@@ -120,7 +120,7 @@ common:
       - name: Model data streams
       - name: Model tabular data
 created: '2025-06-05'
-modified: '2025-06-10'
+modified: '2026-03-16'
 position: Consumer
 description: >-
   Integration problems have been solved by restricted drag-and-drop tools/DSLs
@@ -128,5 +128,5 @@ description: >-
   integrations. 
 maintainers:
   - FN: Kin Lane
-    email: info@apievangelist.com
+    email: kin@apievangelist.com
 specificationVersion: '0.19'
