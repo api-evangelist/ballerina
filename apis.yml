@@ -10,10 +10,12 @@ apis:
     properties:
       - url: ' https://ballerina.io/'
         type: Documentation
+      - type: OpenAPI
+        url: openapi/ballerina-central-api.yml
     description: >-
       Integration problems have been solved by restricted drag-and-drop
       tools/DSLs or generic programming languages that dont understand the
-      unique challenges of integrations. 
+      unique challenges of integrations.
 name: Ballerina
 tags:
   - Integrations
