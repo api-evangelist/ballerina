@@ -125,9 +125,8 @@ created: '2025-06-05'
 modified: '2026-03-16'
 position: Consumer
 description: >-
-  Integration problems have been solved by restricted drag-and-drop tools/DSLs
-  or generic programming languages that dont understand the unique challenges of
-  integrations. 
+  Integration problems have been solved by restricted drag-and-drop tools/DSLs or
+  generic programming languages that dont understand the unique challenges of integrations.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
