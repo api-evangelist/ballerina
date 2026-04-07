@@ -4,8 +4,7 @@ url: >-
 apis:
   - aid: ballerina:ballerina
     name: Ballerina
-    tags:
-      - API
+    tags: []
     humanURL: ' https://ballerina.io/'
     properties:
       - url: ' https://ballerina.io/'
