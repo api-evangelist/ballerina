@@ -1,0 +1,98 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "Ballerina"
+  description: "Taxonomy for the Ballerina programming language ecosystem covering the Central package registry API."
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - namespace: ballerina-central
+      label: Ballerina Central API
+      version: "2.0"
+      baseUrl: https://api.central.ballerina.io
+      status: active
+
+  resources:
+    - name: packages
+      description: Ballerina language packages published to Central registry
+      apis: [ballerina-central]
+      actions: [search, get, get-version, push]
+
+  actions:
+    - name: search
+      description: Search for packages by keyword or organization
+      methods: [GET]
+      pattern: read
+    - name: get
+      description: Retrieve package details
+      methods: [GET]
+      pattern: read
+    - name: get-version
+      description: Retrieve a specific version of a package
+      methods: [GET]
+      pattern: read
+    - name: push
+      description: Publish a new package or version to Central
+      methods: [POST]
+      pattern: write
+
+  schemas:
+    core:
+      - name: Package
+        description: A Ballerina package in the Central registry
+        key_properties: [org, name, version, description, keywords]
+
+  authentication:
+    schemes:
+      - name: BearerToken
+        type: bearer
+        description: Ballerina Central API access token
+
+capability:
+  workflows:
+    - name: Package Registry
+      file: capabilities/package-registry.yaml
+      description: Package discovery and retrieval from Ballerina Central
+      apis_combined: [ballerina-central]
+      tool_count: 3
+      personas: [Ballerina Developer, Integration Engineer]
+      domains: [Package Management, Integration]
+
+  personas:
+    - id: ballerina-developer
+      name: Ballerina Developer
+      description: Developer building integration services using the Ballerina language
+      workflows: [Package Registry]
+    - id: integration-engineer
+      name: Integration Engineer
+      description: Engineer building enterprise integrations using Ballerina language packages
+      workflows: [Package Registry]
+
+  domains:
+    - name: Package Management
+      description: Discovery and retrieval of Ballerina language packages
+      resources: [packages]
+      workflows: [Package Registry]
+
+  namespaces:
+    - namespace: ballerina-central
+      type: consumed
+    - namespace: ballerina-registry-api
+      type: rest-exposed
+      port: 8080
+    - namespace: ballerina-registry-mcp
+      type: mcp-exposed
+      port: 9080
+
+  binds:
+    - name: BALLERINA_TOKEN
+      description: Ballerina Central API access token
+      workflows: [Package Registry]
+
+crossReference:
+  - resource: packages
+    operations: [searchPackages, getPackage, getPackageVersion]
+    workflows: [Package Registry]
+    personas: [Ballerina Developer, Integration Engineer]

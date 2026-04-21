@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-package-summary-schema.json",
+  "title": "PackageSummary",
+  "description": "PackageSummary schema from Ballerina Central API",
+  "type": "object",
+  "properties": {
+    "organization": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string"
+    },
+    "ballerinaVersion": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "pullCount": {
+      "type": "integer"
+    },
+    "createdDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "license": {
+      "type": "string"
+    },
+    "authors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

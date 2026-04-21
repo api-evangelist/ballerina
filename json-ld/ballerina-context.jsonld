@@ -1,0 +1,131 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "ballerina": "https://central.ballerina.io/schema/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Connector": "ballerina:Connector",
+    "ConnectorSearchResponse": "ballerina:ConnectorSearchResponse",
+    "ConnectorSummary": "ballerina:ConnectorSummary",
+    "Module": "ballerina:Module",
+    "Organization": "ballerina:Organization",
+    "Package": "ballerina:Package",
+    "PackageDocs": "ballerina:PackageDocs",
+    "PackageSearchResponse": "ballerina:PackageSearchResponse",
+    "PackageSummary": "ballerina:PackageSummary",
+    "PackageVersion": "ballerina:PackageVersion",
+    "authors": {
+      "@id": "ballerina:authors",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "ballerinaVersion": {
+      "@id": "ballerina:ballerinaVersion",
+      "@type": "xsd:string"
+    },
+    "category": {
+      "@id": "ballerina:category",
+      "@type": "xsd:string"
+    },
+    "connectors": {
+      "@id": "ballerina:connectors",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "count": {
+      "@id": "ballerina:count",
+      "@type": "xsd:integer"
+    },
+    "createdDate": {
+      "@id": "ballerina:createdDate",
+      "@type": "xsd:dateTime"
+    },
+    "dependencies": {
+      "@id": "ballerina:dependencies",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "schema:description"
+    },
+    "functions": {
+      "@id": "ballerina:functions",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "keywords": {
+      "@id": "ballerina:keywords",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "license": {
+      "@id": "ballerina:license",
+      "@type": "xsd:string"
+    },
+    "limit": {
+      "@id": "ballerina:limit",
+      "@type": "xsd:integer"
+    },
+    "moduleName": {
+      "@id": "ballerina:moduleName",
+      "@type": "xsd:string"
+    },
+    "modules": {
+      "@id": "ballerina:modules",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name"
+    },
+    "offset": {
+      "@id": "ballerina:offset",
+      "@type": "xsd:integer"
+    },
+    "organization": {
+      "@id": "ballerina:organization",
+      "@type": "xsd:string"
+    },
+    "packageCount": {
+      "@id": "ballerina:packageCount",
+      "@type": "xsd:integer"
+    },
+    "packageName": {
+      "@id": "ballerina:packageName",
+      "@type": "xsd:string"
+    },
+    "packages": {
+      "@id": "ballerina:packages",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "platform": {
+      "@id": "ballerina:platform",
+      "@type": "xsd:string"
+    },
+    "pullCount": {
+      "@id": "ballerina:pullCount",
+      "@type": "xsd:integer"
+    },
+    "readme": {
+      "@id": "ballerina:readme",
+      "@type": "xsd:string"
+    },
+    "repositoryURL": {
+      "@id": "ballerina:repositoryURL",
+      "@type": "@id"
+    },
+    "version": {
+      "@id": "schema:version"
+    },
+    "versions": {
+      "@id": "ballerina:versions",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "website": {
+      "@id": "ballerina:website",
+      "@type": "@id"
+    }
+  }
+}

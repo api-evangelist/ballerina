@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-structure/central-api-package-summary-structure.json",
+  "name": "PackageSummary",
+  "description": "PackageSummary schema from Ballerina Central API",
+  "type": "object",
+  "properties": {
+    "organization": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string"
+    },
+    "ballerinaVersion": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "pullCount": {
+      "type": "int32"
+    },
+    "createdDate": {
+      "type": "datetime"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "license": {
+      "type": "string"
+    },
+    "authors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

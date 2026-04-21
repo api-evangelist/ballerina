@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-structure/central-api-organization-structure.json",
+  "name": "Organization",
+  "description": "Organization schema from Ballerina Central API",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "website": {
+      "type": "uri"
+    },
+    "packageCount": {
+      "type": "int32"
+    }
+  }
+}

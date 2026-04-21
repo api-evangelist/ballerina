@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-structure/central-api-package-search-response-structure.json",
+  "name": "PackageSearchResponse",
+  "description": "PackageSearchResponse schema from Ballerina Central API",
+  "type": "object",
+  "properties": {
+    "packages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/PackageSummary"
+      }
+    },
+    "count": {
+      "type": "int32",
+      "description": "Total number of matching packages"
+    },
+    "offset": {
+      "type": "int32"
+    },
+    "limit": {
+      "type": "int32"
+    }
+  }
+}

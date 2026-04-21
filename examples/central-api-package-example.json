@@ -1,0 +1,23 @@
+{
+  "organization": "sample-value",
+  "name": "my-package",
+  "version": "1.0.0",
+  "description": "sample-value",
+  "pullCount": 32,
+  "createdDate": "sample-value",
+  "keywords": [
+    "sample-value"
+  ],
+  "license": "sample-value",
+  "authors": [
+    "sample-value"
+  ],
+  "repositoryURL": "https://central.ballerina.io/package",
+  "readme": "sample-value",
+  "modules": [
+    "sample-value"
+  ],
+  "versions": [
+    "1.0.0"
+  ]
+}

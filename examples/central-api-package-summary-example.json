@@ -1,0 +1,17 @@
+{
+  "organization": "sample-value",
+  "name": "my-package",
+  "version": "1.0.0",
+  "platform": "sample-value",
+  "ballerinaVersion": "1.0.0",
+  "description": "sample-value",
+  "pullCount": 71,
+  "createdDate": "sample-value",
+  "keywords": [
+    "sample-value"
+  ],
+  "license": "sample-value",
+  "authors": [
+    "sample-value"
+  ]
+}

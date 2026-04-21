@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-structure/central-api-connector-search-response-structure.json",
+  "name": "ConnectorSearchResponse",
+  "description": "ConnectorSearchResponse schema from Ballerina Central API",
+  "type": "object",
+  "properties": {
+    "connectors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ConnectorSummary"
+      }
+    },
+    "count": {
+      "type": "int32"
+    },
+    "offset": {
+      "type": "int32"
+    },
+    "limit": {
+      "type": "int32"
+    }
+  }
+}

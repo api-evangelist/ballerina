@@ -1,0 +1,23 @@
+{
+  "organization": "sample-value",
+  "name": "my-package",
+  "version": "1.0.0",
+  "description": "sample-value",
+  "category": "sample-value",
+  "readme": "sample-value",
+  "functions": [
+    {
+      "name": "my-package",
+      "description": "sample-value",
+      "parameters": [
+        {
+          "name": {},
+          "type": {},
+          "description": {},
+          "defaultValue": {}
+        }
+      ],
+      "returnType": "sample-value"
+    }
+  ]
+}

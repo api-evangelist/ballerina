@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-structure/central-api-module-structure.json",
+  "name": "Module",
+  "description": "Module schema from Ballerina Central API",
+  "type": "object",
+  "properties": {
+    "organization": {
+      "type": "string"
+    },
+    "packageName": {
+      "type": "string"
+    },
+    "moduleName": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}

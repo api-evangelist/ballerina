@@ -1,0 +1,19 @@
+{
+  "organization": "sample-value",
+  "name": "my-package",
+  "version": "1.0.0",
+  "platform": "sample-value",
+  "ballerinaVersion": "1.0.0",
+  "description": "sample-value",
+  "createdDate": "sample-value",
+  "modules": [
+    "sample-value"
+  ],
+  "dependencies": [
+    {
+      "org": "sample-value",
+      "name": "my-package",
+      "version": "1.0.0"
+    }
+  ]
+}
