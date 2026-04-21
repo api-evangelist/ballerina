@@ -129,7 +129,7 @@ common:
 - type: NaftikoCapability
   url: capabilities/package-registry.yaml
 created: '2025-06-05'
-modified: '2026-04-19'
+modified: '2026-04-21'
 position: Consumer
 description: >-
   Integration problems have been solved by restricted drag-and-drop tools/DSLs or
