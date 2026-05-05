@@ -1,0 +1,13 @@
+{
+  "repo": "ballerina",
+  "feeds": [
+    {
+      "source": "https://blog.ballerina.io/",
+      "feed_url": "https://blog.ballerina.io/feed",
+      "saved": 10,
+      "title": "Blog posts | RSS Feed"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:23:36Z"
+}
