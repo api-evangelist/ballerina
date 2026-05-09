@@ -4,10 +4,10 @@
     {
       "source": "https://blog.ballerina.io/",
       "feed_url": "https://blog.ballerina.io/feed",
-      "saved": 10,
-      "title": "Blog posts | RSS Feed"
+      "title": "Blog posts | RSS Feed",
+      "saved": 22
     }
   ],
-  "post_count": 10,
-  "fetched": "2026-05-03T23:23:36Z"
+  "post_count": 32,
+  "fetched": "2026-05-09T20:17:51Z"
 }
