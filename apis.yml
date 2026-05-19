@@ -25,6 +25,8 @@ type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/showcase/ballerinalang
 - url: https://ballerina.io/
   name: The Ballerina programming language
   type: Website
