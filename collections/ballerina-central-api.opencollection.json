@@ -1,0 +1,272 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ballerina Central API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search packages",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.central.ballerina.io/2.0/packages",
+        "params": [
+          {
+            "name": "q",
+            "value": "",
+            "type": "query",
+            "description": "Search query string"
+          },
+          {
+            "name": "org",
+            "value": "",
+            "type": "query",
+            "description": "Filter by organization name"
+          },
+          {
+            "name": "offset",
+            "value": "",
+            "type": "query",
+            "description": "Pagination offset"
+          },
+          {
+            "name": "limit",
+            "value": "",
+            "type": "query",
+            "description": "Maximum number of results"
+          },
+          {
+            "name": "sort",
+            "value": "",
+            "type": "query",
+            "description": "Sort order"
+          }
+        ]
+      },
+      "docs": "Search for Ballerina packages in Ballerina Central. Supports keyword search, filtering by organization, and pagination."
+    },
+    {
+      "info": {
+        "name": "Get package details",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.central.ballerina.io/2.0/packages/:org/:name",
+        "params": [
+          {
+            "name": "org",
+            "value": "",
+            "type": "path",
+            "description": "Organization name"
+          },
+          {
+            "name": "name",
+            "value": "",
+            "type": "path",
+            "description": "Package name"
+          }
+        ]
+      },
+      "docs": "Returns metadata for a specific Ballerina package."
+    },
+    {
+      "info": {
+        "name": "Get package version details",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.central.ballerina.io/2.0/packages/:org/:name/:version",
+        "params": [
+          {
+            "name": "org",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "name",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "version",
+            "value": "",
+            "type": "path",
+            "description": "Package version (semver)"
+          }
+        ]
+      },
+      "docs": "Returns metadata for a specific version of a Ballerina package."
+    },
+    {
+      "info": {
+        "name": "Get organization details",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.central.ballerina.io/2.0/organizations/:org",
+        "params": [
+          {
+            "name": "org",
+            "value": "",
+            "type": "path",
+            "description": "Organization name"
+          }
+        ]
+      },
+      "docs": "Returns metadata for a Ballerina Central organization."
+    },
+    {
+      "info": {
+        "name": "List organization packages",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.central.ballerina.io/2.0/organizations/:org/packages",
+        "params": [
+          {
+            "name": "org",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "offset",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "limit",
+            "value": "",
+            "type": "query"
+          }
+        ]
+      },
+      "docs": "Returns packages belonging to a specific organization."
+    },
+    {
+      "info": {
+        "name": "Search connectors",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.central.ballerina.io/2.0/connectors",
+        "params": [
+          {
+            "name": "q",
+            "value": "",
+            "type": "query",
+            "description": "Search query string"
+          },
+          {
+            "name": "offset",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "limit",
+            "value": "",
+            "type": "query"
+          },
+          {
+            "name": "sort",
+            "value": "",
+            "type": "query"
+          }
+        ]
+      },
+      "docs": "Search for Ballerina connectors (client libraries for external services)."
+    },
+    {
+      "info": {
+        "name": "Get connector details",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.central.ballerina.io/2.0/connectors/:org/:name/:version",
+        "params": [
+          {
+            "name": "org",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "name",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "version",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Returns details for a specific connector version."
+    },
+    {
+      "info": {
+        "name": "Get package modules",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.central.ballerina.io/2.0/packages/:org/:name/:version/modules",
+        "params": [
+          {
+            "name": "org",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "name",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "version",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Returns the list of modules in a specific package version."
+    },
+    {
+      "info": {
+        "name": "Get package documentation",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "https://api.central.ballerina.io/2.0/packages/:org/:name/:version/docs",
+        "params": [
+          {
+            "name": "org",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "name",
+            "value": "",
+            "type": "path"
+          },
+          {
+            "name": "version",
+            "value": "",
+            "type": "path"
+          }
+        ]
+      },
+      "docs": "Returns API documentation for a specific package version."
+    }
+  ],
+  "bundled": true
+}
