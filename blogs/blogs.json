@@ -2,13 +2,6 @@
   "repo": "ballerina",
   "feeds": [
     {
-      "source": "https://blog.ballerina.io/feed",
-      "feed_url": "https://blog.ballerina.io/feed",
-      "title": "",
-      "saved": 0,
-      "method": "feed"
-    },
-    {
       "source": "https://blog.ballerina.io/feed.xml",
       "feed_url": "https://blog.ballerina.io/feed.xml",
       "title": "",
@@ -24,5 +17,5 @@
     }
   ],
   "post_count": 33,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:03:07Z"
 }
