@@ -1,0 +1,104 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/ballerina-central-api.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 9
+  by_action_class:
+    connected: 9
+  by_consequence:
+    read: 9
+  human_in_the_loop_required: 0
+operations:
+- path: /2.0/packages
+  method: get
+  operationId: searchPackages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /2.0/packages/{org}/{name}
+  method: get
+  operationId: getPackage
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /2.0/packages/{org}/{name}/{version}
+  method: get
+  operationId: getPackageVersion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /2.0/organizations/{org}
+  method: get
+  operationId: getOrganization
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /2.0/organizations/{org}/packages
+  method: get
+  operationId: getOrganizationPackages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /2.0/connectors
+  method: get
+  operationId: searchConnectors
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /2.0/connectors/{org}/{name}/{version}
+  method: get
+  operationId: getConnector
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /2.0/packages/{org}/{name}/{version}/modules
+  method: get
+  operationId: getPackageModules
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /2.0/packages/{org}/{name}/{version}/docs
+  method: get
+  operationId: getPackageDocs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
