@@ -1,0 +1,128 @@
+openapi: 3.1.0
+info:
+  title: Ballerina Central Connectors Organizations API
+  description: Ballerina Central REST API for discovering and managing Ballerina packages, organizations, connectors, and modules. Ballerina Central is the package registry for the Ballerina programming language.
+  version: 1.0.0
+  contact:
+    name: WSO2 / Ballerina
+    url: https://ballerina.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api.central.ballerina.io
+  description: Ballerina Central API
+tags:
+- name: Organizations
+paths:
+  /2.0/organizations/{org}:
+    get:
+      operationId: getOrganization
+      summary: Get organization details
+      description: Returns metadata for a Ballerina Central organization.
+      parameters:
+      - name: org
+        in: path
+        required: true
+        description: Organization name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Organization details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '404':
+          description: Organization not found
+      tags:
+      - Organizations
+  /2.0/organizations/{org}/packages:
+    get:
+      operationId: getOrganizationPackages
+      summary: List organization packages
+      description: Returns packages belonging to a specific organization.
+      parameters:
+      - name: org
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 10
+      responses:
+        '200':
+          description: List of organization packages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageSearchResponse'
+      tags:
+      - Organizations
+components:
+  schemas:
+    PackageSearchResponse:
+      type: object
+      properties:
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageSummary'
+        count:
+          type: integer
+          description: Total number of matching packages
+        offset:
+          type: integer
+        limit:
+          type: integer
+    Organization:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        website:
+          type: string
+          format: uri
+        packageCount:
+          type: integer
+    PackageSummary:
+      type: object
+      properties:
+        organization:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        platform:
+          type: string
+        ballerinaVersion:
+          type: string
+        description:
+          type: string
+        pullCount:
+          type: integer
+        createdDate:
+          type: string
+          format: date-time
+        keywords:
+          type: array
+          items:
+            type: string
+        license:
+          type: string
+        authors:
+          type: array
+          items:
+            type: string

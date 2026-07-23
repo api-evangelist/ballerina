@@ -1,0 +1,379 @@
+openapi: 3.1.0
+info:
+  title: Ballerina Central Connectors Packages API
+  description: Ballerina Central REST API for discovering and managing Ballerina packages, organizations, connectors, and modules. Ballerina Central is the package registry for the Ballerina programming language.
+  version: 1.0.0
+  contact:
+    name: WSO2 / Ballerina
+    url: https://ballerina.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api.central.ballerina.io
+  description: Ballerina Central API
+tags:
+- name: Packages
+paths:
+  /2.0/packages:
+    get:
+      operationId: searchPackages
+      summary: Search packages
+      description: Search for Ballerina packages in Ballerina Central. Supports keyword search, filtering by organization, and pagination.
+      parameters:
+      - name: q
+        in: query
+        description: Search query string
+        schema:
+          type: string
+      - name: org
+        in: query
+        description: Filter by organization name
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: Pagination offset
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: Maximum number of results
+        schema:
+          type: integer
+          default: 10
+      - name: sort
+        in: query
+        description: Sort order
+        schema:
+          type: string
+          enum:
+          - relevance
+          - created_date
+          - pull_count
+      responses:
+        '200':
+          description: List of matching packages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageSearchResponse'
+        '400':
+          description: Bad request
+      tags:
+      - Packages
+  /2.0/packages/{org}/{name}:
+    get:
+      operationId: getPackage
+      summary: Get package details
+      description: Returns metadata for a specific Ballerina package.
+      parameters:
+      - name: org
+        in: path
+        required: true
+        description: Organization name
+        schema:
+          type: string
+      - name: name
+        in: path
+        required: true
+        description: Package name
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Package details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Package'
+        '404':
+          description: Package not found
+      tags:
+      - Packages
+  /2.0/packages/{org}/{name}/{version}:
+    get:
+      operationId: getPackageVersion
+      summary: Get package version details
+      description: Returns metadata for a specific version of a Ballerina package.
+      parameters:
+      - name: org
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: path
+        required: true
+        description: Package version (semver)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Package version details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageVersion'
+        '404':
+          description: Package version not found
+      tags:
+      - Packages
+  /2.0/packages/{org}/{name}/{version}/modules:
+    get:
+      operationId: getPackageModules
+      summary: Get package modules
+      description: Returns the list of modules in a specific package version.
+      parameters:
+      - name: org
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of modules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Module'
+      tags:
+      - Packages
+  /2.0/packages/{org}/{name}/{version}/docs:
+    get:
+      operationId: getPackageDocs
+      summary: Get package documentation
+      description: Returns API documentation for a specific package version.
+      parameters:
+      - name: org
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Package API documentation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageDocs'
+      tags:
+      - Packages
+components:
+  schemas:
+    PackageVersion:
+      type: object
+      properties:
+        organization:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        platform:
+          type: string
+        ballerinaVersion:
+          type: string
+        description:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/Module'
+        dependencies:
+          type: array
+          items:
+            type: object
+            properties:
+              org:
+                type: string
+              name:
+                type: string
+              version:
+                type: string
+    Module:
+      type: object
+      properties:
+        organization:
+          type: string
+        packageName:
+          type: string
+        moduleName:
+          type: string
+        version:
+          type: string
+        description:
+          type: string
+    Package:
+      type: object
+      properties:
+        organization:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        description:
+          type: string
+        pullCount:
+          type: integer
+        createdDate:
+          type: string
+          format: date-time
+        keywords:
+          type: array
+          items:
+            type: string
+        license:
+          type: string
+        authors:
+          type: array
+          items:
+            type: string
+        repositoryURL:
+          type: string
+          format: uri
+        readme:
+          type: string
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/Module'
+        versions:
+          type: array
+          items:
+            type: string
+    PackageSummary:
+      type: object
+      properties:
+        organization:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        platform:
+          type: string
+        ballerinaVersion:
+          type: string
+        description:
+          type: string
+        pullCount:
+          type: integer
+        createdDate:
+          type: string
+          format: date-time
+        keywords:
+          type: array
+          items:
+            type: string
+        license:
+          type: string
+        authors:
+          type: array
+          items:
+            type: string
+    PackageDocs:
+      type: object
+      properties:
+        modules:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              functions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    isIsolated:
+                      type: boolean
+              classes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+              records:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+              types:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+    PackageSearchResponse:
+      type: object
+      properties:
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageSummary'
+        count:
+          type: integer
+          description: Total number of matching packages
+        offset:
+          type: integer
+        limit:
+          type: integer

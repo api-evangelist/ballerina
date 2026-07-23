@@ -1,0 +1,156 @@
+openapi: 3.1.0
+info:
+  title: Ballerina Central Connectors API
+  description: Ballerina Central REST API for discovering and managing Ballerina packages, organizations, connectors, and modules. Ballerina Central is the package registry for the Ballerina programming language.
+  version: 1.0.0
+  contact:
+    name: WSO2 / Ballerina
+    url: https://ballerina.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api.central.ballerina.io
+  description: Ballerina Central API
+tags:
+- name: Connectors
+paths:
+  /2.0/connectors:
+    get:
+      operationId: searchConnectors
+      summary: Search connectors
+      description: Search for Ballerina connectors (client libraries for external services).
+      parameters:
+      - name: q
+        in: query
+        description: Search query string
+        schema:
+          type: string
+      - name: offset
+        in: query
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          default: 10
+      - name: sort
+        in: query
+        schema:
+          type: string
+          enum:
+          - relevance
+          - created_date
+          - pull_count
+      responses:
+        '200':
+          description: List of connectors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorSearchResponse'
+      tags:
+      - Connectors
+  /2.0/connectors/{org}/{name}/{version}:
+    get:
+      operationId: getConnector
+      summary: Get connector details
+      description: Returns details for a specific connector version.
+      parameters:
+      - name: org
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Connector details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connector'
+        '404':
+          description: Connector not found
+      tags:
+      - Connectors
+components:
+  schemas:
+    ConnectorSearchResponse:
+      type: object
+      properties:
+        connectors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectorSummary'
+        count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
+    Connector:
+      type: object
+      properties:
+        organization:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        readme:
+          type: string
+        functions:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              parameters:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    type:
+                      type: string
+                    description:
+                      type: string
+                    defaultValue:
+                      type: string
+              returnType:
+                type: string
+    ConnectorSummary:
+      type: object
+      properties:
+        organization:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        pullCount:
+          type: integer
