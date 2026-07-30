@@ -1,20 +1,45 @@
 aid: ballerina
 url: https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/apis.yml
 apis:
-- aid: ballerina:ballerina
-  name: Ballerina
-  tags: []
+- aid: ballerina:ballerina-connectors-api
+  name: Ballerina Connectors API
+  description: The Connectors API from Ballerina — 2 operation(s) for connectors.
   humanURL: ' https://ballerina.io/'
+  tags:
+  - Connectors
   properties:
-  - url: ' https://ballerina.io/'
-    type: Documentation
   - type: OpenAPI
-    url: openapi/ballerina-central-api.yml
-  - url: graphql/ballerina-graphql.md
-    type: GraphQL
-  description: >-
-    Integration problems have been solved by restricted drag-and-drop tools/DSLs or generic programming languages that
-    dont understand the unique challenges of integrations.
+    url: openapi/ballerina-connectors-api-openapi.yml
+  - type: Documentation
+    url: ' https://ballerina.io/'
+  - type: GraphQL
+    url: graphql/ballerina-graphql.md
+- aid: ballerina:ballerina-organizations-api
+  name: Ballerina Organizations API
+  description: The Organizations API from Ballerina — 2 operation(s) for organizations.
+  humanURL: ' https://ballerina.io/'
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/ballerina-organizations-api-openapi.yml
+  - type: Documentation
+    url: ' https://ballerina.io/'
+  - type: GraphQL
+    url: graphql/ballerina-graphql.md
+- aid: ballerina:ballerina-packages-api
+  name: Ballerina Packages API
+  description: The Packages API from Ballerina — 5 operation(s) for packages.
+  humanURL: ' https://ballerina.io/'
+  tags:
+  - Packages
+  properties:
+  - type: OpenAPI
+    url: openapi/ballerina-packages-api-openapi.yml
+  - type: Documentation
+    url: ' https://ballerina.io/'
+  - type: GraphQL
+    url: graphql/ballerina-graphql.md
 name: Ballerina
 tags:
 - Integrations
@@ -22,7 +47,19 @@ tags:
 - Open Source
 - Programming Language
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ballerina.png
 access: 3rd-Party
 common:
 - type: AgenticAccess
