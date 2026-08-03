@@ -1,0 +1,567 @@
+openapi: 3.1.0
+info:
+  title: Ballerina Central API
+  description: >-
+    Ballerina Central REST API for discovering and managing Ballerina packages,
+    organizations, connectors, and modules. Ballerina Central is the package
+    registry for the Ballerina programming language.
+  version: 1.0.0
+  contact:
+    name: WSO2 / Ballerina
+    url: https://ballerina.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  - url: https://api.central.ballerina.io
+    description: Ballerina Central API
+paths:
+  /2.0/packages:
+    get:
+      operationId: searchPackages
+      summary: Search packages
+      description: >-
+        Search for Ballerina packages in Ballerina Central. Supports keyword
+        search, filtering by organization, and pagination.
+      parameters:
+        - name: q
+          in: query
+          description: Search query string
+          schema:
+            type: string
+        - name: org
+          in: query
+          description: Filter by organization name
+          schema:
+            type: string
+        - name: offset
+          in: query
+          description: Pagination offset
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          description: Maximum number of results
+          schema:
+            type: integer
+            default: 10
+        - name: sort
+          in: query
+          description: Sort order
+          schema:
+            type: string
+            enum:
+              - relevance
+              - created_date
+              - pull_count
+      responses:
+        '200':
+          description: List of matching packages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageSearchResponse'
+        '400':
+          description: Bad request
+  /2.0/packages/{org}/{name}:
+    get:
+      operationId: getPackage
+      summary: Get package details
+      description: Returns metadata for a specific Ballerina package.
+      parameters:
+        - name: org
+          in: path
+          required: true
+          description: Organization name
+          schema:
+            type: string
+        - name: name
+          in: path
+          required: true
+          description: Package name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Package details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Package'
+        '404':
+          description: Package not found
+  /2.0/packages/{org}/{name}/{version}:
+    get:
+      operationId: getPackageVersion
+      summary: Get package version details
+      description: Returns metadata for a specific version of a Ballerina package.
+      parameters:
+        - name: org
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          description: Package version (semver)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Package version details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageVersion'
+        '404':
+          description: Package version not found
+  /2.0/organizations/{org}:
+    get:
+      operationId: getOrganization
+      summary: Get organization details
+      description: Returns metadata for a Ballerina Central organization.
+      parameters:
+        - name: org
+          in: path
+          required: true
+          description: Organization name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Organization details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+        '404':
+          description: Organization not found
+  /2.0/organizations/{org}/packages:
+    get:
+      operationId: getOrganizationPackages
+      summary: List organization packages
+      description: Returns packages belonging to a specific organization.
+      parameters:
+        - name: org
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: List of organization packages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageSearchResponse'
+  /2.0/connectors:
+    get:
+      operationId: searchConnectors
+      summary: Search connectors
+      description: >-
+        Search for Ballerina connectors (client libraries for external services).
+      parameters:
+        - name: q
+          in: query
+          description: Search query string
+          schema:
+            type: string
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - relevance
+              - created_date
+              - pull_count
+      responses:
+        '200':
+          description: List of connectors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorSearchResponse'
+  /2.0/connectors/{org}/{name}/{version}:
+    get:
+      operationId: getConnector
+      summary: Get connector details
+      description: Returns details for a specific connector version.
+      parameters:
+        - name: org
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Connector details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connector'
+        '404':
+          description: Connector not found
+  /2.0/packages/{org}/{name}/{version}/modules:
+    get:
+      operationId: getPackageModules
+      summary: Get package modules
+      description: Returns the list of modules in a specific package version.
+      parameters:
+        - name: org
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of modules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Module'
+  /2.0/packages/{org}/{name}/{version}/docs:
+    get:
+      operationId: getPackageDocs
+      summary: Get package documentation
+      description: Returns API documentation for a specific package version.
+      parameters:
+        - name: org
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: version
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Package API documentation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackageDocs'
+components:
+  schemas:
+    PackageSearchResponse:
+      type: object
+      properties:
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/PackageSummary'
+        count:
+          type: integer
+          description: Total number of matching packages
+        offset:
+          type: integer
+        limit:
+          type: integer
+    PackageSummary:
+      type: object
+      properties:
+        organization:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        platform:
+          type: string
+        ballerinaVersion:
+          type: string
+        description:
+          type: string
+        pullCount:
+          type: integer
+        createdDate:
+          type: string
+          format: date-time
+        keywords:
+          type: array
+          items:
+            type: string
+        license:
+          type: string
+        authors:
+          type: array
+          items:
+            type: string
+    Package:
+      type: object
+      properties:
+        organization:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        description:
+          type: string
+        pullCount:
+          type: integer
+        createdDate:
+          type: string
+          format: date-time
+        keywords:
+          type: array
+          items:
+            type: string
+        license:
+          type: string
+        authors:
+          type: array
+          items:
+            type: string
+        repositoryURL:
+          type: string
+          format: uri
+        readme:
+          type: string
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/Module'
+        versions:
+          type: array
+          items:
+            type: string
+    PackageVersion:
+      type: object
+      properties:
+        organization:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        platform:
+          type: string
+        ballerinaVersion:
+          type: string
+        description:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/Module'
+        dependencies:
+          type: array
+          items:
+            type: object
+            properties:
+              org:
+                type: string
+              name:
+                type: string
+              version:
+                type: string
+    Organization:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        website:
+          type: string
+          format: uri
+        packageCount:
+          type: integer
+    ConnectorSearchResponse:
+      type: object
+      properties:
+        connectors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectorSummary'
+        count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
+    ConnectorSummary:
+      type: object
+      properties:
+        organization:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        pullCount:
+          type: integer
+    Connector:
+      type: object
+      properties:
+        organization:
+          type: string
+        name:
+          type: string
+        version:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        readme:
+          type: string
+        functions:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              parameters:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    type:
+                      type: string
+                    description:
+                      type: string
+                    defaultValue:
+                      type: string
+              returnType:
+                type: string
+    Module:
+      type: object
+      properties:
+        organization:
+          type: string
+        packageName:
+          type: string
+        moduleName:
+          type: string
+        version:
+          type: string
+        description:
+          type: string
+    PackageDocs:
+      type: object
+      properties:
+        modules:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              functions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    isIsolated:
+                      type: boolean
+              classes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+              records:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+              types:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string
+              errors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    description:
+                      type: string

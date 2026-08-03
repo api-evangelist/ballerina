@@ -1,0 +1,18 @@
+{
+  "provider": "ballerina",
+  "sources": [
+    "ballerina-connectors-api-openapi.yml",
+    "ballerina-organizations-api-openapi.yml",
+    "ballerina-packages-api-openapi.yml"
+  ],
+  "outputs": [
+    "ballerina-connectors-api-openapi.yml",
+    "ballerina-organizations-api-openapi.yml",
+    "ballerina-packages-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
