@@ -10,8 +10,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/ballerina-connectors-api-openapi.yml
-  - type: Documentation
-    url: ' https://ballerina.io/'
   - type: GraphQL
     url: graphql/ballerina-graphql.md
 - aid: ballerina:ballerina-organizations-api
@@ -23,8 +21,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/ballerina-organizations-api-openapi.yml
-  - type: Documentation
-    url: ' https://ballerina.io/'
   - type: GraphQL
     url: graphql/ballerina-graphql.md
 - aid: ballerina:ballerina-packages-api
@@ -36,8 +32,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/ballerina-packages-api-openapi.yml
-  - type: Documentation
-    url: ' https://ballerina.io/'
   - type: GraphQL
     url: graphql/ballerina-graphql.md
 name: Ballerina
