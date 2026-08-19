@@ -1,0 +1,273 @@
+{
+  "item": [
+    {
+      "id": "1e6cf1fb-60c9-4d87-9e6c-26435771773a",
+      "name": "Organizations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e9cfa9c6-0780-4a84-bd21-f24deffa618f",
+          "name": "Get organization details",
+          "request": {
+            "name": "Get organization details",
+            "description": {
+              "content": "Returns metadata for a Ballerina Central organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "2.0",
+                "organizations",
+                ":org"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "org",
+                  "description": "(Required) Organization name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a840c816-f543-432d-af14-68b050bf9d0c",
+              "name": "Organization details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0",
+                    "organizations",
+                    ":org"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org",
+                      "description": "(Required) Organization name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"website\": \"http://CbouLlnQWFUZKKecNUUqgNgICRso.tevsLpPzL3R6XJnJkSVdjLgG9DMC-s+ALkEzvKq-m9bfX\",\n  \"packageCount\": 5898\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1bd72e67-8675-43a2-b547-69862cb72b30",
+              "name": "Organization not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0",
+                    "organizations",
+                    ":org"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org",
+                      "description": "(Required) Organization name"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e8954cf5-6715-40c1-b5df-08bd03f64fa7",
+          "name": "List organization packages",
+          "request": {
+            "name": "List organization packages",
+            "description": {
+              "content": "Returns packages belonging to a specific organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "2.0",
+                "organizations",
+                ":org",
+                "packages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "org",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c7d38ce9-22c5-4c0f-8011-d06722b017db",
+              "name": "List of organization packages",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0",
+                    "organizations",
+                    ":org",
+                    "packages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"packages\": [\n    {\n      \"organization\": \"string\",\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"platform\": \"string\",\n      \"ballerinaVersion\": \"string\",\n      \"description\": \"string\",\n      \"pullCount\": 2693,\n      \"createdDate\": \"1973-03-02T14:36:45.859Z\",\n      \"keywords\": [\n        \"string\",\n        \"string\"\n      ],\n      \"license\": \"string\",\n      \"authors\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"organization\": \"string\",\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"platform\": \"string\",\n      \"ballerinaVersion\": \"string\",\n      \"description\": \"string\",\n      \"pullCount\": 5088,\n      \"createdDate\": \"1976-12-15T22:42:10.405Z\",\n      \"keywords\": [\n        \"string\",\n        \"string\"\n      ],\n      \"license\": \"string\",\n      \"authors\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"count\": 6312,\n  \"offset\": 9198,\n  \"limit\": 9827\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.central.ballerina.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "25768735-583d-49b7-a85a-224c56f02302",
+    "name": "Ballerina Central Connectors Organizations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Ballerina Central REST API for discovering and managing Ballerina packages, organizations, connectors, and modules. Ballerina Central is the package registry for the Ballerina programming language.\n\nContact Support:\n Name: WSO2 / Ballerina",
+      "type": "text/plain"
+    }
+  }
+}

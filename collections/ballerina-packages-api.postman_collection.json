@@ -1,0 +1,785 @@
+{
+  "item": [
+    {
+      "id": "4c8725d4-b16b-4641-9dc0-adeb07a7fadf",
+      "name": "Packages",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7d14d38b-876d-4235-a27b-91cde79465be",
+          "name": "Search packages",
+          "request": {
+            "name": "Search packages",
+            "description": {
+              "content": "Search for Ballerina packages in Ballerina Central. Supports keyword search, filtering by organization, and pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "2.0",
+                "packages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search query string"
+                },
+                {
+                  "disabled": false,
+                  "key": "org",
+                  "value": "<string>",
+                  "description": "Filter by organization name"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Pagination offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Maximum number of results"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Sort order"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f2f56bdf-895c-401a-ad9f-ef45584ac10b",
+              "name": "List of matching packages",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0",
+                    "packages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"packages\": [\n    {\n      \"organization\": \"string\",\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"platform\": \"string\",\n      \"ballerinaVersion\": \"string\",\n      \"description\": \"string\",\n      \"pullCount\": 299,\n      \"createdDate\": \"1961-10-07T04:58:28.718Z\",\n      \"keywords\": [\n        \"string\",\n        \"string\"\n      ],\n      \"license\": \"string\",\n      \"authors\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"organization\": \"string\",\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"platform\": \"string\",\n      \"ballerinaVersion\": \"string\",\n      \"description\": \"string\",\n      \"pullCount\": 662,\n      \"createdDate\": \"1987-07-16T22:19:56.891Z\",\n      \"keywords\": [\n        \"string\",\n        \"string\"\n      ],\n      \"license\": \"string\",\n      \"authors\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"count\": 6962,\n  \"offset\": 3268,\n  \"limit\": 3116\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0bfa093-f347-48ea-99ca-1ec482547e4e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0",
+                    "packages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "org",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6d21444e-de7c-4666-80f3-bf9847ae562c",
+          "name": "Get package details",
+          "request": {
+            "name": "Get package details",
+            "description": {
+              "content": "Returns metadata for a specific Ballerina package.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "2.0",
+                "packages",
+                ":org",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "org",
+                  "description": "(Required) Organization name"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Package name"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7c2dfa83-d280-4d2c-9188-9c61a5d82ff2",
+              "name": "Package details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0",
+                    "packages",
+                    ":org",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org",
+                      "description": "(Required) Organization name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Package name"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organization\": \"string\",\n  \"name\": \"string\",\n  \"version\": \"string\",\n  \"description\": \"string\",\n  \"pullCount\": 5400,\n  \"createdDate\": \"1969-09-30T08:26:00.300Z\",\n  \"keywords\": [\n    \"string\",\n    \"string\"\n  ],\n  \"license\": \"string\",\n  \"authors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"repositoryURL\": \"https://GcFRftFU.aysrI.L4iMATqIOcYpIwiaZLjfI52Xvq,g42WJW,QL2zPHEPVWwe20ET\",\n  \"readme\": \"string\",\n  \"modules\": [\n    {\n      \"organization\": \"string\",\n      \"packageName\": \"string\",\n      \"moduleName\": \"string\",\n      \"version\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"organization\": \"string\",\n      \"packageName\": \"string\",\n      \"moduleName\": \"string\",\n      \"version\": \"string\",\n      \"description\": \"string\"\n    }\n  ],\n  \"versions\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff51e76b-cadb-4ba6-acb9-61585dcfaff4",
+              "name": "Package not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0",
+                    "packages",
+                    ":org",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org",
+                      "description": "(Required) Organization name"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Package name"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35a5bb1e-0ddf-4eb9-b929-723d648f6b2d",
+          "name": "Get package version details",
+          "request": {
+            "name": "Get package version details",
+            "description": {
+              "content": "Returns metadata for a specific version of a Ballerina package.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "2.0",
+                "packages",
+                ":org",
+                ":name",
+                ":version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "org",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "version",
+                  "description": "(Required) Package version (semver)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "166443bf-af4f-4453-bade-491681293472",
+              "name": "Package version details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0",
+                    "packages",
+                    ":org",
+                    ":name",
+                    ":version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "version",
+                      "description": "(Required) Package version (semver)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organization\": \"string\",\n  \"name\": \"string\",\n  \"version\": \"string\",\n  \"platform\": \"string\",\n  \"ballerinaVersion\": \"string\",\n  \"description\": \"string\",\n  \"createdDate\": \"2020-08-04T14:17:55.971Z\",\n  \"modules\": [\n    {\n      \"organization\": \"string\",\n      \"packageName\": \"string\",\n      \"moduleName\": \"string\",\n      \"version\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"organization\": \"string\",\n      \"packageName\": \"string\",\n      \"moduleName\": \"string\",\n      \"version\": \"string\",\n      \"description\": \"string\"\n    }\n  ],\n  \"dependencies\": [\n    {\n      \"org\": \"string\",\n      \"name\": \"string\",\n      \"version\": \"string\"\n    },\n    {\n      \"org\": \"string\",\n      \"name\": \"string\",\n      \"version\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adf86222-ee35-4f0c-b882-e5c8768e15cf",
+              "name": "Package version not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0",
+                    "packages",
+                    ":org",
+                    ":name",
+                    ":version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "version",
+                      "description": "(Required) Package version (semver)"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9887a20a-53f4-46bb-92d7-aad8295fa6a3",
+          "name": "Get package modules",
+          "request": {
+            "name": "Get package modules",
+            "description": {
+              "content": "Returns the list of modules in a specific package version.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "2.0",
+                "packages",
+                ":org",
+                ":name",
+                ":version",
+                "modules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "org",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "version",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "705d9795-2708-4bf2-8bdd-d167efad695a",
+              "name": "List of modules",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0",
+                    "packages",
+                    ":org",
+                    ":name",
+                    ":version",
+                    "modules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "version",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"organization\": \"string\",\n    \"packageName\": \"string\",\n    \"moduleName\": \"string\",\n    \"version\": \"string\",\n    \"description\": \"string\"\n  },\n  {\n    \"organization\": \"string\",\n    \"packageName\": \"string\",\n    \"moduleName\": \"string\",\n    \"version\": \"string\",\n    \"description\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e221517-3d69-495b-a6ea-ee8ab140ec5f",
+          "name": "Get package documentation",
+          "request": {
+            "name": "Get package documentation",
+            "description": {
+              "content": "Returns API documentation for a specific package version.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "2.0",
+                "packages",
+                ":org",
+                ":name",
+                ":version",
+                "docs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "org",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "version",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0577c17c-aee4-4814-b6c3-f8eb7e8bc8ef",
+              "name": "Package API documentation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0",
+                    "packages",
+                    ":org",
+                    ":name",
+                    ":version",
+                    "docs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "org",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "version",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"modules\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"functions\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"isIsolated\": false\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"isIsolated\": false\n        }\n      ],\n      \"classes\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"records\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"types\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"errors\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"functions\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"isIsolated\": false\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"isIsolated\": false\n        }\n      ],\n      \"classes\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"records\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"types\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"errors\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.central.ballerina.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "03eb88c5-74e6-4fef-a17f-286ab89f4a2f",
+    "name": "Ballerina Central Connectors Packages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Ballerina Central REST API for discovering and managing Ballerina packages, organizations, connectors, and modules. Ballerina Central is the package registry for the Ballerina programming language.\n\nContact Support:\n Name: WSO2 / Ballerina",
+      "type": "text/plain"
+    }
+  }
+}
