@@ -2,9 +2,15 @@ vocabulary: "1.0.0"
 
 info:
   provider: "Ballerina"
-  description: "Taxonomy for the Ballerina programming language ecosystem covering the Central package registry API."
+  description: "Taxonomy for the Ballerina programming language ecosystem, covering the Ballerina Central package registry API and the toolchain that consumes it."
   created: "2026-04-19"
-  modified: "2026-04-19"
+  modified: "2026-09-04"
+  method: derived
+  source: "openapi/_original/ballerina-central-api.yml (probed 2026-09-04)"
+  note: >-
+    Rewritten 2026-09-04. The previous version named operations (getPackage, getPackageVersion,
+    getOrganization) and exposed ports (8080 REST, 9080 MCP) that do not exist on the live
+    service. Everything below maps to an operation that was called and returned 200.
 
 operational:
   apis:
@@ -13,86 +19,148 @@ operational:
       version: "2.0"
       baseUrl: https://api.central.ballerina.io
       status: active
+      auth: none (anonymous reads)
 
   resources:
     - name: packages
-      description: Ballerina language packages published to Central registry
+      description: Ballerina packages published to the Central registry.
       apis: [ballerina-central]
-      actions: [search, get, get-version, push]
+      actions: [search, full-text-search, list-versions]
+    - name: connectors
+      description: Connector client objects declared inside published packages (outbound integrations).
+      apis: [ballerina-central]
+      actions: [search]
+    - name: triggers
+      description: Event triggers and listeners declared inside published packages (inbound integrations).
+      apis: [ballerina-central]
+      actions: [search]
+    - name: docs
+      description: The generated API documentation model for one published package version.
+      apis: [ballerina-central]
+      actions: [get-docs]
 
   actions:
     - name: search
-      description: Search for packages by keyword or organization
+      description: List or filter a registry collection by query, organization, offset and limit.
       methods: [GET]
       pattern: read
-    - name: get
-      description: Retrieve package details
+    - name: full-text-search
+      description: Full-text package search returning suggestions and field highlighting.
       methods: [GET]
       pattern: read
-    - name: get-version
-      description: Retrieve a specific version of a package
+    - name: list-versions
+      description: List the published versions of one package, newest first.
       methods: [GET]
       pattern: read
-    - name: push
-      description: Publish a new package or version to Central
-      methods: [POST]
-      pattern: write
+    - name: get-docs
+      description: Retrieve the full documentation model for an exact org/name/version.
+      methods: [GET]
+      pattern: read
+
+  cli_actions:
+    description: >-
+      Write operations exist only through the `bal` CLI against a credentialed surface Ballerina
+      does not document as REST. Recorded separately so they are never mistaken for endpoints.
+    actions:
+      - name: push
+        description: Publish a package or version to Central.
+        pattern: write
+        auth: Central access token
+      - name: deprecate
+        description: Mark a published package deprecated.
+        pattern: write
+        auth: Central access token
 
   schemas:
     core:
       - name: Package
-        description: A Ballerina package in the Central registry
-        key_properties: [org, name, version, description, keywords]
+        description: A Ballerina package in the Central registry.
+        key_properties: [id, organization, name, version, platform, ballerinaVersion, keywords, pullCount, isDeprecated, graalvmCompatible]
+      - name: Module
+        description: A module inside a package.
+        key_properties: [name, packageURL, apiDocURL, summary]
+      - name: Connector
+        description: A connector client declared by a package.
+        key_properties: [id, name, displayName, moduleName, package]
+      - name: Trigger
+        description: An event trigger declared by a package.
+        key_properties: [id, name, displayName, moduleName, package]
+      - name: ApiDocs
+        description: The generated documentation model for a package version.
+        key_properties: [apiDocsVersion, docsData, searchData]
 
   authentication:
     schemes:
-      - name: BearerToken
+      - name: Anonymous
+        type: none
+        description: Every published read operation is callable without a credential.
+      - name: CentralAccessToken
         type: bearer
-        description: Ballerina Central API access token
+        description: >-
+          Ballerina Central access token, obtained from central.ballerina.io/dashboard and stored
+          in ~/.ballerina/Settings.toml under [central] accesstoken. Used by the CLI for publish
+          and deprecate; valid one year.
 
 capability:
   workflows:
-    - name: Package Registry
-      file: capabilities/package-registry.yaml
-      description: Package discovery and retrieval from Ballerina Central
+    - name: Package Discovery
+      description: Find a package, resolve its latest version, and read its API documentation.
       apis_combined: [ballerina-central]
+      operations: [fullTextSearchPackages, listPackageVersions, getPackageApiDocs]
       tool_count: 3
-      personas: [Ballerina Developer, Integration Engineer]
-      domains: [Package Management, Integration]
+      personas: [Ballerina Developer, Integration Engineer, Coding Agent]
+    - name: Integration Surface Discovery
+      description: Find the connector or trigger that already exists for a third-party system.
+      apis_combined: [ballerina-central]
+      operations: [searchConnectors, searchTriggers]
+      tool_count: 2
+      personas: [Integration Engineer]
 
   personas:
     - id: ballerina-developer
       name: Ballerina Developer
-      description: Developer building integration services using the Ballerina language
-      workflows: [Package Registry]
+      description: Developer building services and integrations in the Ballerina language.
+      workflows: [Package Discovery]
     - id: integration-engineer
       name: Integration Engineer
-      description: Engineer building enterprise integrations using Ballerina language packages
-      workflows: [Package Registry]
+      description: Engineer assembling enterprise integrations from published connectors and triggers.
+      workflows: [Package Discovery, Integration Surface Discovery]
+    - id: coding-agent
+      name: Coding Agent
+      description: >-
+        An AI agent writing Ballerina code, reaching the same registry through the first-party
+        `ballerina-library` MCP server's get_library tool.
+      workflows: [Package Discovery]
 
   domains:
     - name: Package Management
-      description: Discovery and retrieval of Ballerina language packages
-      resources: [packages]
-      workflows: [Package Registry]
-
-  namespaces:
-    - namespace: ballerina-central
-      type: consumed
-    - namespace: ballerina-registry-api
-      type: rest-exposed
-      port: 8080
-    - namespace: ballerina-registry-mcp
-      type: mcp-exposed
-      port: 9080
+      description: Discovery, version resolution and documentation of Ballerina packages.
+      resources: [packages, docs]
+      workflows: [Package Discovery]
+    - name: Integration Catalog
+      description: Discovery of the connector and trigger surface published to Central.
+      resources: [connectors, triggers]
+      workflows: [Integration Surface Discovery]
 
   binds:
-    - name: BALLERINA_TOKEN
-      description: Ballerina Central API access token
-      workflows: [Package Registry]
+    - name: BALLERINA_CENTRAL_ACCESS_TOKEN
+      description: Environment variable form of the Central access token, used for publishing.
+      workflows: []
 
 crossReference:
   - resource: packages
-    operations: [searchPackages, getPackage, getPackageVersion]
-    workflows: [Package Registry]
-    personas: [Ballerina Developer, Integration Engineer]
+    operations: [searchPackages, fullTextSearchPackages, listPackageVersions]
+    workflows: [Package Discovery]
+    personas: [Ballerina Developer, Integration Engineer, Coding Agent]
+  - resource: connectors
+    operations: [searchConnectors]
+    workflows: [Integration Surface Discovery]
+    personas: [Integration Engineer]
+  - resource: triggers
+    operations: [searchTriggers]
+    workflows: [Integration Surface Discovery]
+    personas: [Integration Engineer]
+  - resource: docs
+    operations: [getPackageApiDocs]
+    workflows: [Package Discovery]
+    personas: [Ballerina Developer, Coding Agent]

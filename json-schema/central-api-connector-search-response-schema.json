@@ -2,13 +2,13 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-connector-search-response-schema.json",
   "title": "ConnectorSearchResponse",
-  "description": "ConnectorSearchResponse schema from Ballerina Central API",
+  "description": "ConnectorSearchResponse as returned by the Ballerina Central API (probed 2026-09-04).",
   "type": "object",
   "properties": {
     "connectors": {
       "type": "array",
       "items": {
-        "$ref": "#/components/schemas/ConnectorSummary"
+        "$ref": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-connector-schema.json"
       }
     },
     "count": {

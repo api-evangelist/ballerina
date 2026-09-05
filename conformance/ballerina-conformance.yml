@@ -1,0 +1,93 @@
+generated: '2026-09-04'
+method: derived
+source: >-
+  openapi/_original/ballerina-central-api.yml (probed 2026-09-04),
+  https://ballerina.io/security-policy/, and the observed error/pagination behaviour of
+  https://api.central.ballerina.io
+provider: Ballerina
+providerId: ballerina
+description: >-
+  Cross-cutting standards conformance for the Ballerina Central API. Recorded honestly: this is
+  a small read-only registry API and it conforms to very little. Every `conforms: false` below
+  is a checked absence with the evidence that established it, not an unchecked assumption. Note
+  the asymmetry that makes Ballerina interesting in this catalog — the PRODUCT is a
+  standards-fluent code generator (OpenAPI, AsyncAPI, GraphQL, gRPC, WSDL, EDI, FHIR), while the
+  API the company itself operates declares no standard at all.
+conformance:
+  - id: openapi
+    conforms: false
+    evidence: >-
+      No OpenAPI, Swagger or api-docs document is served on api.central.ballerina.io — /openapi.json,
+      /openapi.yaml, /swagger.json, /api-docs and /docs all returned 404 on 2026-09-04. The
+      contract in this repo was written from probes, by API Evangelist, not by Ballerina.
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      No oauth2 securityScheme, no /.well-known/oauth-authorization-server on any host (404 or
+      SPA shell, 2026-09-04). Publishing uses a static Central access token, not an OAuth flow.
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration returned 404 on ballerina.io and api.central.ballerina.io.
+  - id: rfc9457
+    conforms: false
+    evidence: >-
+      Errors are plain application/json in three different shapes, none of them problem+json.
+      See errors/ballerina-problem-types.yml.
+  - id: rfc8594
+    conforms: false
+    evidence: No Deprecation or Sunset response header observed on any probed response.
+  - id: rfc9116
+    conforms: false
+    evidence: >-
+      /.well-known/security.txt returned 404 on ballerina.io and api.central.ballerina.io. A
+      security policy IS published at https://ballerina.io/security-policy/ with a contact
+      address and PGP fingerprint — it is simply not served at the RFC 9116 location.
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Offset/limit pagination with count/offset/limit echoed in every list response — verified
+      on GET /2.0/registry/packages?org=ballerina&limit=2 (200, count=84).
+  - id: idempotency
+    conforms: false
+    evidence: No mutating HTTP operation exists, so no Idempotency-Key mechanism is applicable.
+  - id: 'json:api'
+    conforms: false
+    evidence: Bespoke envelopes (packages/connectors/triggers + count/offset/limit); no JSON:API document structure.
+  - id: odata
+    conforms: false
+    evidence: No $metadata surface; no OData query options accepted.
+  - id: cors
+    conforms: unknown
+    evidence: Not established by these probes.
+  - id: https-only
+    conforms: true
+    evidence: >-
+      TLS 1.3 with HSTS (max-age=31536000; includeSubDomains) on api.central.ballerina.io —
+      see security/ballerina-domain-security.yml.
+  - id: semver
+    conforms: partial
+    evidence: >-
+      Published PACKAGES are semantically versioned and `bal semver` validates compatibility
+      against Central. The distribution's own 2201.MINOR.PATCH scheme is not semver, and the
+      API is versioned only by the /2.0/ path segment.
+domain_standard:
+  applicable: false
+  market: package registry / language ecosystem
+  note: >-
+    There is no dominant machine-readable interchange standard for language package registries
+    that Ballerina Central could declare — no equivalent of SCIM, FHIR or ISO 20022 exists for
+    this market. Recorded as not applicable rather than as a failure, per the reward-only rule.
+  adjacent_observation: >-
+    Ballerina's PRODUCT does implement a long list of domain standards as first-party code
+    generators: OpenAPI, AsyncAPI, GraphQL, gRPC/Protobuf, WSDL/SOAP, EDI (X12/EDIFACT),
+    XSD and HL7 FHIR via the health tool. That is standards conformance of the language, not of
+    the API this record scores, and it is deliberately not counted as domain_standard_conformance
+    here — but it is the most standards-literate toolchain in this part of the catalog.
+compliance:
+  certifications_published: false
+  trust_center: false
+  note: >-
+    No SOC 2 / ISO 27001 / PCI / HIPAA / FedRAMP claim is published for Ballerina or Ballerina
+    Central. Ballerina is an Apache-2.0 open-source project operated by WSO2; the compliance
+    posture that exists is WSO2's, published under WSO2's own brand and not asserted for this
+    service. No Compliance pointer is emitted.

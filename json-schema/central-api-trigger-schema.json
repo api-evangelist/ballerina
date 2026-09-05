@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-trigger-schema.json",
+  "title": "Trigger",
+  "description": "An event trigger (listener) declared by a published package.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "moduleName": {
+      "type": "string"
+    },
+    "serviceTypes": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object"
+      }
+    },
+    "listenerParams": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object"
+      }
+    },
+    "displayAnnotation": {
+      "type": "object"
+    },
+    "package": {
+      "$ref": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-package-schema.json"
+    }
+  }
+}

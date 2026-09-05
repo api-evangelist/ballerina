@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-package-full-text-search-response-schema.json",
+  "title": "PackageFullTextSearchResponse",
+  "description": "PackageFullTextSearchResponse as returned by the Ballerina Central API (probed 2026-09-04).",
+  "allOf": [
+    {
+      "$ref": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-package-search-response-schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "suggestions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "highlighting": {
+          "type": "object",
+          "description": "Map of package id to the matched fragments per field.",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

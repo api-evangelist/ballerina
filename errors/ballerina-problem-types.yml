@@ -1,0 +1,121 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  live error responses from https://api.central.ballerina.io, provoked 2026-09-04, plus the
+  error contract of the first-party ballerina-library MCP server
+provider: Ballerina
+providerId: ballerina
+description: >-
+  Ballerina Central publishes no error reference, so this catalog was produced by provoking the
+  errors and reading what came back. There is no RFC 9457 problem+json here; the API returns
+  three distinct JSON envelopes depending on which layer rejects the request, and an agent
+  parsing only one of them will fail to read the other two. That inconsistency is the finding.
+format: json
+rfc9457: false
+content_type: application/json
+envelopes:
+  - id: query-param-cast
+    layer: HTTP framework
+    status: 400
+    fields: [timestamp, status, reason, message, path, method]
+    example:
+      timestamp: '2026-09-04T23:38:16.879730736Z'
+      status: 400
+      reason: Bad Request
+      message: "error in casting query param : 'limit'"
+      path: /packages?q=http&limit=abc
+      method: GET
+    evidence:
+      url: https://api.central.ballerina.io/2.0/registry/packages?q=http&limit=abc
+      status: 400
+    note: >-
+      Note that `path` is reported as /packages, not /2.0/registry/packages — the envelope
+      leaks the internal route, so it cannot be used to reconstruct the public URL.
+  - id: search-validation
+    layer: registry search service
+    status: 400
+    fields: [message]
+    example:
+      message: 'invalid search request received. invalid/unsupported sort field '
+    evidence:
+      url: https://api.central.ballerina.io/2.0/registry/packages?q=http&sort=relevance
+      status: 400
+  - id: resource-not-found
+    layer: registry service
+    status: 404
+    fields: [message]
+    example:
+      message: 'package not found: ballerina/nosuchpkg:*_any'
+    evidence:
+      url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/nosuchpkg
+      status: 404
+  - id: gateway-not-found
+    layer: API gateway
+    status: 404
+    fields: [code, message, description]
+    example:
+      code: '404'
+      message: Not Found
+      description: The requested resource is not available.
+    evidence:
+      url: https://api.central.ballerina.io/2.0/registry/organizations
+      status: 404
+  - id: unrouted
+    layer: nginx
+    status: 404
+    fields: []
+    content_type: text/html
+    example: '<html><head><title>404 Not Found</title></head>…'
+    evidence:
+      url: https://api.central.ballerina.io/2.0/packages
+      status: 404
+    note: >-
+      Anything outside /2.0/registry/* and /2.0/docs/* falls through to nginx and returns HTML,
+      not JSON. A client that assumes a JSON body on every 4xx will throw a parse error here.
+problems:
+  - type: invalid-parameter
+    title: Invalid query parameter
+    status: 400
+    envelope: query-param-cast
+    operations: [searchPackages, fullTextSearchPackages, searchConnectors, searchTriggers]
+    remediation: Send `limit` and `offset` as integers and `readme` as a boolean.
+  - type: unsupported-sort
+    title: Unsupported sort field
+    status: 400
+    envelope: search-validation
+    operations: [searchPackages, fullTextSearchPackages]
+    remediation: >-
+      Omit `sort`. No accepted value could be established from the public surface; relevance,
+      pullCount,DESC and createdDate,DESC were all rejected on 2026-09-04.
+  - type: package-not-found
+    title: Package not found
+    status: 404
+    envelope: resource-not-found
+    operations: [listPackageVersions]
+    remediation: Verify the org/name pair; the message echoes the coordinate that was resolved.
+  - type: module-not-resolved
+    title: Module cannot be resolved
+    status: 404
+    envelope: resource-not-found
+    operations: [getPackageApiDocs]
+    example_message: module cannot be resolved as it may not exist.
+    remediation: >-
+      Resolve an exact published version with listPackageVersions first; the docs endpoint does
+      not accept `latest`.
+  - type: unknown-resource
+    title: No such registry resource
+    status: 404
+    envelope: gateway-not-found
+    operations: []
+    remediation: >-
+      Check the path against the probed surface. There is no organizations resource on this API,
+      despite Central having organization pages on the web front end.
+mcp_errors:
+  server: ballerina-library
+  shape: '{ isError: true, content: [{ type: "text", text: "<JSON with an error code>" }] }'
+  source: https://github.com/ballerina-platform/skills/blob/main/mcp/server.js
+  codes_observed_in_source: [PackageNotFoundError, UpstreamError]
+gaps:
+  - No published error reference for the Central API.
+  - Three JSON envelopes plus an HTML fall-through for the same 4xx family.
+  - No machine-readable error code — only prose in `message`.

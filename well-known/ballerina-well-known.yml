@@ -1,0 +1,151 @@
+generated: '2026-09-04'
+method: probed
+source: live GET probes of the named /.well-known paths on every host this record knows
+provider: Ballerina
+providerId: ballerina
+description: >-
+  Probe of the standard discovery documents across every Ballerina host — the site, the docs
+  and registry front ends, the API host and the blog. Nothing was found. Two hosts
+  (central.ballerina.io and lib.ballerina.io) are single-page applications that answer HTTP 200
+  with the same HTML shell for every /.well-known/* path; those are recorded as misses, not
+  hits, and no WellKnown or SecurityTxt pointer is emitted for this provider.
+hosts:
+  - host: ballerina.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+  - host: api.central.ballerina.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+  - host: central.ballerina.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: null
+        note: SPA catch-all returned the Ballerina Central HTML shell, not a document. Treated as a miss.
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell. Treated as a miss.
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell. Treated as a miss.
+      - path: /.well-known/api-catalog
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell. Treated as a miss.
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell. Treated as a miss.
+      - path: /.well-known/agent-card.json
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell — not an AgentCard. Treated as a miss.
+      - path: /.well-known/agent.json
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell — not an AgentCard. Treated as a miss.
+  - host: lib.ballerina.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell. Treated as a miss.
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell. Treated as a miss.
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell. Treated as a miss.
+      - path: /.well-known/api-catalog
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell. Treated as a miss.
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell. Treated as a miss.
+      - path: /.well-known/agent-card.json
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell — not an AgentCard. Treated as a miss.
+      - path: /.well-known/agent.json
+        status: 200
+        file: null
+        note: SPA catch-all HTML shell — not an AgentCard. Treated as a miss.
+  - host: blog.ballerina.io
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+summary:
+  hosts_probed: 5
+  paths_probed: 35
+  documents_found: 0
+  security_txt: false
+  agent_card: false
+  note: >-
+    Ballerina does publish a security policy with a reporting address and a PGP fingerprint —
+    at https://ballerina.io/security-policy/ — it is simply not mirrored to
+    /.well-known/security.txt. Serving that one file would make the policy machine-discoverable.

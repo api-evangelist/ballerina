@@ -1,0 +1,57 @@
+{
+  "triggers": [
+    {
+      "id": 190,
+      "name": "Trigger",
+      "displayName": "GitHub",
+      "moduleName": "trigger.github",
+      "serviceTypes": null,
+      "listenerParams": null,
+      "displayAnnotation": {
+        "label": "GitHub",
+        "iconPath": "docs/icon.png"
+      },
+      "package": {
+        "id": 49948,
+        "organization": "ballerinax",
+        "name": "trigger.github",
+        "version": "0.11.0",
+        "platform": "any",
+        "languageSpecificationVersion": "2024R1",
+        "isDeprecated": false,
+        "deprecateMessage": "",
+        "URL": "/ballerinax/trigger.github/0.11.0",
+        "balaVersion": "3.0.0",
+        "balaURL": "https://fileserver.central.ballerina.io/2.0/ballerinax/trigger.github/0.11.0/ballerinax-trigger.github-any-0.11.0.bala?Expires=1788565364&Signature=Z2CaZqXjkPBISacsFJuv6TFPF9WdguscTyaw2Jjgmb798tgg~2WJ6ogqx6vq-GrLC0eqpBC9SlHUcdxggr6eTnGua576xMgV12f43WD~BCxaioR7FqNq6bOM~m64qMAEF5~pEn1jjdd3YjLkYH9ksKbg3BaF22orjs0LU2Em9nA~hw8HUJI2UmzAPU2iY5O9LrhxLbV83oMi5Rkbj15sDtJW7jG9PjniJalUd~DpshiPLad4fbJ3OG-XKHVqxi42ZpiIlv5QjvEih4DnxYWO-4KBHa5oke5ny0FaNaIhGsWs-NH1PgjAZhLSNGFudYocbXVRuFtOArvpBA8N4LkxkA__&Key-Pair-Id=K27IQ7NPTKLKDU",
+        "digest": "sha-256=efd789f47e149ca1085dba7e16cd7c8b8740331b1f6cb7f73709cb565e279bfc",
+        "summary": "The GitHub Trigger module allows you to listen to following events occur in GitHub. ",
+        "readme": "## Overview\nThe GitHub Trigger module allows you to listen to following events occur in GitHub. \n- `Ping`, `Fork`, `Push`, `Create`, `Watch`\n- `Release`, `Issue`, `Label`, `Milestone`\n- `Pull Request`, `Pull Request Review`, `Pull Request Review Comment`\n\nThis module supports [GitHub API](https://docs.github.com/en/graphql) v4 version and only allows to perform functions behalf of the currently logged in user.\n\n\n## Prerequisites\nBefore using this trigger in your Ballerina application, complete the following:\n\n* Create github account\n\n### Compatibility\n\n|                               | Version                       |\n|-------------------------------|-------------------------------|\n| Ballerina Language            | Ballerina Swan Lake 2201.11.0 |\n\n## Quickstart\nTo use the GitHub Trigger in your Ballerina application, update the  .bal file as follows:\n\n### Step 1: Import the GitHub Webhook Ballerina library\nFirst, import the ballerinax/github.webhook and ballerina/websub modules into the Ballerina project as follows.\n\n```ballerina\n    import ballerinax/trigger.github;\n```\n\n### Step 2: Initialize the GitHub Webhook Listener\nInitialize the Trigger by providing the listener config & port number/httpListener object.\n\n```ballerina\n    configurable github:ListenerConfig userInput = {\n        secret: \"xxxxxx\"\n    };\n    listener github:Listener webhookListener = new (userInput, 8090);\n```\n\nListener config is not mandatory If you haven't setup secret in webhook page we can omit it and initialize as follows.\n\n```ballerina\n    listener github:Listener webhookListener = new (listenOn = 8090);\n```\n\nIf you don't provide a port it will use the default port which is 8090.\n\n```ballerina\n    listener github:Listener webhookListener = new ();\n```\n\n### Step 3: Use the correct service type to implement the service\nUse the correct service type for the corresponding channel when implementing the service.\nEx :- If you need to listen to Issue events you may use IssuesService service type as follows.\n\n```ballerina\nservice github:IssuesService on githubListener {\n    \n    remote function onAssigned(github:IssuesEvent payload) returns error? {\n        return;\n    }\n\n    remote function onClosed(github:IssuesEvent payload) returns error? {\n        return;\n    } \n\n    remote function onLabeled(github:IssuesEvent payload) returns error? {\n        return;\n    }\n\n    remote function onOpened(github:IssuesEvent payload) returns error? {\n        return;\n    }\n\n    remote function onReopened(github:IssuesEvent payload) returns error? {\n        return;\n    }\n\n    remote function onUnassigned(github:IssuesEvent payload) returns error? {\n        return;\n    }\n\n    remote function onUnlabeled(github:IssuesEvent payload) returns error? {\n        return;\n    }\n}\n```\n\n### Step 4: Provide remote functions corresponding to the events which you are interested on\nThe remote functions can be provided as follows.\n\n```ballerina\n    remote function onPush(github:PushEvent payload) returns error? {\n        log:printInfo(\"Received push-event-message \", eventPayload = payload);\n    }\n```\n### Step 5: Run the service \nUse `bal run` command to compile and run the Ballerina program.  \n\n### Step 5: Configure Github webhook with the URL of the service\n- Create a webhook in github following [github documentation](https://docs.github.com/en/developers/webhooks-and-events/webhooks/creating-webhooks)\n- Provide the public URL of the started service as the Payload URL (Add a trailing / to the URL if its not present). \n- Provide application/json for the content type. \n- Support for secret field will be available in the next github trigger releases. \n- Select the list of events you need to subscribe to and click on Add webhook.\n\nThis will add a subscription to github event api and the ballerina service functions will be triggerred once an event is fired.\n\n## Report issues\n\nTo report bugs, request new features, start new discussions, etc., go to the [Ballerina Library repository](https://github.com/ballerina-platform/ballerina-library)\n\n## Useful links\n\n- For more information go to the [`trigger.github` package](https://central.ballerina.io/ballerinax/trigger.github/latest).\n- For example demonstrations of the usage, go to [Ballerina By Examples](https://ballerina.io/learn/by-example/).\n- Chat live with us via our [Discord server](https://discord.gg/ballerinalang).\n- Post all technical questions on Stack Overflow with the [#ballerina](https://stackoverflow.com/questions/tagged/ballerina) tag.",
+        "template": false,
+        "licenses": [
+          "Apache-2.0"
+        ],
+        "authors": [
+          "Ballerina"
+        ],
+        "sourceCodeLocation": "https://github.com/ballerina-platform/asyncapi-triggers",
+        "keywords": [
+          "Communication/Team Chat",
+          "Cost/Freemium",
+          "Trigger"
+        ],
+        "ballerinaVersion": "2201.13.0",
+        "icon": "https://bcentral-packageicons.azureedge.net/images/ballerinax_trigger.github_0.11.0.png",
+        "ownerUUID": "b5a9e54d-8ade-47a1-8abc-6bc46e89069d",
+        "createdDate": 1773383781000,
+        "pullCount": 27171,
+        "visibility": "public",
+        "modules": [],
+        "balToolId": "",
+        "graalvmCompatible": "Unknown"
+      }
+    }
+  ],
+  "count": 16,
+  "offset": 0,
+  "limit": 15
+}

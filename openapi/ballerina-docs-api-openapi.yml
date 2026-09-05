@@ -1,0 +1,172 @@
+openapi: 3.1.0
+info:
+  title: Ballerina Docs API
+  description: The public read API of Ballerina Central — the package registry for the Ballerina programming
+    language, operated by WSO2. The surface documented here was established by calling every operation
+    anonymously on 2026-09-04 and by reading WSO2's own first-party clients of this API (ballerina-platform/skills
+    mcp/src/central-client.js and ballerina-platform/ballerina-library connector-doc-generator/modules/central/central.bal),
+    which name the same paths. Every path, parameter, response shape and error envelope below was observed
+    on a live call; nothing is inferred from marketing copy.
+  version: '2.0'
+  contact:
+    name: WSO2 / Ballerina
+    url: https://ballerina.io
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+x-provenance:
+  method: probed
+  probed: '2026-09-04'
+  probe_transcript:
+  - url: https://api.central.ballerina.io/2.0/registry/packages?org=ballerina&limit=2&readme=false
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/search-packages?q=http&limit=2
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/http
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/nosuchpkg
+    status: 404
+  - url: https://api.central.ballerina.io/2.0/registry/connectors?q=salesforce&limit=1
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/triggers?q=github&limit=1
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/1.7.0
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/9.9.9
+    status: 404
+  first_party_sources:
+  - https://github.com/ballerina-platform/skills/blob/main/mcp/src/central-client.js
+  - https://github.com/ballerina-platform/ballerina-library/blob/main/connector-doc-generator/modules/central/central.bal
+  supersedes: An earlier scaffold in this repo described /2.0/packages, /2.0/connectors and /2.0/organizations/{org}.
+    Every one of those paths returns HTTP 404 on the live host; they were replaced by the probed surface
+    below.
+servers:
+- url: https://api.central.ballerina.io
+  description: Ballerina Central API (public, unauthenticated for read operations)
+tags:
+- name: Docs
+  description: Retrieve the generated API documentation model for a published package version.
+paths:
+  /2.0/docs/{orgName}/{packageName}/{version}:
+    get:
+      operationId: getPackageApiDocs
+      summary: Get the generated API documentation model for a package version
+      description: Returns the API documentation model rendered at lib.ballerina.io for one published
+        package version — every module, client, function, record, type, constant, error, listener, annotation
+        and enum. Payloads scale with the package (ballerina/random 1.7.0 returned ~7 KB; ballerina/http
+        2.17.0 returned ~3.2 MB).
+      tags:
+      - Docs
+      parameters:
+      - name: orgName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: packageName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: path
+        required: true
+        description: An exact published version. `latest` is not accepted — resolve it first via listPackageVersions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The API documentation model.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiDocs'
+        '404':
+          description: The org/name/version tuple is not published.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundMessage'
+              examples:
+                missing:
+                  value:
+                    message: module cannot be resolved as it may not exist.
+components:
+  schemas:
+    ApiDocs:
+      type: object
+      description: The generated documentation model for one package version.
+      properties:
+        apiDocsVersion:
+          type: string
+        docsData:
+          type: object
+          properties:
+            releaseVersion:
+              type: string
+            langLibs:
+              type: array
+              items:
+                type: object
+            modules:
+              type: array
+              items:
+                type: object
+        searchData:
+          type: object
+          description: Flat search indexes over the documented symbols.
+          properties:
+            modules:
+              type: array
+              items:
+                type: object
+            classes:
+              type: array
+              items:
+                type: object
+            functions:
+              type: array
+              items:
+                type: object
+            records:
+              type: array
+              items:
+                type: object
+            constants:
+              type: array
+              items:
+                type: object
+            errors:
+              type: array
+              items:
+                type: object
+            types:
+              type: array
+              items:
+                type: object
+            clients:
+              type: array
+              items:
+                type: object
+            listeners:
+              type: array
+              items:
+                type: object
+            annotations:
+              type: array
+              items:
+                type: object
+            objectTypes:
+              type: array
+              items:
+                type: object
+            enums:
+              type: array
+              items:
+                type: object
+    NotFoundMessage:
+      type: object
+      description: The 404 envelope returned by registry and docs lookups.
+      properties:
+        message:
+          type: string

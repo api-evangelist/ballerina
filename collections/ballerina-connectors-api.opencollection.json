@@ -1,8 +1,8 @@
 {
   "opencollection": "1.0.0",
   "info": {
-    "name": "Ballerina Central Connectors API",
-    "version": "1.0.0"
+    "name": "Ballerina Connectors API",
+    "version": "2.0"
   },
   "items": [
     {
@@ -18,63 +18,31 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://api.central.ballerina.io/2.0/connectors",
+            "url": "https://api.central.ballerina.io/2.0/registry/connectors",
             "params": [
               {
                 "name": "q",
                 "value": "",
                 "type": "query",
-                "description": "Search query string"
-              },
-              {
-                "name": "offset",
-                "value": "",
-                "type": "query"
+                "description": ""
               },
               {
                 "name": "limit",
                 "value": "",
-                "type": "query"
+                "type": "query",
+                "description": ""
               },
               {
-                "name": "sort",
+                "name": "offset",
                 "value": "",
-                "type": "query"
+                "type": "query",
+                "description": ""
               }
             ]
           },
-          "docs": "Search for Ballerina connectors (client libraries for external services)."
-        },
-        {
-          "info": {
-            "name": "Get connector details",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.central.ballerina.io/2.0/connectors/:org/:name/:version",
-            "params": [
-              {
-                "name": "org",
-                "value": "",
-                "type": "path"
-              },
-              {
-                "name": "name",
-                "value": "",
-                "type": "path"
-              },
-              {
-                "name": "version",
-                "value": "",
-                "type": "path"
-              }
-            ]
-          },
-          "docs": "Returns details for a specific connector version."
+          "docs": "Search the connector clients declared by published packages. Each hit carries the client name, its module, and the full package record it belongs to."
         }
       ]
     }
-  ],
-  "bundled": true
+  ]
 }

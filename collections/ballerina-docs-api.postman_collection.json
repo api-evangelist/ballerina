@@ -1,0 +1,74 @@
+{
+  "item": [
+    {
+      "id": "2123c2d9-4400-47fd-a956-2b7d85c9322c",
+      "name": "Docs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "baf44d97-13de-4115-b96a-683b6ebc020c",
+          "name": "Get the generated API documentation model for a package version",
+          "request": {
+            "name": "Get the generated API documentation model for a package version",
+            "method": "GET",
+            "description": {
+              "content": "Returns the API documentation model rendered at lib.ballerina.io for one published package version — every module, client, function, record, type, constant, error, listener, annotation and enum. Payloads scale with the package (ballerina/random 1.7.0 returned ~7 KB; ballerina/http 2.17.0 returned ~3.2 MB).",
+              "type": "text/plain"
+            },
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "2.0",
+                "docs",
+                "{orgName}",
+                "{packageName}",
+                "{version}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "key": "orgName",
+                  "value": "<string>",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "packageName",
+                  "value": "<string>",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "An exact published version. `latest` is not accepted — resolve it first via listPackageVersions."
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "info": {
+    "_postman_id": "feadd6b8-539e-4e96-a4c5-d8923075dcb1",
+    "name": "Ballerina Docs API",
+    "description": {
+      "content": "The public read API of Ballerina Central — the package registry for the Ballerina programming language, operated by WSO2. The surface documented here was established by calling every operation anonymously on 2026-09-04 and by reading WSO2's own first-party clients of this API (ballerina-platform/skills mcp/src/central-client.js and ballerina-platform/ballerina-library connector-doc-generator/modules/central/central.bal), which name the same paths. Every path, parameter, response shape and error envelope below was observed on a live call; nothing is inferred from marketing copy.",
+      "type": "text/plain"
+    },
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.central.ballerina.io"
+    }
+  ]
+}

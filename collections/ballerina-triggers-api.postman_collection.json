@@ -1,0 +1,72 @@
+{
+  "item": [
+    {
+      "id": "8df18fe6-373d-4343-ac9c-1182d24390ad",
+      "name": "Triggers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eed3ac5d-32b2-4914-8aee-65618c9a2928",
+          "name": "Search event triggers",
+          "request": {
+            "name": "Search event triggers",
+            "method": "GET",
+            "description": {
+              "content": "Search the event triggers (listeners) declared by published packages — the inbound/event half of the registry, as opposed to the outbound connector clients.",
+              "type": "text/plain"
+            },
+            "url": {
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "2.0",
+                "registry",
+                "triggers"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<string>",
+                  "description": ""
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": ""
+                }
+              ],
+              "variable": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "info": {
+    "_postman_id": "2d9ea752-0f62-472e-9e79-7d0edb361700",
+    "name": "Ballerina Triggers API",
+    "description": {
+      "content": "The public read API of Ballerina Central — the package registry for the Ballerina programming language, operated by WSO2. The surface documented here was established by calling every operation anonymously on 2026-09-04 and by reading WSO2's own first-party clients of this API (ballerina-platform/skills mcp/src/central-client.js and ballerina-platform/ballerina-library connector-doc-generator/modules/central/central.bal), which name the same paths. Every path, parameter, response shape and error envelope below was observed on a live call; nothing is inferred from marketing copy.",
+      "type": "text/plain"
+    },
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.central.ballerina.io"
+    }
+  ]
+}

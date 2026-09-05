@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-structure/central-api-not-found-message-structure.json",
+  "name": "NotFoundMessage",
+  "description": "The 404 envelope returned by registry and docs lookups.",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    }
+  }
+}

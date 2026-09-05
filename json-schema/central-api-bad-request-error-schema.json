@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-bad-request-error-schema.json",
+  "title": "BadRequestError",
+  "description": "Two 400 envelopes were observed. A query-parameter cast failure returns the timestamp/status/reason/message/path/method shape; a search validation failure returns a bare `message`.",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "integer"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+generated: '2026-09-04'
+method: derived
+source: mcp/ballerina-mcp.yml + openapi/_original/ballerina-central-api.yml
+provider: Ballerina
+providerId: ballerina
+description: >-
+  Binding between the one tool the first-party `ballerina-library` MCP server exposes and the
+  Ballerina Central REST operations it actually calls. The binding is high-confidence because
+  the server's own source (mcp/src/central-client.js) names the endpoints in comments and in
+  code, rather than being matched by name similarity.
+surfaces:
+  openapi: openapi/_original/ballerina-central-api.yml
+  graphql: null
+  mcp:
+    server: ballerina-library
+    transport: stdio
+    gated: false
+    note: Local stdio server; no hosted endpoint to introspect, so tools were read from source.
+crosswalk:
+  - tool: get_library
+    category: discovery
+    rest:
+      - fullTextSearchPackages
+      - listPackageVersions
+      - getPackageApiDocs
+    binding: composite
+    confidence: high
+    note: >-
+      One tool call fans out to several REST calls. Version resolution reads
+      GET /2.0/registry/packages?org=<org>&limit=1000&readme=false and filters client-side to
+      the exact org/name (the source's resolveLatestVersion), which is the searchPackages
+      operation used as a lookup; when a version is supplied or found in Dependencies.toml it
+      is used directly. The documentation model then comes from
+      GET /2.0/docs/{orgName}/{packageName}/{version} (getPackageApiDocs) and is compressed to
+      a syntax string by the server before it reaches the agent.
+mcp_only: []
+rest_only:
+  - operation: searchConnectors
+    reason: >-
+      The connector index (GET /2.0/registry/connectors) has no MCP tool; an agent can only
+      reach connectors by first knowing the package that declares them.
+  - operation: searchTriggers
+    reason: The trigger index (GET /2.0/registry/triggers) has no MCP tool.
+  - operation: searchPackages
+    reason: >-
+      Exposed to the server internally for version resolution, but not surfaced to agents as a
+      searchable tool — an agent cannot browse Central through this MCP server, only fetch a
+      library it can already name.
+coverage:
+  mcp_tools: 1
+  rest_operations: 6
+  bound_operations: 3
+  mcp_only: 0
+  rest_only: 3

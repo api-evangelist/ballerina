@@ -2,566 +2,478 @@ openapi: 3.1.0
 info:
   title: Ballerina Central API
   description: >-
-    Ballerina Central REST API for discovering and managing Ballerina packages,
-    organizations, connectors, and modules. Ballerina Central is the package
-    registry for the Ballerina programming language.
-  version: 1.0.0
+    The public read API of Ballerina Central — the package registry for the
+    Ballerina programming language, operated by WSO2. The surface documented
+    here was established by calling every operation anonymously on
+    2026-09-04 and by reading WSO2's own first-party clients of this API
+    (ballerina-platform/skills mcp/src/central-client.js and
+    ballerina-platform/ballerina-library
+    connector-doc-generator/modules/central/central.bal), which name the same
+    paths. Every path, parameter, response shape and error envelope below was
+    observed on a live call; nothing is inferred from marketing copy.
+  version: '2.0'
   contact:
     name: WSO2 / Ballerina
     url: https://ballerina.io
   license:
-    name: Apache 2.0
+    name: Apache-2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
+x-provenance:
+  method: probed
+  probed: '2026-09-04'
+  probe_transcript:
+    - url: https://api.central.ballerina.io/2.0/registry/packages?org=ballerina&limit=2&readme=false
+      status: 200
+    - url: https://api.central.ballerina.io/2.0/registry/search-packages?q=http&limit=2
+      status: 200
+    - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/http
+      status: 200
+    - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/nosuchpkg
+      status: 404
+    - url: https://api.central.ballerina.io/2.0/registry/connectors?q=salesforce&limit=1
+      status: 200
+    - url: https://api.central.ballerina.io/2.0/registry/triggers?q=github&limit=1
+      status: 200
+    - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/1.7.0
+      status: 200
+    - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/9.9.9
+      status: 404
+  first_party_sources:
+    - https://github.com/ballerina-platform/skills/blob/main/mcp/src/central-client.js
+    - https://github.com/ballerina-platform/ballerina-library/blob/main/connector-doc-generator/modules/central/central.bal
+  supersedes: >-
+    An earlier scaffold in this repo described /2.0/packages, /2.0/connectors and
+    /2.0/organizations/{org}. Every one of those paths returns HTTP 404 on the
+    live host; they were replaced by the probed surface below.
 servers:
   - url: https://api.central.ballerina.io
-    description: Ballerina Central API
+    description: Ballerina Central API (public, unauthenticated for read operations)
+tags:
+  - name: Packages
+    description: Search and resolve Ballerina packages published to Ballerina Central.
+  - name: Connectors
+    description: Search the connector clients contained in published packages.
+  - name: Triggers
+    description: Search the event triggers/listeners contained in published packages.
+  - name: Docs
+    description: Retrieve the generated API documentation model for a published package version.
 paths:
-  /2.0/packages:
+  /2.0/registry/packages:
     get:
       operationId: searchPackages
-      summary: Search packages
+      summary: Search or list packages
       description: >-
-        Search for Ballerina packages in Ballerina Central. Supports keyword
-        search, filtering by organization, and pagination.
+        List packages in Ballerina Central, optionally filtered by a free-text
+        query or by owning organization. Paginated with offset/limit; the
+        response echoes count/offset/limit.
+      tags: [Packages]
       parameters:
         - name: q
           in: query
-          description: Search query string
-          schema:
-            type: string
+          required: false
+          description: Free-text query matched against package name, summary and keywords.
+          schema: { type: string }
         - name: org
           in: query
-          description: Filter by organization name
-          schema:
-            type: string
-        - name: offset
-          in: query
-          description: Pagination offset
-          schema:
-            type: integer
-            default: 0
+          required: false
+          description: Restrict results to packages owned by this organization (e.g. `ballerina`, `ballerinax`).
+          schema: { type: string }
         - name: limit
           in: query
-          description: Maximum number of results
-          schema:
-            type: integer
-            default: 10
+          required: false
+          description: Maximum packages to return. Observed accepted up to 1000 (WSO2's own MCP client sends limit=1000).
+          schema: { type: integer, minimum: 1 }
+        - name: offset
+          in: query
+          required: false
+          description: Zero-based pagination offset.
+          schema: { type: integer, minimum: 0, default: 0 }
+        - name: readme
+          in: query
+          required: false
+          description: When `false`, the large `readme` field is omitted from each package.
+          schema: { type: boolean }
         - name: sort
           in: query
-          description: Sort order
-          schema:
-            type: string
-            enum:
-              - relevance
-              - created_date
-              - pull_count
+          required: false
+          description: >-
+            Accepted by the server but no sort field could be established from the
+            public surface — `relevance`, `pullCount,DESC` and `createdDate,DESC`
+            each returned HTTP 400 `invalid/unsupported sort field` when probed on
+            2026-09-04. Documented here because the parameter demonstrably exists,
+            not because a working value is known.
+          schema: { type: string }
       responses:
         '200':
-          description: List of matching packages
+          description: A page of packages.
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/PackageSearchResponse'
+              schema: { $ref: '#/components/schemas/PackageSearchResponse' }
         '400':
-          description: Bad request
-  /2.0/packages/{org}/{name}:
-    get:
-      operationId: getPackage
-      summary: Get package details
-      description: Returns metadata for a specific Ballerina package.
-      parameters:
-        - name: org
-          in: path
-          required: true
-          description: Organization name
-          schema:
-            type: string
-        - name: name
-          in: path
-          required: true
-          description: Package name
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Package details
+          description: Invalid query parameter (bad cast, or unsupported sort field).
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Package'
-        '404':
-          description: Package not found
-  /2.0/packages/{org}/{name}/{version}:
+              schema: { $ref: '#/components/schemas/BadRequestError' }
+  /2.0/registry/search-packages:
     get:
-      operationId: getPackageVersion
-      summary: Get package version details
-      description: Returns metadata for a specific version of a Ballerina package.
-      parameters:
-        - name: org
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: version
-          in: path
-          required: true
-          description: Package version (semver)
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Package version details
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PackageVersion'
-        '404':
-          description: Package version not found
-  /2.0/organizations/{org}:
-    get:
-      operationId: getOrganization
-      summary: Get organization details
-      description: Returns metadata for a Ballerina Central organization.
-      parameters:
-        - name: org
-          in: path
-          required: true
-          description: Organization name
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Organization details
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Organization'
-        '404':
-          description: Organization not found
-  /2.0/organizations/{org}/packages:
-    get:
-      operationId: getOrganizationPackages
-      summary: List organization packages
-      description: Returns packages belonging to a specific organization.
-      parameters:
-        - name: org
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: offset
-          in: query
-          schema:
-            type: integer
-            default: 0
-        - name: limit
-          in: query
-          schema:
-            type: integer
-            default: 10
-      responses:
-        '200':
-          description: List of organization packages
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PackageSearchResponse'
-  /2.0/connectors:
-    get:
-      operationId: searchConnectors
-      summary: Search connectors
+      operationId: fullTextSearchPackages
+      summary: Full-text package search
       description: >-
-        Search for Ballerina connectors (client libraries for external services).
+        Full-text search over published packages. Returns the same package page
+        as `/2.0/registry/packages` plus `suggestions` and a `highlighting` map
+        keyed by package id.
+      tags: [Packages]
       parameters:
         - name: q
           in: query
-          description: Search query string
-          schema:
-            type: string
-        - name: offset
-          in: query
-          schema:
-            type: integer
-            default: 0
+          required: true
+          description: Free-text search query.
+          schema: { type: string }
         - name: limit
           in: query
-          schema:
-            type: integer
-            default: 10
-        - name: sort
+          required: false
+          schema: { type: integer, minimum: 1 }
+        - name: offset
           in: query
-          schema:
-            type: string
-            enum:
-              - relevance
-              - created_date
-              - pull_count
+          required: false
+          schema: { type: integer, minimum: 0, default: 0 }
       responses:
         '200':
-          description: List of connectors
+          description: A page of matching packages with search metadata.
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/ConnectorSearchResponse'
-  /2.0/connectors/{org}/{name}/{version}:
-    get:
-      operationId: getConnector
-      summary: Get connector details
-      description: Returns details for a specific connector version.
-      parameters:
-        - name: org
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: version
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Connector details
+              schema: { $ref: '#/components/schemas/PackageFullTextSearchResponse' }
+        '400':
+          description: Invalid query parameter.
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Connector'
-        '404':
-          description: Connector not found
-  /2.0/packages/{org}/{name}/{version}/modules:
+              schema: { $ref: '#/components/schemas/BadRequestError' }
+  /2.0/registry/packages/{orgName}/{packageName}:
     get:
-      operationId: getPackageModules
-      summary: Get package modules
-      description: Returns the list of modules in a specific package version.
+      operationId: listPackageVersions
+      summary: List the published versions of a package
+      description: >-
+        Returns the versions published for `orgName/packageName`, newest first,
+        as a JSON array of version strings. This is the endpoint WSO2's own
+        tooling calls to resolve "latest".
+      tags: [Packages]
       parameters:
-        - name: org
+        - name: orgName
           in: path
           required: true
-          schema:
-            type: string
-        - name: name
+          description: Owning organization, e.g. `ballerina` or `ballerinax`.
+          schema: { type: string }
+        - name: packageName
           in: path
           required: true
-          schema:
-            type: string
-        - name: version
-          in: path
-          required: true
-          schema:
-            type: string
+          description: Package name, e.g. `http`.
+          schema: { type: string }
       responses:
         '200':
-          description: List of modules
+          description: Version strings, newest first.
           content:
             application/json:
               schema:
                 type: array
-                items:
-                  $ref: '#/components/schemas/Module'
-  /2.0/packages/{org}/{name}/{version}/docs:
+                items: { type: string }
+              examples:
+                ballerinaHttp:
+                  summary: ballerina/http (truncated)
+                  value: ['2.17.0', '2.16.7', '2.16.6']
+        '404':
+          description: No such package.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/NotFoundMessage' }
+              examples:
+                missing:
+                  value: { message: 'package not found: ballerina/nosuchpkg:*_any' }
+  /2.0/registry/connectors:
     get:
-      operationId: getPackageDocs
-      summary: Get package documentation
-      description: Returns API documentation for a specific package version.
+      operationId: searchConnectors
+      summary: Search connectors
+      description: >-
+        Search the connector clients declared by published packages. Each hit
+        carries the client name, its module, and the full package record it
+        belongs to.
+      tags: [Connectors]
       parameters:
-        - name: org
+        - name: q
+          in: query
+          required: false
+          schema: { type: string }
+        - name: limit
+          in: query
+          required: false
+          schema: { type: integer, minimum: 1 }
+        - name: offset
+          in: query
+          required: false
+          schema: { type: integer, minimum: 0, default: 0 }
+      responses:
+        '200':
+          description: A page of connectors.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ConnectorSearchResponse' }
+        '400':
+          description: Invalid query parameter.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/BadRequestError' }
+  /2.0/registry/triggers:
+    get:
+      operationId: searchTriggers
+      summary: Search event triggers
+      description: >-
+        Search the event triggers (listeners) declared by published packages —
+        the inbound/event half of the registry, as opposed to the outbound
+        connector clients.
+      tags: [Triggers]
+      parameters:
+        - name: q
+          in: query
+          required: false
+          schema: { type: string }
+        - name: limit
+          in: query
+          required: false
+          schema: { type: integer, minimum: 1 }
+        - name: offset
+          in: query
+          required: false
+          schema: { type: integer, minimum: 0, default: 0 }
+      responses:
+        '200':
+          description: A page of triggers.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TriggerSearchResponse' }
+        '400':
+          description: Invalid query parameter.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/BadRequestError' }
+  /2.0/docs/{orgName}/{packageName}/{version}:
+    get:
+      operationId: getPackageApiDocs
+      summary: Get the generated API documentation model for a package version
+      description: >-
+        Returns the API documentation model rendered at lib.ballerina.io for one
+        published package version — every module, client, function, record,
+        type, constant, error, listener, annotation and enum. Payloads scale
+        with the package (ballerina/random 1.7.0 returned ~7 KB; ballerina/http
+        2.17.0 returned ~3.2 MB).
+      tags: [Docs]
+      parameters:
+        - name: orgName
           in: path
           required: true
-          schema:
-            type: string
-        - name: name
+          schema: { type: string }
+        - name: packageName
           in: path
           required: true
-          schema:
-            type: string
+          schema: { type: string }
         - name: version
           in: path
           required: true
-          schema:
-            type: string
+          description: An exact published version. `latest` is not accepted — resolve it first via listPackageVersions.
+          schema: { type: string }
       responses:
         '200':
-          description: Package API documentation
+          description: The API documentation model.
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/PackageDocs'
+              schema: { $ref: '#/components/schemas/ApiDocs' }
+        '404':
+          description: The org/name/version tuple is not published.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/NotFoundMessage' }
+              examples:
+                missing:
+                  value: { message: 'module cannot be resolved as it may not exist.' }
 components:
   schemas:
+    Package:
+      type: object
+      description: A package published to Ballerina Central.
+      properties:
+        id: { type: integer, description: Registry-assigned numeric package id. }
+        organization: { type: string, description: Owning organization, e.g. `ballerina`. }
+        name: { type: string }
+        version: { type: string }
+        platform: { type: string, description: 'Target platform of the published artifact, e.g. `java21` or `any`.' }
+        languageSpecificationVersion: { type: string, description: 'Ballerina language specification the package was built against, e.g. `2024R1`.' }
+        isDeprecated: { type: boolean, description: True when the maintainer has deprecated this package version. }
+        deprecateMessage: { type: string, description: Maintainer-supplied deprecation notice; empty when not deprecated. }
+        URL: { type: string, description: 'Central-relative path to the package page, e.g. `/ballerina/http/2.17.0`.' }
+        balaVersion: { type: string, description: Version of the BALA archive format used.  }
+        balaURL: { type: string, description: Download URL for the BALA archive. }
+        digest: { type: string, description: Content digest of the published archive. }
+        summary: { type: string }
+        readme: { type: string, description: Full README markdown; omitted when `readme=false`. }
+        template: { type: boolean, description: True when the package is a project template. }
+        licenses:
+          type: array
+          items: { type: string }
+        authors:
+          type: array
+          items: { type: string }
+        sourceCodeLocation: { type: string }
+        keywords:
+          type: array
+          items: { type: string }
+        ballerinaVersion: { type: string }
+        icon: { type: string }
+        ownerUUID: { type: string }
+        createdDate: { type: integer, description: Publication time, epoch milliseconds. }
+        pullCount: { type: integer, description: Cumulative pulls of this package. }
+        visibility: { type: string, description: '`public` for everything reachable anonymously.' }
+        modules:
+          type: array
+          items: { $ref: '#/components/schemas/Module' }
+        balToolId: { type: string, description: Set when the package ships a `bal` CLI tool. }
+        graalvmCompatible: { type: string, description: 'GraalVM native-image compatibility as declared/verified: e.g. `Yes`, `No`, `Unknown`.' }
+    Module:
+      type: object
+      description: A module inside a published package.
+      properties:
+        packageURL: { type: string }
+        apiDocURL: { type: string, description: Rendered API docs URL on lib.ballerina.io. }
+        name: { type: string }
+        summary: { type: string }
+        readme: { type: string }
+    Connector:
+      type: object
+      description: A connector client declared by a published package.
+      properties:
+        id: { type: integer }
+        name: { type: string, description: 'Ballerina object name, e.g. `Client`.' }
+        displayName: { type: string }
+        moduleName: { type: string }
+        functions:
+          type: [array, 'null']
+          items: { type: object }
+        displayAnnotation: { type: object }
+        icon: { type: string }
+        package: { $ref: '#/components/schemas/Package' }
+    Trigger:
+      type: object
+      description: An event trigger (listener) declared by a published package.
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        displayName: { type: string }
+        moduleName: { type: string }
+        serviceTypes:
+          type: [array, 'null']
+          items: { type: object }
+        listenerParams:
+          type: [array, 'null']
+          items: { type: object }
+        displayAnnotation: { type: object }
+        package: { $ref: '#/components/schemas/Package' }
     PackageSearchResponse:
       type: object
       properties:
         packages:
           type: array
-          items:
-            $ref: '#/components/schemas/PackageSummary'
-        count:
-          type: integer
-          description: Total number of matching packages
-        offset:
-          type: integer
-        limit:
-          type: integer
-    PackageSummary:
-      type: object
-      properties:
-        organization:
-          type: string
-        name:
-          type: string
-        version:
-          type: string
-        platform:
-          type: string
-        ballerinaVersion:
-          type: string
-        description:
-          type: string
-        pullCount:
-          type: integer
-        createdDate:
-          type: string
-          format: date-time
-        keywords:
-          type: array
-          items:
-            type: string
-        license:
-          type: string
-        authors:
-          type: array
-          items:
-            type: string
-    Package:
-      type: object
-      properties:
-        organization:
-          type: string
-        name:
-          type: string
-        version:
-          type: string
-        description:
-          type: string
-        pullCount:
-          type: integer
-        createdDate:
-          type: string
-          format: date-time
-        keywords:
-          type: array
-          items:
-            type: string
-        license:
-          type: string
-        authors:
-          type: array
-          items:
-            type: string
-        repositoryURL:
-          type: string
-          format: uri
-        readme:
-          type: string
-        modules:
-          type: array
-          items:
-            $ref: '#/components/schemas/Module'
-        versions:
-          type: array
-          items:
-            type: string
-    PackageVersion:
-      type: object
-      properties:
-        organization:
-          type: string
-        name:
-          type: string
-        version:
-          type: string
-        platform:
-          type: string
-        ballerinaVersion:
-          type: string
-        description:
-          type: string
-        createdDate:
-          type: string
-          format: date-time
-        modules:
-          type: array
-          items:
-            $ref: '#/components/schemas/Module'
-        dependencies:
-          type: array
-          items:
-            type: object
-            properties:
-              org:
-                type: string
-              name:
-                type: string
-              version:
-                type: string
-    Organization:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        website:
-          type: string
-          format: uri
-        packageCount:
-          type: integer
+          items: { $ref: '#/components/schemas/Package' }
+        count: { type: integer, description: Total matches available, not the page size. }
+        offset: { type: integer }
+        limit: { type: integer }
+    PackageFullTextSearchResponse:
+      allOf:
+        - $ref: '#/components/schemas/PackageSearchResponse'
+        - type: object
+          properties:
+            suggestions:
+              type: array
+              items: { type: string }
+            highlighting:
+              type: object
+              description: Map of package id to the matched fragments per field.
+              additionalProperties:
+                type: object
+                additionalProperties:
+                  type: array
+                  items: { type: string }
     ConnectorSearchResponse:
       type: object
       properties:
         connectors:
           type: array
-          items:
-            $ref: '#/components/schemas/ConnectorSummary'
-        count:
-          type: integer
-        offset:
-          type: integer
-        limit:
-          type: integer
-    ConnectorSummary:
+          items: { $ref: '#/components/schemas/Connector' }
+        count: { type: integer }
+        offset: { type: integer }
+        limit: { type: integer }
+    TriggerSearchResponse:
       type: object
       properties:
-        organization:
-          type: string
-        name:
-          type: string
-        version:
-          type: string
-        description:
-          type: string
-        category:
-          type: string
-        pullCount:
-          type: integer
-    Connector:
-      type: object
-      properties:
-        organization:
-          type: string
-        name:
-          type: string
-        version:
-          type: string
-        description:
-          type: string
-        category:
-          type: string
-        readme:
-          type: string
-        functions:
+        triggers:
           type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              description:
-                type: string
-              parameters:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    type:
-                      type: string
-                    description:
-                      type: string
-                    defaultValue:
-                      type: string
-              returnType:
-                type: string
-    Module:
+          items: { $ref: '#/components/schemas/Trigger' }
+        count: { type: integer }
+        offset: { type: integer }
+        limit: { type: integer }
+    ApiDocs:
       type: object
+      description: The generated documentation model for one package version.
       properties:
-        organization:
-          type: string
-        packageName:
-          type: string
-        moduleName:
-          type: string
-        version:
-          type: string
-        description:
-          type: string
-    PackageDocs:
+        apiDocsVersion: { type: string }
+        docsData:
+          type: object
+          properties:
+            releaseVersion: { type: string }
+            langLibs:
+              type: array
+              items: { type: object }
+            modules:
+              type: array
+              items: { type: object }
+        searchData:
+          type: object
+          description: Flat search indexes over the documented symbols.
+          properties:
+            modules: { type: array, items: { type: object } }
+            classes: { type: array, items: { type: object } }
+            functions: { type: array, items: { type: object } }
+            records: { type: array, items: { type: object } }
+            constants: { type: array, items: { type: object } }
+            errors: { type: array, items: { type: object } }
+            types: { type: array, items: { type: object } }
+            clients: { type: array, items: { type: object } }
+            listeners: { type: array, items: { type: object } }
+            annotations: { type: array, items: { type: object } }
+            objectTypes: { type: array, items: { type: object } }
+            enums: { type: array, items: { type: object } }
+    BadRequestError:
+      description: >-
+        Two 400 envelopes were observed. A query-parameter cast failure returns
+        the timestamp/status/reason/message/path/method shape; a search
+        validation failure returns a bare `message`.
+      oneOf:
+        - type: object
+          properties:
+            timestamp: { type: string, format: date-time }
+            status: { type: integer }
+            reason: { type: string }
+            message: { type: string }
+            path: { type: string }
+            method: { type: string }
+        - type: object
+          properties:
+            message: { type: string }
+    NotFoundMessage:
       type: object
+      description: The 404 envelope returned by registry and docs lookups.
       properties:
-        modules:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              description:
-                type: string
-              functions:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    description:
-                      type: string
-                    isIsolated:
-                      type: boolean
-              classes:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    description:
-                      type: string
-              records:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    description:
-                      type: string
-              types:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    description:
-                      type: string
-              errors:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    description:
-                      type: string
+        message: { type: string }
+    NotFoundResource:
+      type: object
+      description: The 404 envelope returned by the gateway for an unrouted /2.0/registry path.
+      properties:
+        code: { type: string }
+        message: { type: string }
+        description: { type: string }

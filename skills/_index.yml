@@ -1,0 +1,74 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://github.com/ballerina-platform/skills and
+  https://github.com/ballerina-platform/ballerina-library/tree/main/agent-skills
+provider: Ballerina
+providerId: ballerina
+description: >-
+  Ballerina (WSO2) publishes Agent Skills of its own, in the Anthropic Agent Skill format
+  (SKILL.md + frontmatter), distributed as Claude Code plugins from the `ballerina-skills`
+  marketplace at github.com/ballerina-platform/skills. Every file in this directory was
+  fetched verbatim from a Ballerina-owned repository on 2026-09-04 — none of them was
+  written by API Evangelist.
+distribution:
+  marketplace: ballerina-skills
+  register: /plugin marketplace add ballerina-platform/skills
+  plugins:
+    - name: ballerina
+      install: /plugin install ballerina@ballerina-skills
+      source: https://github.com/ballerina-platform/skills
+      description: >-
+        Ballerina language support — LSP code intelligence for .bal files plus an AI coding
+        assistant for writing integrations and services, discovering libraries from Ballerina
+        Central, and running and testing projects.
+    - name: ballerina-libdev
+      install: /plugin install ballerina-libdev@ballerina-skills
+      source: https://github.com/ballerina-platform/ballerina-library/tree/main/agent-skills
+      description: Agent skills for developing and maintaining Ballerina library modules.
+  license: Apache-2.0
+skills:
+  - file: ballerina-ballerina-language.md
+    name: ballerina
+    plugin: ballerina
+    summary: >-
+      Writes, runs, tests, debugs and deploys Ballerina programs and integrations — project
+      scaffolding, HTTP/GraphQL services, dependency resolution, compile-error diagnosis, and
+      Docker/Kubernetes/GraalVM deployment.
+    source: https://github.com/ballerina-platform/skills/blob/main/skills/ballerina/SKILL.md
+    fetched: '2026-09-04'
+    http_status: 200
+  - file: ballerina-generating-connectors.md
+    name: generating-connectors
+    plugin: ballerina-libdev
+    summary: >-
+      Five-stage pipeline (sanitize → client → tests → examples → docs) that generates a
+      complete Ballerina connector package from an OpenAPI specification.
+    source: https://github.com/ballerina-platform/ballerina-library/blob/main/agent-skills/skills/generating-connectors/SKILL.md
+    fetched: '2026-09-04'
+    http_status: 200
+  - file: ballerina-generate-connector-docs.md
+    name: generate-connector-docs
+    plugin: ballerina-libdev
+    summary: >-
+      Generates the full connector documentation set — overview, setup guide, action reference
+      and a validated example guide with screenshots — from a Ballerina Central package
+      coordinate such as ballerinax/mysql:1.16.0.
+    source: https://github.com/ballerina-platform/ballerina-library/blob/main/agent-skills/skills/generate-connector-docs/SKILL.md
+    fetched: '2026-09-04'
+    http_status: 200
+  - file: ballerina-making-graalvm-compatible.md
+    name: making-graalvm-compatible
+    plugin: ballerina-libdev
+    summary: >-
+      Takes a Ballerina library to a warning-free `bal build --graalvm` / `bal test --graalvm`,
+      including reachability metadata and marking the package graalvmCompatible.
+    source: https://github.com/ballerina-platform/ballerina-library/blob/main/agent-skills/skills/making-graalvm-compatible/SKILL.md
+    fetched: '2026-09-04'
+    http_status: 200
+notes:
+  - >-
+    These skills operate the Ballerina toolchain and the Central registry from a developer
+    machine; they are not skills for calling the Central REST API over HTTP. That distinction
+    matters when reading them as an agent surface — the agent surface Ballerina ships is the
+    `bal` CLI plus the ballerina-library MCP server, not a hosted HTTP agent endpoint.

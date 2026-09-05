@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-trigger-search-response-schema.json",
+  "title": "TriggerSearchResponse",
+  "description": "TriggerSearchResponse as returned by the Ballerina Central API (probed 2026-09-04).",
+  "type": "object",
+  "properties": {
+    "triggers": {
+      "type": "array",
+      "items": {
+        "$ref": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-trigger-schema.json"
+      }
+    },
+    "count": {
+      "type": "integer"
+    },
+    "offset": {
+      "type": "integer"
+    },
+    "limit": {
+      "type": "integer"
+    }
+  }
+}

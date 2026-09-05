@@ -1,23 +1,55 @@
 {
-  "organization": "sample-value",
-  "name": "my-package",
-  "version": "1.0.0",
-  "description": "sample-value",
-  "pullCount": 32,
-  "createdDate": "sample-value",
-  "keywords": [
-    "sample-value"
+  "id": 55308,
+  "organization": "ballerina",
+  "name": "http",
+  "version": "2.17.0",
+  "platform": "java21",
+  "languageSpecificationVersion": "2024R1",
+  "isDeprecated": false,
+  "deprecateMessage": "",
+  "URL": "/ballerina/http/2.17.0",
+  "balaVersion": "3.0.0",
+  "balaURL": "https://fileserver.central.ballerina.io/2.0/ballerina/http/2.17.0/ballerina-http-java21-2.17.0.bala?Expires=1788565358&Signature=fGjAr-KENFK4L4P5vpSY7pj3U2VT38bKLUVW-BzteZRBrf~KCOFSN7qYdDKXZjJMkI36ZwdI3rh1WDhdS0XGQ8HR~ytKxrEC7hkRPVqJ6fHpJuhvPiolyZnKwQJdNKazoJX3Vbnfa~Pe3SLLnjUjknWcD-HJwPd7tVM~orzNE2lRQKWnW8~V8l07LtzNWG03zYOaE48IzkzNIPlC215PtgtfHrpkI~MFxPFUdNyWDyxuJGS0i8rcgExSc7NShHNuOjORPFqTt0Fw6O6eh3Fd8PIOdQfyM-a-NKDhBoM9YESd~R~fdDOKhdneFc-z39vhf15EW0QZrqys3eO3twDUyQ__&Key-Pair-Id=K27IQ7NPTKLKDU",
+  "digest": "sha-256=4bf9e5c7841894e19f2c375d1ed71780127fa1b4d64e4ffae87e527b81fd720b",
+  "summary": "This module provides APIs for connecting and interacting with HTTP and HTTP2 endpoints. It facilitates two types of network entry points as the `Client` and `Listener`.",
+  "readme": "",
+  "template": false,
+  "licenses": [
+    "Apache-2.0"
   ],
-  "license": "sample-value",
   "authors": [
-    "sample-value"
+    "Ballerina"
   ],
-  "repositoryURL": "https://central.ballerina.io/package",
-  "readme": "sample-value",
+  "sourceCodeLocation": "https://github.com/ballerina-platform/module-ballerina-http",
+  "keywords": [
+    "http",
+    "network",
+    "service",
+    "listener",
+    "client"
+  ],
+  "ballerinaVersion": "2201.13.6",
+  "icon": "https://bcentral-packageicons.azureedge.net/images/ballerina_http_2.17.0.png",
+  "ownerUUID": "b5a9e54d-8ade-47a1-8abc-6bc46e89069d",
+  "createdDate": 1788517274000,
+  "pullCount": 1888984,
+  "visibility": "public",
   "modules": [
-    "sample-value"
+    {
+      "packageURL": "/ballerina/http/2.17.0",
+      "apiDocURL": "https://lib.ballerina.io/ballerina/http/2.17.0",
+      "name": "http",
+      "summary": "",
+      "readme": ""
+    },
+    {
+      "packageURL": "/ballerina/http/2.17.0",
+      "apiDocURL": "https://lib.ballerina.io/ballerina/http.httpscerr/2.17.0",
+      "name": "http.httpscerr",
+      "summary": "",
+      "readme": ""
+    }
   ],
-  "versions": [
-    "1.0.0"
-  ]
+  "balToolId": "",
+  "graalvmCompatible": "Unknown"
 }

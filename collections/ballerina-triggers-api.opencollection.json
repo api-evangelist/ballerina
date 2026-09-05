@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ballerina Triggers API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Triggers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search event triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.central.ballerina.io/2.0/registry/triggers",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": ""
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": ""
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": ""
+              }
+            ]
+          },
+          "docs": "Search the event triggers (listeners) declared by published packages — the inbound/event half of the registry, as opposed to the outbound connector clients."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  registry metadata queried 2026-09-04 — hub.docker.com/v2, marketplace.visualstudio.com
+  extensionquery, api.github.com releases, formulae.brew.sh, registry.npmjs.org and the
+  Ballerina Central registry API itself
+provider: Ballerina
+providerId: ballerina
+description: >-
+  First-party distribution for Ballerina. There is no client SDK for the Ballerina Central
+  REST API in any language registry — the supported client of that API is the `bal` CLI, which
+  ships inside the distribution (see cli/ballerina-cli.yml). What Ballerina does publish, and
+  keeps current, is the language distribution itself plus the standard library on its own
+  registry. Every version and date below was read from the registry's metadata endpoint on
+  2026-09-04.
+packages:
+  - name: ballerina/ballerina
+    registry: docker
+    url: https://hub.docker.com/r/ballerina/ballerina
+    official: true
+    language: n/a
+    kind: runtime-image
+    version: 2201.13.5
+    published: '2026-07-27'
+    note: >-
+      656 tags published. Latest GA tag 2201.13.5 (2026-07-27); a 2201.13.6-rc1 prerelease tag
+      followed on 2026-09-02.
+  - name: WSO2.ballerina
+    registry: vscode-marketplace
+    url: https://marketplace.visualstudio.com/items?itemName=WSO2.ballerina
+    official: true
+    language: typescript
+    kind: ide-extension
+    version: 5.12.226070705
+    published: '2026-07-08'
+    note: Published by WSO2; the low-code/diagram editor and language client for .bal files.
+  - name: ballerina-distribution
+    registry: github-releases
+    url: https://github.com/ballerina-platform/ballerina-distribution/releases
+    official: true
+    language: java
+    kind: distribution
+    version: 2201.13.5
+    published: '2026-07-27'
+    note: >-
+      The installers (macOS pkg, Windows msi, Linux deb/rpm, zip) are attached to GitHub
+      releases and linked from ballerina.io/downloads. A nightly channel is published daily.
+  - name: ballerina
+    registry: homebrew
+    url: https://formulae.brew.sh/formula/ballerina
+    official: false
+    language: n/a
+    kind: installer
+    version: 2201.13.5
+    published: null
+    note: >-
+      Homebrew formula, community-maintained in homebrew-core but tracking the GA distribution
+      exactly (2201.13.5 as of 2026-09-04). Ballerina's own docs recommend `brew install
+      ballerina`, which is why it is recorded here; brew's API does not expose a release date,
+      so `published` is null rather than guessed.
+  - name: 'ballerina/* (standard library)'
+    registry: ballerina-central
+    url: https://central.ballerina.io/
+    official: true
+    language: ballerina
+    kind: standard-library
+    version: null
+    published: null
+    note: >-
+      84 packages under the `ballerina` organization on Ballerina Central as of 2026-09-04
+      (GET /2.0/registry/packages?org=ballerina&limit=1). Each package versions independently
+      — e.g. ballerina/http 2.17.0 — so a single version for the set would be a fiction;
+      resolve a specific one with GET /2.0/registry/packages/ballerina/{name}.
+  - name: 'ballerinax/* (connectors)'
+    registry: ballerina-central
+    url: https://central.ballerina.io/
+    official: true
+    language: ballerina
+    kind: connectors
+    version: null
+    published: null
+    note: >-
+      727 packages under the `ballerinax` organization as of 2026-09-04 — the WSO2-maintained
+      connector library (clients generated against third-party APIs). Same per-package
+      versioning caveat as the standard library.
+  - name: '@ballerina/highlightjs-ballerina'
+    registry: npm
+    url: https://www.npmjs.com/package/@ballerina/highlightjs-ballerina
+    official: true
+    language: javascript
+    kind: syntax-highlighting
+    version: 1.0.1
+    published: '2023-08-28'
+    note: >-
+      The only currently-maintained package in the `@ballerina` npm scope; a syntax
+      highlighting grammar, not a client library. `@ballerina/syntax-tree` (1.0.5, 2021-08-18)
+      is the other scope member and has not been released in five years. Recorded for
+      completeness, and because an agent searching npm for "ballerina" will find these and
+      should not mistake them for an SDK.
+sdk_summary:
+  client_sdk_count: 0
+  note: >-
+    No first-party client SDK exists for the Ballerina Central REST API in npm, PyPI, Maven
+    Central, NuGet, pkg.go.dev, RubyGems, Packagist or crates.io. repo1.maven.org has no
+    org/ballerinalang group (404 on 2026-09-04) — the JVM artifacts are published to GitHub
+    Packages, not Maven Central. This is why no `SDKs` pointer is emitted for this provider:
+    claiming one would credit Ballerina with a client library it does not ship.

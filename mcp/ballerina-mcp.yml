@@ -1,0 +1,76 @@
+generated: '2026-09-04'
+method: searched
+source: https://github.com/ballerina-platform/skills/blob/main/mcp/server.js
+provider: Ballerina
+providerId: ballerina
+name: ballerina-library
+description: >-
+  WSO2 ships a first-party MCP server for Ballerina called `ballerina-library`. It runs over
+  stdio as part of the `ballerina` Claude Code plugin (registered from the ballerina-skills
+  marketplace) and exposes one tool that returns a Ballerina library's complete API surface as
+  a compact syntax string, resolving versions and documentation through the public Ballerina
+  Central REST API. The tool list and input schema below were read from the server's own
+  source on 2026-09-04, not inferred: the server registers exactly one tool.
+status: published
+deployment:
+  mode: local-stdio
+  endpoint: null
+  install: /plugin marketplace add ballerina-platform/skills && /plugin install ballerina@ballerina-skills
+  package: https://github.com/ballerina-platform/skills
+  auth: none
+  verified: searched
+server:
+  name: ballerina-library
+  version: 0.4.0
+  transport: stdio
+  runtime: node >=18
+  entrypoint: node ${CLAUDE_PLUGIN_ROOT}/mcp/dist/server.js
+  sdk: '@modelcontextprotocol/sdk 1.29.0'
+  license: Apache-2.0
+  config_file: https://github.com/ballerina-platform/skills/blob/main/.mcp.json
+  not_on_npm: >-
+    The package.json declares name `ballerina-mcp` but no such package is published to npm
+    (registry.npmjs.org/ballerina-mcp returned 404 on 2026-09-04). Distribution is the plugin
+    repository only.
+tools:
+  - name: get_library
+    title: Get full Ballerina library API
+    description: >-
+      Fetch a Ballerina library's full API as a compact syntax string. Returns all clients,
+      functions, type definitions, services and annotations; the caller filters to what the
+      task needs.
+    input_schema:
+      type: object
+      properties:
+        name:
+          type: string
+          required: true
+          description: Package name as 'org/name' WITHOUT a version suffix, e.g. 'ballerinax/github'.
+        version:
+          type: string
+          required: false
+          description: >-
+            Optional explicit version. If omitted, Dependencies.toml in projectDir is consulted,
+            otherwise the latest version from Ballerina Central is used.
+        projectDir:
+          type: string
+          required: false
+          description: Optional path to a Ballerina project, used to read Dependencies.toml for locked versions.
+    errors: >-
+      Returned as { isError: true, content: [{ type: 'text', text: '<JSON>' }] } with an
+      `error` code in the JSON body.
+    backing_api:
+      - https://api.central.ballerina.io/2.0/registry/packages?org={org}&limit=1000&readme=false
+      - https://api.central.ballerina.io/2.0/docs/{org}/{name}/{version}
+related:
+  - name: ballerina/mcp
+    type: language-library
+    url: https://central.ballerina.io/ballerina/mcp/latest
+    repo: https://github.com/ballerina-platform/module-ballerina-mcp
+    description: >-
+      Ballerina's MCP client/server library — a way to BUILD MCP servers in Ballerina, not a
+      server Ballerina operates. Recorded here so the two are not conflated.
+probes:
+  - url: https://mcp.ballerina.io/
+    status: 0
+    note: Host does not resolve. No hosted/remote MCP endpoint was found for Ballerina Central.

@@ -1,0 +1,52 @@
+generated: '2026-09-04'
+method: searched
+source: https://ballerina.io/learn/publish-packages-to-ballerina-central/
+docs: https://ballerina.io/learn/publish-packages-to-ballerina-central/
+provider: Ballerina
+providerId: ballerina
+description: >-
+  Ballerina Central runs a split authentication model, and the split is the important fact for
+  an agent: every read operation on the public REST API is anonymous, and the only credentialed
+  operation is publishing, which is not exposed over the documented REST surface at all — it is
+  driven by the `bal` CLI. The OpenAPI in this repo therefore declares no securitySchemes, and
+  that is correct rather than a gap.
+schemes:
+  - id: anonymous
+    type: none
+    applies_to: >-
+      All probed read operations: GET /2.0/registry/packages, /2.0/registry/search-packages,
+      /2.0/registry/packages/{org}/{name}, /2.0/registry/connectors, /2.0/registry/triggers and
+      /2.0/docs/{org}/{name}/{version}.
+    verified: probed
+    evidence:
+      - url: https://api.central.ballerina.io/2.0/registry/packages?org=ballerina&limit=2&readme=false
+        status: 200
+        note: Returned a full package page with no Authorization header sent.
+      - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/1.7.0
+        status: 200
+        note: Returned the full documentation model anonymously.
+  - id: central-access-token
+    type: bearer-token
+    applies_to: Publishing and deprecating packages (`bal push`, `bal deprecate`).
+    credential: Ballerina Central access token
+    obtained_from: https://central.ballerina.io/dashboard?tab=token
+    account_required: true
+    storage:
+      file: <USER_HOME>/.ballerina/Settings.toml
+      field: '[central] accesstoken'
+      environment_variable: BALLERINA_CENTRAL_ACCESS_TOKEN
+    rotation: >-
+      Tokens are valid for one year from generation; the docs warn that an expired token
+      surfaces as an unauthorized error on push.
+    verified: searched
+    evidence:
+      - url: https://ballerina.io/learn/publish-packages-to-ballerina-central/
+        status: 200
+oauth:
+  supported: false
+  note: >-
+    No OAuth 2.0 or OpenID Connect surface is published for the Central API — no scopes,
+    authorization server metadata or protected-resource metadata was found on any Ballerina
+    host (see well-known/ballerina-well-known.yml). Sign-in to central.ballerina.io itself is
+    an interactive web flow for humans, not a documented API authorization surface, so no
+    scopes/ artifact is written for this provider.

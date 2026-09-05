@@ -1,0 +1,257 @@
+openapi: 3.1.0
+info:
+  title: Ballerina Triggers API
+  description: The public read API of Ballerina Central — the package registry for the Ballerina programming
+    language, operated by WSO2. The surface documented here was established by calling every operation
+    anonymously on 2026-09-04 and by reading WSO2's own first-party clients of this API (ballerina-platform/skills
+    mcp/src/central-client.js and ballerina-platform/ballerina-library connector-doc-generator/modules/central/central.bal),
+    which name the same paths. Every path, parameter, response shape and error envelope below was observed
+    on a live call; nothing is inferred from marketing copy.
+  version: '2.0'
+  contact:
+    name: WSO2 / Ballerina
+    url: https://ballerina.io
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+x-provenance:
+  method: probed
+  probed: '2026-09-04'
+  probe_transcript:
+  - url: https://api.central.ballerina.io/2.0/registry/packages?org=ballerina&limit=2&readme=false
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/search-packages?q=http&limit=2
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/http
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/nosuchpkg
+    status: 404
+  - url: https://api.central.ballerina.io/2.0/registry/connectors?q=salesforce&limit=1
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/triggers?q=github&limit=1
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/1.7.0
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/9.9.9
+    status: 404
+  first_party_sources:
+  - https://github.com/ballerina-platform/skills/blob/main/mcp/src/central-client.js
+  - https://github.com/ballerina-platform/ballerina-library/blob/main/connector-doc-generator/modules/central/central.bal
+  supersedes: An earlier scaffold in this repo described /2.0/packages, /2.0/connectors and /2.0/organizations/{org}.
+    Every one of those paths returns HTTP 404 on the live host; they were replaced by the probed surface
+    below.
+servers:
+- url: https://api.central.ballerina.io
+  description: Ballerina Central API (public, unauthenticated for read operations)
+tags:
+- name: Triggers
+  description: Search the event triggers/listeners contained in published packages.
+paths:
+  /2.0/registry/triggers:
+    get:
+      operationId: searchTriggers
+      summary: Search event triggers
+      description: Search the event triggers (listeners) declared by published packages — the inbound/event
+        half of the registry, as opposed to the outbound connector clients.
+      tags:
+      - Triggers
+      parameters:
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 0
+          default: 0
+      responses:
+        '200':
+          description: A page of triggers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerSearchResponse'
+        '400':
+          description: Invalid query parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+components:
+  schemas:
+    BadRequestError:
+      description: Two 400 envelopes were observed. A query-parameter cast failure returns the timestamp/status/reason/message/path/method
+        shape; a search validation failure returns a bare `message`.
+      oneOf:
+      - type: object
+        properties:
+          timestamp:
+            type: string
+            format: date-time
+          status:
+            type: integer
+          reason:
+            type: string
+          message:
+            type: string
+          path:
+            type: string
+          method:
+            type: string
+      - type: object
+        properties:
+          message:
+            type: string
+    Module:
+      type: object
+      description: A module inside a published package.
+      properties:
+        packageURL:
+          type: string
+        apiDocURL:
+          type: string
+          description: Rendered API docs URL on lib.ballerina.io.
+        name:
+          type: string
+        summary:
+          type: string
+        readme:
+          type: string
+    Package:
+      type: object
+      description: A package published to Ballerina Central.
+      properties:
+        id:
+          type: integer
+          description: Registry-assigned numeric package id.
+        organization:
+          type: string
+          description: Owning organization
+          e.g. `ballerina`.: null
+        name:
+          type: string
+        version:
+          type: string
+        platform:
+          type: string
+          description: Target platform of the published artifact, e.g. `java21` or `any`.
+        languageSpecificationVersion:
+          type: string
+          description: Ballerina language specification the package was built against, e.g. `2024R1`.
+        isDeprecated:
+          type: boolean
+          description: True when the maintainer has deprecated this package version.
+        deprecateMessage:
+          type: string
+          description: Maintainer-supplied deprecation notice; empty when not deprecated.
+        URL:
+          type: string
+          description: Central-relative path to the package page, e.g. `/ballerina/http/2.17.0`.
+        balaVersion:
+          type: string
+          description: Version of the BALA archive format used.
+        balaURL:
+          type: string
+          description: Download URL for the BALA archive.
+        digest:
+          type: string
+          description: Content digest of the published archive.
+        summary:
+          type: string
+        readme:
+          type: string
+          description: Full README markdown; omitted when `readme=false`.
+        template:
+          type: boolean
+          description: True when the package is a project template.
+        licenses:
+          type: array
+          items:
+            type: string
+        authors:
+          type: array
+          items:
+            type: string
+        sourceCodeLocation:
+          type: string
+        keywords:
+          type: array
+          items:
+            type: string
+        ballerinaVersion:
+          type: string
+        icon:
+          type: string
+        ownerUUID:
+          type: string
+        createdDate:
+          type: integer
+          description: Publication time
+          epoch milliseconds.: null
+        pullCount:
+          type: integer
+          description: Cumulative pulls of this package.
+        visibility:
+          type: string
+          description: '`public` for everything reachable anonymously.'
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/Module'
+        balToolId:
+          type: string
+          description: Set when the package ships a `bal` CLI tool.
+        graalvmCompatible:
+          type: string
+          description: 'GraalVM native-image compatibility as declared/verified: e.g. `Yes`, `No`, `Unknown`.'
+    Trigger:
+      type: object
+      description: An event trigger (listener) declared by a published package.
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        displayName:
+          type: string
+        moduleName:
+          type: string
+        serviceTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+        listenerParams:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+        displayAnnotation:
+          type: object
+        package:
+          $ref: '#/components/schemas/Package'
+    TriggerSearchResponse:
+      type: object
+      properties:
+        triggers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Trigger'
+        count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer

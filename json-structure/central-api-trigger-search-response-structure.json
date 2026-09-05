@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-structure/central-api-trigger-search-response-structure.json",
+  "name": "TriggerSearchResponse",
+  "description": "TriggerSearchResponse as returned by the Ballerina Central API (probed 2026-09-04).",
+  "type": "object",
+  "properties": {
+    "triggers": {
+      "type": "array",
+      "items": {
+        "$ref": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-structure/central-api-trigger-structure.json"
+      }
+    },
+    "count": {
+      "type": "int32"
+    },
+    "offset": {
+      "type": "int32"
+    },
+    "limit": {
+      "type": "int32"
+    }
+  }
+}

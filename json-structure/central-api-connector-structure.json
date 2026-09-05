@@ -2,63 +2,39 @@
   "$schema": "https://json-structure.org/meta/core/v0/#",
   "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-structure/central-api-connector-structure.json",
   "name": "Connector",
-  "description": "Connector schema from Ballerina Central API",
+  "description": "A connector client declared by a published package.",
   "type": "object",
   "properties": {
-    "organization": {
-      "type": "string"
+    "id": {
+      "type": "int32"
     },
     "name": {
+      "type": "string",
+      "description": "Ballerina object name, e.g. `Client`."
+    },
+    "displayName": {
       "type": "string"
     },
-    "version": {
-      "type": "string"
-    },
-    "description": {
-      "type": "string"
-    },
-    "category": {
-      "type": "string"
-    },
-    "readme": {
+    "moduleName": {
       "type": "string"
     },
     "functions": {
-      "type": "array",
+      "type": [
+        "array",
+        "null"
+      ],
       "items": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "parameters": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "defaultValue": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "returnType": {
-            "type": "string"
-          }
-        }
+        "type": "object"
       }
+    },
+    "displayAnnotation": {
+      "type": "object"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "package": {
+      "$ref": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-structure/central-api-package-structure.json"
     }
   }
 }

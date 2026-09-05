@@ -1,0 +1,95 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://ballerina.io/downloads/, https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.13.5,
+  https://api.github.com/repos/ballerina-platform/ballerina-distribution/releases, and live probes of
+  https://api.central.ballerina.io
+provider: Ballerina
+providerId: ballerina
+description: >-
+  Two lifecycles run side by side here and they are easy to conflate. The LANGUAGE has a
+  disciplined, dated, publicly documented release train (Swan Lake updates and patches, with
+  release notes per version). The API — the Central registry surface — has none: it has been
+  `/2.0/` throughout, with no changelog, no deprecation policy, no sunset headers and no status
+  page. What the API does carry is per-package deprecation as first-class data, which is a
+  genuinely useful signal most registries do not expose.
+api_lifecycle:
+  versioning:
+    scheme: path segment
+    current: '2.0'
+    changelog_published: false
+    note: No changelog, release notes or version history is published for the Central REST API.
+  deprecation_policy:
+    published: false
+    sunset_header: false
+    deprecation_header: false
+    rfc8594: false
+    evidence:
+      - url: https://api.central.ballerina.io/2.0/registry/packages?org=ballerina&limit=1&readme=false
+        status: 200
+        note: Response headers carried no Deprecation or Sunset header.
+  sla:
+    published: false
+  status_page:
+    exists: false
+    evidence:
+      - url: https://status.ballerina.io/
+        status: 0
+        note: Host does not resolve.
+      - url: https://ballerina.io/status/
+        status: 404
+  deprecated_operations: []
+  removed_operations:
+    - path: /2.0/packages
+      note: >-
+        Never observed live. An earlier scaffold in this record claimed it; it returns 404 and
+        the real route is /2.0/registry/packages.
+resource_lifecycle:
+  package_deprecation:
+    supported: true
+    surfaced_as:
+      - field: isDeprecated
+        type: boolean
+      - field: deprecateMessage
+        type: string
+    set_by: bal deprecate
+    docs: https://ballerina.io/learn/cli-commands/
+    note: >-
+      Every package record returned by the registry carries these two fields, so a consumer can
+      detect a deprecated dependency from a single read — no separate deprecation feed needed.
+  package_immutability:
+    note: >-
+      Published versions remain resolvable after deprecation; the deprecation is advisory
+      metadata rather than a removal. No un-publish operation is documented.
+  credential_expiry:
+    what: Ballerina Central access token
+    lifetime: 1 year from generation
+    source: https://ballerina.io/learn/publish-packages-to-ballerina-central/
+language_lifecycle:
+  current_ga: 2201.13.5
+  released: '2026-07-27'
+  release_notes: https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.13.5
+  cadence: >-
+    A Swan Lake "Update" minor line (2201.x.0) with numbered patch releases underneath, plus
+    a maintained legacy 1.2.x line and a nightly channel.
+  maintained_lines:
+    - line: 2201.13.x
+      latest: 2201.13.5
+      released: '2026-07-27'
+    - line: 2201.12.x
+      latest: 2201.12.12
+      released: '2026-06-05'
+    - line: 1.2.x
+      latest: 1.2.68
+      released: '2026-08-10'
+      note: Published as a GitHub prerelease.
+  in_flight:
+    - version: 2201.13.6-rc1
+      released: '2026-09-01'
+      stage: release-candidate
+  update_tool: https://ballerina.io/learn/update-tool/
+  archived_versions: https://ballerina.io/downloads/archived/
+gaps:
+  - No status page for central.ballerina.io or api.central.ballerina.io.
+  - No deprecation or sunset policy for the API itself, and no Deprecation/Sunset headers.
+  - No changelog for the API; the only dated change record is the language release train.

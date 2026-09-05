@@ -2,11 +2,17 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-package-schema.json",
   "title": "Package",
-  "description": "Package schema from Ballerina Central API",
+  "description": "A package published to Ballerina Central.",
   "type": "object",
   "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Registry-assigned numeric package id."
+    },
     "organization": {
-      "type": "string"
+      "type": "string",
+      "description": "Owning organization",
+      "e.g. `ballerina`.": null
     },
     "name": {
       "type": "string"
@@ -14,24 +20,54 @@
     "version": {
       "type": "string"
     },
-    "description": {
+    "platform": {
+      "type": "string",
+      "description": "Target platform of the published artifact, e.g. `java21` or `any`."
+    },
+    "languageSpecificationVersion": {
+      "type": "string",
+      "description": "Ballerina language specification the package was built against, e.g. `2024R1`."
+    },
+    "isDeprecated": {
+      "type": "boolean",
+      "description": "True when the maintainer has deprecated this package version."
+    },
+    "deprecateMessage": {
+      "type": "string",
+      "description": "Maintainer-supplied deprecation notice; empty when not deprecated."
+    },
+    "URL": {
+      "type": "string",
+      "description": "Central-relative path to the package page, e.g. `/ballerina/http/2.17.0`."
+    },
+    "balaVersion": {
+      "type": "string",
+      "description": "Version of the BALA archive format used."
+    },
+    "balaURL": {
+      "type": "string",
+      "description": "Download URL for the BALA archive."
+    },
+    "digest": {
+      "type": "string",
+      "description": "Content digest of the published archive."
+    },
+    "summary": {
       "type": "string"
     },
-    "pullCount": {
-      "type": "integer"
-    },
-    "createdDate": {
+    "readme": {
       "type": "string",
-      "format": "date-time"
+      "description": "Full README markdown; omitted when `readme=false`."
     },
-    "keywords": {
+    "template": {
+      "type": "boolean",
+      "description": "True when the package is a project template."
+    },
+    "licenses": {
       "type": "array",
       "items": {
         "type": "string"
       }
-    },
-    "license": {
-      "type": "string"
     },
     "authors": {
       "type": "array",
@@ -39,24 +75,50 @@
         "type": "string"
       }
     },
-    "repositoryURL": {
-      "type": "string",
-      "format": "uri"
-    },
-    "readme": {
+    "sourceCodeLocation": {
       "type": "string"
     },
-    "modules": {
-      "type": "array",
-      "items": {
-        "$ref": "#/components/schemas/Module"
-      }
-    },
-    "versions": {
+    "keywords": {
       "type": "array",
       "items": {
         "type": "string"
       }
+    },
+    "ballerinaVersion": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "ownerUUID": {
+      "type": "string"
+    },
+    "createdDate": {
+      "type": "integer",
+      "description": "Publication time",
+      "epoch milliseconds.": null
+    },
+    "pullCount": {
+      "type": "integer",
+      "description": "Cumulative pulls of this package."
+    },
+    "visibility": {
+      "type": "string",
+      "description": "`public` for everything reachable anonymously."
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "$ref": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-module-schema.json"
+      }
+    },
+    "balToolId": {
+      "type": "string",
+      "description": "Set when the package ships a `bal` CLI tool."
+    },
+    "graalvmCompatible": {
+      "type": "string",
+      "description": "GraalVM native-image compatibility as declared/verified: e.g. `Yes`, `No`, `Unknown`."
     }
   }
 }

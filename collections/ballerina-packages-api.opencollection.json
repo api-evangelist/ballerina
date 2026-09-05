@@ -1,8 +1,8 @@
 {
   "opencollection": "1.0.0",
   "info": {
-    "name": "Ballerina Central Connectors Packages API",
-    "version": "1.0.0"
+    "name": "Ballerina Packages API",
+    "version": "2.0"
   },
   "items": [
     {
@@ -13,159 +13,110 @@
       "items": [
         {
           "info": {
-            "name": "Search packages",
+            "name": "Search or list packages",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.central.ballerina.io/2.0/packages",
+            "url": "https://api.central.ballerina.io/2.0/registry/packages",
             "params": [
               {
                 "name": "q",
                 "value": "",
                 "type": "query",
-                "description": "Search query string"
+                "description": "Free-text query matched against package name, summary and keywords."
               },
               {
                 "name": "org",
                 "value": "",
                 "type": "query",
-                "description": "Filter by organization name"
-              },
-              {
-                "name": "offset",
-                "value": "",
-                "type": "query",
-                "description": "Pagination offset"
+                "description": "Restrict results to packages owned by this organization (e.g. `ballerina`, `ballerinax`)."
               },
               {
                 "name": "limit",
                 "value": "",
                 "type": "query",
-                "description": "Maximum number of results"
+                "description": "Maximum packages to return. Observed accepted up to 1000 (WSO2's own MCP client sends limit=1000)."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based pagination offset."
+              },
+              {
+                "name": "readme",
+                "value": "",
+                "type": "query",
+                "description": "When `false`, the large `readme` field is omitted from each package."
               },
               {
                 "name": "sort",
                 "value": "",
                 "type": "query",
-                "description": "Sort order"
+                "description": "Accepted by the server but no sort field could be established from the public surface — `relevance`, `pullCount,DESC` and `createdDate,DESC` each returned HTTP 400 `invalid/unsupported sort field` when probed on 2026-09-04. Documented here because the parameter demonstrably exists, not because a working value is known."
               }
             ]
           },
-          "docs": "Search for Ballerina packages in Ballerina Central. Supports keyword search, filtering by organization, and pagination."
+          "docs": "List packages in Ballerina Central, optionally filtered by a free-text query or by owning organization. Paginated with offset/limit; the response echoes count/offset/limit."
         },
         {
           "info": {
-            "name": "Get package details",
+            "name": "Full-text package search",
             "type": "http"
           },
           "http": {
             "method": "GET",
-            "url": "https://api.central.ballerina.io/2.0/packages/:org/:name",
+            "url": "https://api.central.ballerina.io/2.0/registry/search-packages",
             "params": [
               {
-                "name": "org",
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text search query."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": ""
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": ""
+              }
+            ]
+          },
+          "docs": "Full-text search over published packages. Returns the same package page as `/2.0/registry/packages` plus `suggestions` and a `highlighting` map keyed by package id."
+        },
+        {
+          "info": {
+            "name": "List the published versions of a package",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.central.ballerina.io/2.0/registry/packages/{orgName}/{packageName}",
+            "params": [
+              {
+                "name": "orgName",
                 "value": "",
                 "type": "path",
-                "description": "Organization name"
+                "description": "Owning organization, e.g. `ballerina` or `ballerinax`."
               },
               {
-                "name": "name",
+                "name": "packageName",
                 "value": "",
                 "type": "path",
-                "description": "Package name"
+                "description": "Package name, e.g. `http`."
               }
             ]
           },
-          "docs": "Returns metadata for a specific Ballerina package."
-        },
-        {
-          "info": {
-            "name": "Get package version details",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.central.ballerina.io/2.0/packages/:org/:name/:version",
-            "params": [
-              {
-                "name": "org",
-                "value": "",
-                "type": "path"
-              },
-              {
-                "name": "name",
-                "value": "",
-                "type": "path"
-              },
-              {
-                "name": "version",
-                "value": "",
-                "type": "path",
-                "description": "Package version (semver)"
-              }
-            ]
-          },
-          "docs": "Returns metadata for a specific version of a Ballerina package."
-        },
-        {
-          "info": {
-            "name": "Get package modules",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.central.ballerina.io/2.0/packages/:org/:name/:version/modules",
-            "params": [
-              {
-                "name": "org",
-                "value": "",
-                "type": "path"
-              },
-              {
-                "name": "name",
-                "value": "",
-                "type": "path"
-              },
-              {
-                "name": "version",
-                "value": "",
-                "type": "path"
-              }
-            ]
-          },
-          "docs": "Returns the list of modules in a specific package version."
-        },
-        {
-          "info": {
-            "name": "Get package documentation",
-            "type": "http"
-          },
-          "http": {
-            "method": "GET",
-            "url": "https://api.central.ballerina.io/2.0/packages/:org/:name/:version/docs",
-            "params": [
-              {
-                "name": "org",
-                "value": "",
-                "type": "path"
-              },
-              {
-                "name": "name",
-                "value": "",
-                "type": "path"
-              },
-              {
-                "name": "version",
-                "value": "",
-                "type": "path"
-              }
-            ]
-          },
-          "docs": "Returns API documentation for a specific package version."
+          "docs": "Returns the versions published for `orgName/packageName`, newest first, as a JSON array of version strings. This is the endpoint WSO2's own tooling calls to resolve \"latest\"."
         }
       ]
     }
-  ],
-  "bundled": true
+  ]
 }

@@ -1,0 +1,122 @@
+generated: '2026-09-04'
+method: probed
+source: >-
+  live calls to https://api.central.ballerina.io on 2026-09-04, plus
+  https://ballerina.io/learn/publish-packages-to-ballerina-central/
+provider: Ballerina
+providerId: ballerina
+description: >-
+  Cross-cutting runtime semantics of the Ballerina Central API. The single fact that governs
+  most of this document: the public HTTP surface is READ-ONLY. Every published operation is a
+  GET; publishing and deprecation happen through the `bal` CLI against a credentialed surface
+  Ballerina does not document as REST. That makes idempotency, reversibility and dry-run
+  inapplicable rather than absent, and it is why those blocks below are marked `na`.
+auth:
+  style: none (anonymous) for reads
+  detail: See authentication/ballerina-authentication.yml. No key, no OAuth, no scopes.
+pagination:
+  style: offset-limit
+  params:
+    offset: Zero-based, default 0.
+    limit: Page size. WSO2's own MCP client sends limit=1000 without error.
+  response_fields: [count, offset, limit]
+  semantics: >-
+    `count` is the TOTAL number of matches, not the size of the page returned — a client that
+    reads `count` as the page length will loop wrong. Verified: org=ballerina with limit=2
+    returned 2 packages and count=84.
+  cursor: false
+  link_header: false
+filtering:
+  query_param: q
+  scoping_param: org
+  payload_trimming:
+    param: readme
+    effect: >-
+      `readme=false` drops the full README markdown from every package in the page. On a
+      1000-package org listing this is the difference between a usable response and megabytes
+      of prose; WSO2's own client always sends it.
+sorting:
+  param: sort
+  status: unresolved
+  detail: >-
+    The parameter exists and is validated, but no accepted value was found — relevance,
+    pullCount,DESC and createdDate,DESC each returned 400 `invalid/unsupported sort field`.
+versioning:
+  style: path
+  current: '2.0'
+  detail: >-
+    The API version is the leading `/2.0/` path segment. No version header, no dated versions,
+    no version negotiation. Package versions are separate and semantic (e.g. ballerina/http
+    2.17.0); resolve `latest` yourself via listPackageVersions — the docs endpoint rejects the
+    literal string `latest`.
+request_id:
+  header: null
+  detail: >-
+    No request-id or correlation header is returned. Responses carry `x-azure-ref` (Azure Front
+    Door) and, on the registry, `x-envoy-upstream-service-time`; neither is documented as a
+    support identifier but x-azure-ref is the only per-request handle that exists.
+caching:
+  detail: >-
+    Responses carry `x-cache: CONFIG_NOCACHE` and no Cache-Control, ETag or Last-Modified. A
+    client that wants conditional requests has nothing to condition on; cache locally by
+    (org, name, version), which is immutable once published.
+  etag: false
+  last_modified: false
+error_envelope:
+  shape: inconsistent — see errors/ballerina-problem-types.yml
+  rfc9457: false
+rate_limit_signaling:
+  headers: none observed
+  detail: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header appeared on any 200 or 4xx response
+    probed on 2026-09-04. See rate-limits/ballerina-rate-limits.yml.
+idempotency:
+  coverage: na
+  scope: []
+  header: null
+  detail: >-
+    There is no mutating operation on the public HTTP surface, so replay protection has nothing
+    to protect. Publishing is done by `bal push`, and the CLI documents no idempotency key or
+    replay-safe retry for it; Ballerina's own docs do not state what a repeated push of an
+    already-published org/name/version does, so no behaviour is asserted here.
+reversibility:
+  grade: na
+  detail: >-
+    No write surface over HTTP, therefore nothing to reverse over HTTP. For completeness on the
+    CLI side: a published package version cannot be deleted or replaced — the documented
+    reversal is `bal deprecate`, which marks the package deprecated (surfacing as isDeprecated
+    and deprecateMessage on every subsequent read) rather than removing it. Ballerina's docs
+    state no window for that operation, so no window is asserted here.
+  reversal_operations:
+    - operation: bal deprecate
+      surface: cli
+      reverses: bal push
+      window: null
+      window_source: null
+      note: >-
+        Marks a published package deprecated; the package remains resolvable and downloadable.
+        No documented time limit and no un-publish. Window left null deliberately — the docs do
+        not state one.
+dry_run_mode:
+  supported: na
+  detail: Read-only HTTP surface; nothing to rehearse.
+data_conventions:
+  timestamps: >-
+    `createdDate` is epoch MILLISECONDS as an integer (e.g. 1788517274000), not ISO 8601. The
+    only ISO-8601 value anywhere in the API is `timestamp` inside one of the 400 envelopes.
+  identifiers: >-
+    Packages carry a numeric registry `id` AND a natural key of (organization, name, version).
+    Connectors and triggers carry their own numeric ids and embed the whole parent package
+    record rather than referencing it.
+  nulls: >-
+    `functions`, `serviceTypes` and `listenerParams` are returned as JSON null rather than an
+    empty array in list responses — a client must handle null, not just [].
+  enums_as_strings: >-
+    `graalvmCompatible` is a string with values including `Yes`, `No` and `Unknown` — not a
+    boolean, despite the name.
+cross_references:
+  errors: errors/ballerina-problem-types.yml
+  authentication: authentication/ballerina-authentication.yml
+  lifecycle: lifecycle/ballerina-lifecycle.yml
+  rate_limits: rate-limits/ballerina-rate-limits.yml
+  data_model: data-model/ballerina-data-model.yml

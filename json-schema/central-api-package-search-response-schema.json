@@ -2,18 +2,19 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-package-search-response-schema.json",
   "title": "PackageSearchResponse",
-  "description": "PackageSearchResponse schema from Ballerina Central API",
+  "description": "PackageSearchResponse as returned by the Ballerina Central API (probed 2026-09-04).",
   "type": "object",
   "properties": {
     "packages": {
       "type": "array",
       "items": {
-        "$ref": "#/components/schemas/PackageSummary"
+        "$ref": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-package-schema.json"
       }
     },
     "count": {
       "type": "integer",
-      "description": "Total number of matching packages"
+      "description": "Total matches available",
+      "not the page size.": null
     },
     "offset": {
       "type": "integer"

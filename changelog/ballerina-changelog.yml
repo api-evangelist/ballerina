@@ -1,0 +1,87 @@
+generated: '2026-09-04'
+method: searched
+source: >-
+  https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.13.5 and the dated
+  release list at https://api.github.com/repos/ballerina-platform/ballerina-distribution/releases
+provider: Ballerina
+providerId: ballerina
+description: >-
+  Ballerina publishes per-version release notes on its own site under
+  /downloads/swan-lake-release-notes/<version>, and every distribution release is dated on
+  GitHub. What is recorded below is the LANGUAGE and DISTRIBUTION changelog. There is no
+  changelog for the Ballerina Central REST API — the two should not be read as the same thing.
+scheme:
+  style: '2201.MINOR.PATCH — "Swan Lake Update <MINOR>" with numbered patch releases'
+  semver: false
+  note: >-
+    2201 is a fixed prefix, not a major version; the meaningful line is the middle number
+    (Update 13 = 2201.13.x). A legacy 1.2.x line is still patched in parallel.
+  release_notes_url_pattern: https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-{version}
+  archived: https://ballerina.io/downloads/archived/
+current:
+  version: 2201.13.5
+  released: '2026-07-27'
+  url: https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.13.5
+entries:
+  - version: 2201.13.5
+    date: '2026-07-27'
+    kind: patch
+    breaking: false
+    highlights:
+      - Fifth patch release of the 2201.13.0 line.
+      - Compiler and runtime bug fixes.
+      - Security improvements.
+    upgrade: bal dist pull 2201.13.5
+    url: https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.13.5
+  - version: 2201.12.12
+    date: '2026-06-05'
+    kind: patch
+    breaking: false
+    highlights:
+      - Patch on the maintained 2201.12.x line, released after 2201.13.4 shipped.
+    url: https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.12.12
+  - version: 2201.13.4
+    date: '2026-05-09'
+    kind: patch
+    breaking: false
+    url: https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.13.4
+  - version: 2201.13.3
+    date: '2026-04-20'
+    kind: patch
+    breaking: false
+    url: https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.13.3
+  - version: 2201.13.2
+    date: '2026-03-14'
+    kind: patch
+    breaking: false
+    url: https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.13.2
+  - version: 2201.13.1
+    date: '2025-11-14'
+    kind: patch
+    breaking: false
+    url: https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.13.1
+  - version: 2201.13.0
+    date: '2025-11-07'
+    kind: minor
+    breaking: false
+    highlights:
+      - 'Natural expressions: experimental first-class syntax for running natural-language instructions through an LLM at runtime, with dependent typing on the expected result shape and multimodal (image/audio/file) inputs.'
+      - 'Compile-time code generation: `const natural` data generation and `@natural:code` function generation.'
+      - 'Multi-package workspaces for monorepo-style development without publishing to a repository.'
+      - 'CLI tools (openapi, graphql, grpc, persist) decoupled from the distribution and updatable with `bal tool update`.'
+      - '`bal clean --dependency-cache`; consecutive builds skip recompiling unchanged projects within 24 hours.'
+      - 'xml:fromString() now preserves the XML declaration; time:civilAddDuration() added; OAuth2 client timeouts configurable.'
+    url: https://ballerina.io/downloads/swan-lake-release-notes/swan-lake-2201.13.0
+in_flight:
+  - version: 2201.13.6-rc1
+    date: '2026-09-01'
+    stage: release-candidate
+  - channel: nightly
+    date: '2026-09-04'
+    note: A nightly build is published daily to the ballerina-distribution releases.
+api_changelog:
+  published: false
+  note: >-
+    No dated change record exists for the /2.0/ Central REST API. Consumers have no way to
+    learn that an endpoint moved — which is exactly how this record ended up carrying a
+    contract describing /2.0/packages instead of /2.0/registry/packages.

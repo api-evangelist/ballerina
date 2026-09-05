@@ -1,0 +1,52 @@
+overlay: 1.0.0
+info:
+  title: "API Evangelist enhancements \u2014 Ballerina Packages API"
+  version: 1.0.0
+x-generated: '2026-09-04'
+x-method: generated
+x-source: openapi/ballerina-packages-api-openapi.yml
+extends: https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/openapi/ballerina-packages-api-openapi.yml
+actions:
+- target: $.info
+  description: Record that this contract was established by probing the live API, not published by the
+    provider.
+  update:
+    x-api-evangelist:
+      provenance: probed
+      probed: '2026-09-04'
+      note: Ballerina publishes no OpenAPI for Ballerina Central. Every path here returned the documented
+        status on a live anonymous call.
+- target: $.info
+  description: Attach the provider record this contract belongs to.
+  update:
+    x-provider:
+      name: Ballerina
+      slug: ballerina
+      operator: WSO2 LLC
+      site: https://ballerina.io/
+      apis_json: https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/apis.yml
+- target: $.servers[0]
+  description: Record that the read surface needs no credential.
+  update:
+    x-auth: "none \u2014 every operation on this server was called anonymously on 2026-09-04"
+- target: $.paths['/2.0/registry/packages'].get
+  description: Tag searchPackages with the API Evangelist artifacts derived from it.
+  update:
+    x-artifacts:
+      errors: errors/ballerina-problem-types.yml
+      conventions: conventions/ballerina-conventions.yml
+      data_model: data-model/ballerina-data-model.yml
+- target: $.paths['/2.0/registry/search-packages'].get
+  description: Tag fullTextSearchPackages with the API Evangelist artifacts derived from it.
+  update:
+    x-artifacts:
+      errors: errors/ballerina-problem-types.yml
+      conventions: conventions/ballerina-conventions.yml
+      data_model: data-model/ballerina-data-model.yml
+- target: $.paths['/2.0/registry/packages/{orgName}/{packageName}'].get
+  description: Tag listPackageVersions with the API Evangelist artifacts derived from it.
+  update:
+    x-artifacts:
+      errors: errors/ballerina-problem-types.yml
+      conventions: conventions/ballerina-conventions.yml
+      data_model: data-model/ballerina-data-model.yml

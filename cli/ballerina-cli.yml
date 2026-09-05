@@ -1,0 +1,120 @@
+generated: '2026-09-04'
+method: searched
+source: https://ballerina.io/learn/cli-commands/
+docs: https://ballerina.io/learn/cli-commands/
+provider: Ballerina
+providerId: ballerina
+name: bal
+description: >-
+  `bal` is Ballerina's first-party CLI and it is the supported client of Ballerina Central. Two
+  of its commands — `bal search` and `bal pull` — are what most consumers use instead of calling
+  the REST API directly, and `bal push` / `bal deprecate` reach a credentialed write surface that
+  has no documented REST equivalent. It ships inside the distribution, so its version is the
+  distribution version.
+install:
+  - method: homebrew
+    command: brew install ballerina
+  - method: installer
+    url: https://ballerina.io/downloads/
+    note: macOS pkg, Windows msi, Linux deb/rpm and zip, attached to each GitHub release.
+  - method: docker
+    command: docker pull ballerina/ballerina:2201.13.5
+version: 2201.13.5
+released: '2026-07-27'
+version_command: bal version
+update_tool: https://ballerina.io/learn/update-tool/
+command_groups:
+  - group: core
+    commands:
+      - name: build
+        description: Compile the current package into an executable JAR.
+      - name: run
+        description: Compile and run the current package, or run a previously built program.
+      - name: test
+        description: Run package tests.
+      - name: doc
+        description: Generate the current package's documentation.
+      - name: pack
+        description: Create the distribution (BALA) format of the current package.
+  - group: package
+    commands:
+      - name: new
+        description: Create a new Ballerina package.
+      - name: add
+        description: Add a new module to the current package.
+      - name: graph
+        description: Print the dependency graph.
+      - name: search
+        description: Search Ballerina Central for packages.
+        central_api: GET /2.0/registry/search-packages
+      - name: semver
+        description: Validate semantic-version compatibility against published versions.
+        central_api: GET /2.0/registry/packages/{org}/{name}
+      - name: pull
+        description: Pull a package from Ballerina Central.
+        central_api: GET /2.0/registry/packages/{org}/{name} then the package's balaURL
+      - name: push
+        description: Publish a package to Ballerina Central.
+        auth: Central access token
+      - name: deprecate
+        description: Deprecate a package in Ballerina Central.
+        auth: Central access token
+        surfaces_as: isDeprecated / deprecateMessage on every subsequent read
+  - group: tool
+    description: Manage CLI tools installed from Ballerina Central.
+    commands:
+      - name: tool pull
+        description: Install a tool from Ballerina Central.
+      - name: tool remove
+        description: Uninstall a tool.
+      - name: tool update
+        description: Update a tool to its latest patch version.
+      - name: tool use
+        description: Switch between installed tool versions.
+      - name: tool list
+        description: List installed tools and versions.
+      - name: tool search
+        description: Find tools by keyword.
+  - group: distribution
+    commands:
+      - name: dist
+        description: Manage installed Ballerina distributions (pull, use, list, remove).
+      - name: update
+        description: Update the Ballerina tool itself.
+  - group: specification-tooling
+    description: >-
+      Code generation between Ballerina and the specification formats. This is the group that
+      makes Ballerina unusual in this catalog — the language ships first-party generators for
+      six contract formats.
+    commands:
+      - name: openapi
+        description: Generate a client or service from an OpenAPI definition, or an OpenAPI from Ballerina source.
+        docs: https://ballerina.io/learn/openapi-tool/
+      - name: asyncapi
+        description: Generate Ballerina sources from an AsyncAPI definition.
+        docs: https://ballerina.io/learn/asyncapi-tool/
+      - name: graphql
+        description: Generate a GraphQL client, schema or service.
+        docs: https://ballerina.io/learn/graphql-tool/
+      - name: grpc
+        description: Generate gRPC stub/skeleton code from a proto file.
+        docs: https://ballerina.io/learn/grpc-tool/
+      - name: persist
+        description: Manage data persistence — model, generate and migrate.
+        docs: https://ballerina.io/learn/bal-persist-overview/
+      - name: bindgen
+        description: Generate Ballerina bridge code for Java APIs.
+  - group: developer
+    commands:
+      - name: clean
+        description: Remove build artifacts.
+      - name: format
+        description: Format Ballerina source files.
+      - name: shell
+        description: Run the Ballerina interactive REPL.
+      - name: profile
+        description: Profile a package and generate flame graphs.
+      - name: version
+        description: Print distribution and language specification versions.
+      - name: help
+        description: Print usage for any command.

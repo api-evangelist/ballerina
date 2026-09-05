@@ -2,22 +2,23 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-schema/central-api-module-schema.json",
   "title": "Module",
-  "description": "Module schema from Ballerina Central API",
+  "description": "A module inside a published package.",
   "type": "object",
   "properties": {
-    "organization": {
+    "packageURL": {
       "type": "string"
     },
-    "packageName": {
+    "apiDocURL": {
+      "type": "string",
+      "description": "Rendered API docs URL on lib.ballerina.io."
+    },
+    "name": {
       "type": "string"
     },
-    "moduleName": {
+    "summary": {
       "type": "string"
     },
-    "version": {
-      "type": "string"
-    },
-    "description": {
+    "readme": {
       "type": "string"
     }
   }

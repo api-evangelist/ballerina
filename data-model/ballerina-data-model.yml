@@ -1,0 +1,110 @@
+generated: '2026-09-04'
+method: derived
+source: openapi/_original/ballerina-central-api.yml (itself probed 2026-09-04)
+provider: Ballerina
+providerId: ballerina
+description: >-
+  Entity graph of the Ballerina Central API. The registry's shape is unusual in one way worth
+  flagging to anyone integrating: connectors and triggers EMBED the full Package record rather
+  than referencing it by id, so a single connector search page can return the same package
+  document many times over. There are no id-reference fields to follow; the only join key that
+  crosses responses is the natural key (organization, name, version).
+entities:
+  - name: Package
+    description: A package published to Ballerina Central. The root entity of the registry.
+    identifiers:
+      - field: id
+        kind: surrogate
+        type: integer
+      - fields: [organization, name, version]
+        kind: natural
+        note: The coordinate every CLI command and every URL path uses.
+    key_fields:
+      - organization
+      - name
+      - version
+      - platform
+      - ballerinaVersion
+      - languageSpecificationVersion
+      - pullCount
+      - createdDate
+      - isDeprecated
+      - deprecateMessage
+      - graalvmCompatible
+      - visibility
+      - balToolId
+    relationships:
+      - type: has_many
+        target: Module
+        via: modules
+        embedded: true
+    lifecycle_fields: [isDeprecated, deprecateMessage]
+    counts_observed:
+      ballerina_org_packages: 84
+      ballerinax_org_packages: 727
+  - name: Module
+    description: A module inside a package. Embedded in the parent package record.
+    identifiers:
+      - fields: [packageURL, name]
+        kind: natural
+    key_fields: [packageURL, apiDocURL, name, summary, readme]
+    relationships:
+      - type: belongs_to
+        target: Package
+        via: packageURL
+        note: A path string, not an id — resolving it means parsing /org/name/version.
+  - name: Connector
+    description: A connector client object declared by a package (the outbound half).
+    identifiers:
+      - field: id
+        kind: surrogate
+    key_fields: [id, name, displayName, moduleName, functions, displayAnnotation, icon]
+    relationships:
+      - type: belongs_to
+        target: Package
+        via: package
+        embedded: true
+        note: The ENTIRE package record is inlined on every connector.
+  - name: Trigger
+    description: An event trigger / listener declared by a package (the inbound half).
+    identifiers:
+      - field: id
+        kind: surrogate
+    key_fields: [id, name, displayName, moduleName, serviceTypes, listenerParams, displayAnnotation]
+    relationships:
+      - type: belongs_to
+        target: Package
+        via: package
+        embedded: true
+  - name: ApiDocs
+    description: >-
+      The generated documentation model for one package version — the same model that renders
+      lib.ballerina.io. Two parallel views: docsData (nested, per module) and searchData (flat
+      indexes by symbol kind).
+    identifiers:
+      - fields: [organization, name, version]
+        kind: natural
+        note: Not present in the body; it is the request path that identifies it.
+    key_fields: [apiDocsVersion, docsData.releaseVersion, docsData.langLibs, docsData.modules]
+    search_indexes:
+      [modules, classes, functions, records, constants, errors, types, clients, listeners,
+       annotations, objectTypes, enums]
+    relationships:
+      - type: belongs_to
+        target: Package
+        via: request path
+    size_note: >-
+      ballerina/random 1.7.0 returned ~7 KB; ballerina/http 2.17.0 returned ~3.2 MB. There is no
+      partial or field-selected variant, so an agent must be prepared for either.
+  - name: SearchPage
+    description: The pagination envelope shared by every list response.
+    key_fields: [count, offset, limit]
+    note: >-
+      `count` is total matches, not page size. The collection key differs per endpoint —
+      `packages`, `connectors`, `triggers` — so a generic pager must switch on it.
+graph_notes:
+  - No organization entity exists on the API, despite Central having organization pages on the web.
+  - No reverse index from a connector or trigger back to its docs; go through the package coordinate.
+  - >-
+    createdDate is epoch milliseconds, so any ERD render treating it as a date string will be
+    wrong by 55 years.

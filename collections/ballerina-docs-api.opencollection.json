@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ballerina Docs API",
+    "version": "2.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Docs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the generated API documentation model for a package version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.central.ballerina.io/2.0/docs/{orgName}/{packageName}/{version}",
+            "params": [
+              {
+                "name": "orgName",
+                "value": "",
+                "type": "path",
+                "description": ""
+              },
+              {
+                "name": "packageName",
+                "value": "",
+                "type": "path",
+                "description": ""
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "An exact published version. `latest` is not accepted — resolve it first via listPackageVersions."
+              }
+            ]
+          },
+          "docs": "Returns the API documentation model rendered at lib.ballerina.io for one published package version — every module, client, function, record, type, constant, error, listener, annotation and enum. Payloads scale with the package (ballerina/random 1.7.0 returned ~7 KB; ballerina/http 2.17.0 returned ~3.2 MB)."
+        }
+      ]
+    }
+  ]
+}

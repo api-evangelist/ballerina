@@ -1,18 +1,22 @@
-generated: '2026-07-15'
+generated: '2026-09-04'
 method: generated
-source: openapi/ballerina-central-api.yml
-description: Recommended x-agentic-access execution contracts, classified heuristically from
-  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
-  audience per deployment. See research/curity/agentic-governance/.
+source: openapi/_original/ballerina-central-api.yml (probed 2026-09-04)
+description: "Recommended x-agentic-access execution contracts for the Ballerina Central API, classified\
+  \ from the probed contract. Every published operation is an anonymous read of public registry data,\
+  \ so every classification below is connected/read with no human-in-the-loop and no audit requirement.\
+  \ The write path (bal push / bal deprecate) is NOT part of this surface and is deliberately not classified\
+  \ here \u2014 it is a credentialed CLI operation, not an HTTP endpoint an agent can be handed. Regenerated\
+  \ after the contract in this repo was replaced: the previous version classified nine operations, five\
+  \ of which do not exist on the live API."
 summary:
-  operations: 9
+  operations: 6
   by_action_class:
-    connected: 9
+    connected: 6
   by_consequence:
-    read: 9
+    read: 6
   human_in_the_loop_required: 0
 operations:
-- path: /2.0/packages
+- path: /2.0/registry/packages
   method: get
   operationId: searchPackages
   x-agentic-access:
@@ -22,9 +26,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /2.0/packages/{org}/{name}
+- path: /2.0/registry/search-packages
   method: get
-  operationId: getPackage
+  operationId: fullTextSearchPackages
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -32,9 +36,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /2.0/packages/{org}/{name}/{version}
+- path: /2.0/registry/packages/{orgName}/{packageName}
   method: get
-  operationId: getPackageVersion
+  operationId: listPackageVersions
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -42,27 +46,7 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /2.0/organizations/{org}
-  method: get
-  operationId: getOrganization
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /2.0/organizations/{org}/packages
-  method: get
-  operationId: getOrganizationPackages
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /2.0/connectors
+- path: /2.0/registry/connectors
   method: get
   operationId: searchConnectors
   x-agentic-access:
@@ -72,9 +56,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /2.0/connectors/{org}/{name}/{version}
+- path: /2.0/registry/triggers
   method: get
-  operationId: getConnector
+  operationId: searchTriggers
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -82,19 +66,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /2.0/packages/{org}/{name}/{version}/modules
+- path: /2.0/docs/{orgName}/{packageName}/{version}
   method: get
-  operationId: getPackageModules
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /2.0/packages/{org}/{name}/{version}/docs
-  method: get
-  operationId: getPackageDocs
+  operationId: getPackageApiDocs
   x-agentic-access:
     action-class: connected
     consequence: read

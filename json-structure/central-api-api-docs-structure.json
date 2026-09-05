@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/json-structure/central-api-api-docs-structure.json",
+  "name": "ApiDocs",
+  "description": "The generated documentation model for one package version.",
+  "type": "object",
+  "properties": {
+    "apiDocsVersion": {
+      "type": "string"
+    },
+    "docsData": {
+      "type": "object",
+      "properties": {
+        "releaseVersion": {
+          "type": "string"
+        },
+        "langLibs": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "searchData": {
+      "type": "object",
+      "description": "Flat search indexes over the documented symbols.",
+      "properties": {
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "classes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "functions": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "constants": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "clients": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "listeners": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "annotations": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "objectTypes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "enums": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    }
+  }
+}

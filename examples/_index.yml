@@ -1,0 +1,66 @@
+generated: '2026-09-04'
+method: probed
+source: live responses from https://api.central.ballerina.io captured 2026-09-04
+provider: Ballerina
+providerId: ballerina
+description: >-
+  Real response payloads from the Ballerina Central API, captured verbatim from anonymous calls
+  on 2026-09-04. These replace an earlier set of scaffolds whose every field read "sample-value"
+  and which described objects (Organization, PackageSummary, ConnectorSummary) that the API does
+  not return.
+examples:
+  - file: central-api-package-example.json
+    entity: Package
+    operation: searchPackages
+    source: https://api.central.ballerina.io/2.0/registry/packages?org=ballerina&limit=2&readme=false
+    status: 200
+  - file: central-api-module-example.json
+    entity: Module
+    operation: searchPackages
+    source: https://api.central.ballerina.io/2.0/registry/packages?org=ballerina&limit=2&readme=false
+    status: 200
+    note: The first module of the first package in that page.
+  - file: central-api-package-search-response-example.json
+    entity: PackageSearchResponse
+    operation: searchPackages
+    source: https://api.central.ballerina.io/2.0/registry/packages?org=ballerina&limit=2&readme=false
+    status: 200
+  - file: central-api-package-fulltext-search-response-example.json
+    entity: PackageFullTextSearchResponse
+    operation: fullTextSearchPackages
+    source: https://api.central.ballerina.io/2.0/registry/search-packages?q=http&limit=2
+    status: 200
+  - file: central-api-package-versions-example.json
+    entity: 'array of version strings'
+    operation: listPackageVersions
+    source: https://api.central.ballerina.io/2.0/registry/packages/ballerina/http
+    status: 200
+  - file: central-api-connector-example.json
+    entity: Connector
+    operation: searchConnectors
+    source: https://api.central.ballerina.io/2.0/registry/connectors?q=salesforce&limit=1
+    status: 200
+  - file: central-api-connector-search-response-example.json
+    entity: ConnectorSearchResponse
+    operation: searchConnectors
+    source: https://api.central.ballerina.io/2.0/registry/connectors?q=salesforce&limit=1
+    status: 200
+  - file: central-api-trigger-example.json
+    entity: Trigger
+    operation: searchTriggers
+    source: https://api.central.ballerina.io/2.0/registry/triggers
+    status: 200
+  - file: central-api-trigger-search-response-example.json
+    entity: TriggerSearchResponse
+    operation: searchTriggers
+    source: https://api.central.ballerina.io/2.0/registry/triggers
+    status: 200
+    note: Truncated to a single trigger; count/offset/limit are the values the server returned.
+  - file: central-api-package-docs-example.json
+    entity: ApiDocs
+    operation: getPackageApiDocs
+    source: https://api.central.ballerina.io/2.0/docs/ballerina/random/1.7.0
+    status: 200
+    note: >-
+      A deliberately small package was chosen so the example is readable — ballerina/http 2.17.0
+      returns the same shape at ~3.2 MB.
