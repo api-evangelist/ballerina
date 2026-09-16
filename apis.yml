@@ -45,7 +45,7 @@ apis:
   baseURL: https://api.central.ballerina.io
   tags:
   - Triggers
-  - Events
+  - Event-Driven
   tags_raw:
   - Triggers
   - Event-Driven
