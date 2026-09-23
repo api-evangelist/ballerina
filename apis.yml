@@ -279,3 +279,5 @@ x-enrichment:
   status: enriched
   artifacts_added: 47
   pass: local-v3
+x-parent: wso2
+x-relationship: product
