@@ -1,12 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Ballerina Packages API
-  description: The public read API of Ballerina Central — the package registry for the Ballerina programming
-    language, operated by WSO2. The surface documented here was established by calling every operation
-    anonymously on 2026-09-04 and by reading WSO2's own first-party clients of this API (ballerina-platform/skills
-    mcp/src/central-client.js and ballerina-platform/ballerina-library connector-doc-generator/modules/central/central.bal),
-    which name the same paths. Every path, parameter, response shape and error envelope below was observed
-    on a live call; nothing is inferred from marketing copy.
+  title: Ballerina Central Packages API
+  description: The public read API of Ballerina Central — the package registry for the Ballerina programming language, operated by WSO2.
   version: '2.0'
   contact:
     name: WSO2 / Ballerina
@@ -14,32 +9,6 @@ info:
   license:
     name: Apache-2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
-x-provenance:
-  method: probed
-  probed: '2026-09-04'
-  probe_transcript:
-  - url: https://api.central.ballerina.io/2.0/registry/packages?org=ballerina&limit=2&readme=false
-    status: 200
-  - url: https://api.central.ballerina.io/2.0/registry/search-packages?q=http&limit=2
-    status: 200
-  - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/http
-    status: 200
-  - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/nosuchpkg
-    status: 404
-  - url: https://api.central.ballerina.io/2.0/registry/connectors?q=salesforce&limit=1
-    status: 200
-  - url: https://api.central.ballerina.io/2.0/registry/triggers?q=github&limit=1
-    status: 200
-  - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/1.7.0
-    status: 200
-  - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/9.9.9
-    status: 404
-  first_party_sources:
-  - https://github.com/ballerina-platform/skills/blob/main/mcp/src/central-client.js
-  - https://github.com/ballerina-platform/ballerina-library/blob/main/connector-doc-generator/modules/central/central.bal
-  supersedes: An earlier scaffold in this repo described /2.0/packages, /2.0/connectors and /2.0/organizations/{org}.
-    Every one of those paths returns HTTP 404 on the live host; they were replaced by the probed surface
-    below.
 servers:
 - url: https://api.central.ballerina.io
   description: Ballerina Central API (public, unauthenticated for read operations)
@@ -51,8 +20,7 @@ paths:
     get:
       operationId: searchPackages
       summary: Search or list packages
-      description: List packages in Ballerina Central, optionally filtered by a free-text query or by
-        owning organization. Paginated with offset/limit; the response echoes count/offset/limit.
+      description: List packages in Ballerina Central, optionally filtered by a free-text query or by owning organization. Paginated with offset/limit; the response echoes count/offset/limit.
       tags:
       - Packages
       parameters:
@@ -71,8 +39,7 @@ paths:
       - name: limit
         in: query
         required: false
-        description: Maximum packages to return. Observed accepted up to 1000 (WSO2's own MCP client sends
-          limit=1000).
+        description: Maximum packages to return. Observed accepted up to 1000 (WSO2's own MCP client sends limit=1000).
         schema:
           type: integer
           minimum: 1
@@ -93,10 +60,7 @@ paths:
       - name: sort
         in: query
         required: false
-        description: Accepted by the server but no sort field could be established from the public surface
-          — `relevance`, `pullCount,DESC` and `createdDate,DESC` each returned HTTP 400 `invalid/unsupported
-          sort field` when probed on 2026-09-04. Documented here because the parameter demonstrably exists,
-          not because a working value is known.
+        description: Accepted by the server but no sort field could be established from the public surface — `relevance`, `pullCount,DESC` and `createdDate,DESC` each returned HTTP 400 `invalid/unsupported sort field` when probed on 2026-09-04. Documented here because the parameter demonstrably exists, not because a working value is known.
         schema:
           type: string
       responses:
@@ -116,8 +80,7 @@ paths:
     get:
       operationId: fullTextSearchPackages
       summary: Full-text package search
-      description: Full-text search over published packages. Returns the same package page as `/2.0/registry/packages`
-        plus `suggestions` and a `highlighting` map keyed by package id.
+      description: Full-text search over published packages. Returns the same package page as `/2.0/registry/packages` plus `suggestions` and a `highlighting` map keyed by package id.
       tags:
       - Packages
       parameters:
@@ -157,8 +120,7 @@ paths:
     get:
       operationId: listPackageVersions
       summary: List the published versions of a package
-      description: Returns the versions published for `orgName/packageName`, newest first, as a JSON array
-        of version strings. This is the endpoint WSO2's own tooling calls to resolve "latest".
+      description: Returns the versions published for `orgName/packageName`, newest first, as a JSON array of version strings. This is the endpoint WSO2's own tooling calls to resolve "latest".
       tags:
       - Packages
       parameters:
@@ -202,9 +164,14 @@ paths:
                     message: 'package not found: ballerina/nosuchpkg:*_any'
 components:
   schemas:
+    NotFoundMessage:
+      type: object
+      description: The 404 envelope returned by registry and docs lookups.
+      properties:
+        message:
+          type: string
     BadRequestError:
-      description: Two 400 envelopes were observed. A query-parameter cast failure returns the timestamp/status/reason/message/path/method
-        shape; a search validation failure returns a bare `message`.
+      description: Two 400 envelopes were observed. A query-parameter cast failure returns the timestamp/status/reason/message/path/method shape; a search validation failure returns a bare `message`.
       oneOf:
       - type: object
         properties:
@@ -225,6 +192,24 @@ components:
         properties:
           message:
             type: string
+    PackageFullTextSearchResponse:
+      allOf:
+      - $ref: '#/components/schemas/PackageSearchResponse'
+      - type: object
+        properties:
+          suggestions:
+            type: array
+            items:
+              type: string
+          highlighting:
+            type: object
+            description: Map of package id to the matched fragments per field.
+            additionalProperties:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
     Module:
       type: object
       description: A module inside a published package.
@@ -239,12 +224,6 @@ components:
         summary:
           type: string
         readme:
-          type: string
-    NotFoundMessage:
-      type: object
-      description: The 404 envelope returned by registry and docs lookups.
-      properties:
-        message:
           type: string
     Package:
       type: object
@@ -333,24 +312,6 @@ components:
         graalvmCompatible:
           type: string
           description: 'GraalVM native-image compatibility as declared/verified: e.g. `Yes`, `No`, `Unknown`.'
-    PackageFullTextSearchResponse:
-      allOf:
-      - $ref: '#/components/schemas/PackageSearchResponse'
-      - type: object
-        properties:
-          suggestions:
-            type: array
-            items:
-              type: string
-          highlighting:
-            type: object
-            description: Map of package id to the matched fragments per field.
-            additionalProperties:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
     PackageSearchResponse:
       type: object
       properties:
@@ -366,3 +327,27 @@ components:
           type: integer
         limit:
           type: integer
+x-provenance:
+  method: probed
+  probed: '2026-09-04'
+  probe_transcript:
+  - url: https://api.central.ballerina.io/2.0/registry/packages?org=ballerina&limit=2&readme=false
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/search-packages?q=http&limit=2
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/http
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/nosuchpkg
+    status: 404
+  - url: https://api.central.ballerina.io/2.0/registry/connectors?q=salesforce&limit=1
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/triggers?q=github&limit=1
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/1.7.0
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/9.9.9
+    status: 404
+  first_party_sources:
+  - https://github.com/ballerina-platform/skills/blob/main/mcp/src/central-client.js
+  - https://github.com/ballerina-platform/ballerina-library/blob/main/connector-doc-generator/modules/central/central.bal
+  supersedes: An earlier scaffold in this repo described /2.0/packages, /2.0/connectors and /2.0/organizations/{org}. Every one of those paths returns HTTP 404 on the live host; they were replaced by the probed surface below.

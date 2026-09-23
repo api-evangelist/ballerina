@@ -1,23 +1,26 @@
 {
   "provider": "ballerina",
   "sources": [
-    "ballerina-connectors-api-openapi.yml",
-    "ballerina-organizations-api-openapi.yml",
-    "ballerina-packages-api-openapi.yml"
+    "_original/ballerina-central-api.yml"
   ],
   "outputs": [
     "ballerina-connectors-api-openapi.yml",
-    "ballerina-organizations-api-openapi.yml",
-    "ballerina-packages-api-openapi.yml"
+    "ballerina-docs-api-openapi.yml",
+    "ballerina-packages-api-openapi.yml",
+    "ballerina-triggers-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
-    "ballerina-connectors-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "ballerina-organizations-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "ballerina-packages-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "ballerina-central-api.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "ballerina-connectors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ballerina-docs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ballerina-packages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ballerina-triggers-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

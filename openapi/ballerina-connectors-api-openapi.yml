@@ -1,12 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Ballerina Connectors API
-  description: The public read API of Ballerina Central — the package registry for the Ballerina programming
-    language, operated by WSO2. The surface documented here was established by calling every operation
-    anonymously on 2026-09-04 and by reading WSO2's own first-party clients of this API (ballerina-platform/skills
-    mcp/src/central-client.js and ballerina-platform/ballerina-library connector-doc-generator/modules/central/central.bal),
-    which name the same paths. Every path, parameter, response shape and error envelope below was observed
-    on a live call; nothing is inferred from marketing copy.
+  title: Ballerina Central Connectors API
+  description: The public read API of Ballerina Central — the package registry for the Ballerina programming language, operated by WSO2.
   version: '2.0'
   contact:
     name: WSO2 / Ballerina
@@ -14,32 +9,6 @@ info:
   license:
     name: Apache-2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
-x-provenance:
-  method: probed
-  probed: '2026-09-04'
-  probe_transcript:
-  - url: https://api.central.ballerina.io/2.0/registry/packages?org=ballerina&limit=2&readme=false
-    status: 200
-  - url: https://api.central.ballerina.io/2.0/registry/search-packages?q=http&limit=2
-    status: 200
-  - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/http
-    status: 200
-  - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/nosuchpkg
-    status: 404
-  - url: https://api.central.ballerina.io/2.0/registry/connectors?q=salesforce&limit=1
-    status: 200
-  - url: https://api.central.ballerina.io/2.0/registry/triggers?q=github&limit=1
-    status: 200
-  - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/1.7.0
-    status: 200
-  - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/9.9.9
-    status: 404
-  first_party_sources:
-  - https://github.com/ballerina-platform/skills/blob/main/mcp/src/central-client.js
-  - https://github.com/ballerina-platform/ballerina-library/blob/main/connector-doc-generator/modules/central/central.bal
-  supersedes: An earlier scaffold in this repo described /2.0/packages, /2.0/connectors and /2.0/organizations/{org}.
-    Every one of those paths returns HTTP 404 on the live host; they were replaced by the probed surface
-    below.
 servers:
 - url: https://api.central.ballerina.io
   description: Ballerina Central API (public, unauthenticated for read operations)
@@ -51,8 +20,7 @@ paths:
     get:
       operationId: searchConnectors
       summary: Search connectors
-      description: Search the connector clients declared by published packages. Each hit carries the client
-        name, its module, and the full package record it belongs to.
+      description: Search the connector clients declared by published packages. Each hit carries the client name, its module, and the full package record it belongs to.
       tags:
       - Connectors
       parameters:
@@ -89,29 +57,6 @@ paths:
                 $ref: '#/components/schemas/BadRequestError'
 components:
   schemas:
-    BadRequestError:
-      description: Two 400 envelopes were observed. A query-parameter cast failure returns the timestamp/status/reason/message/path/method
-        shape; a search validation failure returns a bare `message`.
-      oneOf:
-      - type: object
-        properties:
-          timestamp:
-            type: string
-            format: date-time
-          status:
-            type: integer
-          reason:
-            type: string
-          message:
-            type: string
-          path:
-            type: string
-          method:
-            type: string
-      - type: object
-        properties:
-          message:
-            type: string
     Connector:
       type: object
       description: A connector client declared by a published package.
@@ -137,19 +82,28 @@ components:
           type: string
         package:
           $ref: '#/components/schemas/Package'
-    ConnectorSearchResponse:
-      type: object
-      properties:
-        connectors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Connector'
-        count:
-          type: integer
-        offset:
-          type: integer
-        limit:
-          type: integer
+    BadRequestError:
+      description: Two 400 envelopes were observed. A query-parameter cast failure returns the timestamp/status/reason/message/path/method shape; a search validation failure returns a bare `message`.
+      oneOf:
+      - type: object
+        properties:
+          timestamp:
+            type: string
+            format: date-time
+          status:
+            type: integer
+          reason:
+            type: string
+          message:
+            type: string
+          path:
+            type: string
+          method:
+            type: string
+      - type: object
+        properties:
+          message:
+            type: string
     Module:
       type: object
       description: A module inside a published package.
@@ -165,6 +119,19 @@ components:
           type: string
         readme:
           type: string
+    ConnectorSearchResponse:
+      type: object
+      properties:
+        connectors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connector'
+        count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
     Package:
       type: object
       description: A package published to Ballerina Central.
@@ -252,3 +219,27 @@ components:
         graalvmCompatible:
           type: string
           description: 'GraalVM native-image compatibility as declared/verified: e.g. `Yes`, `No`, `Unknown`.'
+x-provenance:
+  method: probed
+  probed: '2026-09-04'
+  probe_transcript:
+  - url: https://api.central.ballerina.io/2.0/registry/packages?org=ballerina&limit=2&readme=false
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/search-packages?q=http&limit=2
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/http
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/packages/ballerina/nosuchpkg
+    status: 404
+  - url: https://api.central.ballerina.io/2.0/registry/connectors?q=salesforce&limit=1
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/registry/triggers?q=github&limit=1
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/1.7.0
+    status: 200
+  - url: https://api.central.ballerina.io/2.0/docs/ballerina/random/9.9.9
+    status: 404
+  first_party_sources:
+  - https://github.com/ballerina-platform/skills/blob/main/mcp/src/central-client.js
+  - https://github.com/ballerina-platform/ballerina-library/blob/main/connector-doc-generator/modules/central/central.bal
+  supersedes: An earlier scaffold in this repo described /2.0/packages, /2.0/connectors and /2.0/organizations/{org}. Every one of those paths returns HTTP 404 on the live host; they were replaced by the probed surface below.
