@@ -57,6 +57,41 @@ paths:
                 $ref: '#/components/schemas/BadRequestError'
 components:
   schemas:
+    BadRequestError:
+      description: Two 400 envelopes were observed. A query-parameter cast failure returns the timestamp/status/reason/message/path/method shape; a search validation failure returns a bare `message`.
+      oneOf:
+      - type: object
+        properties:
+          timestamp:
+            type: string
+            format: date-time
+          status:
+            type: integer
+          reason:
+            type: string
+          message:
+            type: string
+          path:
+            type: string
+          method:
+            type: string
+      - type: object
+        properties:
+          message:
+            type: string
+    ConnectorSearchResponse:
+      type: object
+      properties:
+        connectors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connector'
+        count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
     Connector:
       type: object
       description: A connector client declared by a published package.
@@ -82,28 +117,6 @@ components:
           type: string
         package:
           $ref: '#/components/schemas/Package'
-    BadRequestError:
-      description: Two 400 envelopes were observed. A query-parameter cast failure returns the timestamp/status/reason/message/path/method shape; a search validation failure returns a bare `message`.
-      oneOf:
-      - type: object
-        properties:
-          timestamp:
-            type: string
-            format: date-time
-          status:
-            type: integer
-          reason:
-            type: string
-          message:
-            type: string
-          path:
-            type: string
-          method:
-            type: string
-      - type: object
-        properties:
-          message:
-            type: string
     Module:
       type: object
       description: A module inside a published package.
@@ -119,19 +132,6 @@ components:
           type: string
         readme:
           type: string
-    ConnectorSearchResponse:
-      type: object
-      properties:
-        connectors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Connector'
-        count:
-          type: integer
-        offset:
-          type: integer
-        limit:
-          type: integer
     Package:
       type: object
       description: A package published to Ballerina Central.

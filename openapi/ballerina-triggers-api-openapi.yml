@@ -79,19 +79,34 @@ components:
         properties:
           message:
             type: string
-    TriggerSearchResponse:
+    Trigger:
       type: object
+      description: An event trigger (listener) declared by a published package.
       properties:
-        triggers:
-          type: array
+        id:
+          type: integer
+        name:
+          type: string
+        displayName:
+          type: string
+        moduleName:
+          type: string
+        serviceTypes:
+          type:
+          - array
+          - 'null'
           items:
-            $ref: '#/components/schemas/Trigger'
-        count:
-          type: integer
-        offset:
-          type: integer
-        limit:
-          type: integer
+            type: object
+        listenerParams:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+        displayAnnotation:
+          type: object
+        package:
+          $ref: '#/components/schemas/Package'
     Module:
       type: object
       description: A module inside a published package.
@@ -107,6 +122,19 @@ components:
           type: string
         readme:
           type: string
+    TriggerSearchResponse:
+      type: object
+      properties:
+        triggers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Trigger'
+        count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
     Package:
       type: object
       description: A package published to Ballerina Central.
@@ -194,34 +222,6 @@ components:
         graalvmCompatible:
           type: string
           description: 'GraalVM native-image compatibility as declared/verified: e.g. `Yes`, `No`, `Unknown`.'
-    Trigger:
-      type: object
-      description: An event trigger (listener) declared by a published package.
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        displayName:
-          type: string
-        moduleName:
-          type: string
-        serviceTypes:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-        listenerParams:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-        displayAnnotation:
-          type: object
-        package:
-          $ref: '#/components/schemas/Package'
 x-provenance:
   method: probed
   probed: '2026-09-04'

@@ -79,7 +79,7 @@ name: Ballerina
 tags:
 - Integration
 - Orchestration
-- Open-Source
+- Open Source
 - Programming Language
 - Package Registry
 - Developer Tools
@@ -94,6 +94,7 @@ tags_raw:
 - Developer Tools
 - Code Generation
 - Agent Skills
+- Open-Source
 type: Index
 deliveryModel:
   model: saas
