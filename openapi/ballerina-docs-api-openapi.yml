@@ -59,12 +59,6 @@ paths:
                     message: module cannot be resolved as it may not exist.
 components:
   schemas:
-    NotFoundMessage:
-      type: object
-      description: The 404 envelope returned by registry and docs lookups.
-      properties:
-        message:
-          type: string
     ApiDocs:
       type: object
       description: The generated documentation model for one package version.
@@ -136,6 +130,12 @@ components:
               type: array
               items:
                 type: object
+    NotFoundMessage:
+      type: object
+      description: The 404 envelope returned by registry and docs lookups.
+      properties:
+        message:
+          type: string
 x-provenance:
   method: probed
   probed: '2026-09-04'

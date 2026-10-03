@@ -57,41 +57,6 @@ paths:
                 $ref: '#/components/schemas/BadRequestError'
 components:
   schemas:
-    BadRequestError:
-      description: Two 400 envelopes were observed. A query-parameter cast failure returns the timestamp/status/reason/message/path/method shape; a search validation failure returns a bare `message`.
-      oneOf:
-      - type: object
-        properties:
-          timestamp:
-            type: string
-            format: date-time
-          status:
-            type: integer
-          reason:
-            type: string
-          message:
-            type: string
-          path:
-            type: string
-          method:
-            type: string
-      - type: object
-        properties:
-          message:
-            type: string
-    ConnectorSearchResponse:
-      type: object
-      properties:
-        connectors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Connector'
-        count:
-          type: integer
-        offset:
-          type: integer
-        limit:
-          type: integer
     Connector:
       type: object
       description: A connector client declared by a published package.
@@ -117,21 +82,19 @@ components:
           type: string
         package:
           $ref: '#/components/schemas/Package'
-    Module:
+    ConnectorSearchResponse:
       type: object
-      description: A module inside a published package.
       properties:
-        packageURL:
-          type: string
-        apiDocURL:
-          type: string
-          description: Rendered API docs URL on lib.ballerina.io.
-        name:
-          type: string
-        summary:
-          type: string
-        readme:
-          type: string
+        connectors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connector'
+        count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
     Package:
       type: object
       description: A package published to Ballerina Central.
@@ -219,6 +182,43 @@ components:
         graalvmCompatible:
           type: string
           description: 'GraalVM native-image compatibility as declared/verified: e.g. `Yes`, `No`, `Unknown`.'
+    BadRequestError:
+      description: Two 400 envelopes were observed. A query-parameter cast failure returns the timestamp/status/reason/message/path/method shape; a search validation failure returns a bare `message`.
+      oneOf:
+      - type: object
+        properties:
+          timestamp:
+            type: string
+            format: date-time
+          status:
+            type: integer
+          reason:
+            type: string
+          message:
+            type: string
+          path:
+            type: string
+          method:
+            type: string
+      - type: object
+        properties:
+          message:
+            type: string
+    Module:
+      type: object
+      description: A module inside a published package.
+      properties:
+        packageURL:
+          type: string
+        apiDocURL:
+          type: string
+          description: Rendered API docs URL on lib.ballerina.io.
+        name:
+          type: string
+        summary:
+          type: string
+        readme:
+          type: string
 x-provenance:
   method: probed
   probed: '2026-09-04'
