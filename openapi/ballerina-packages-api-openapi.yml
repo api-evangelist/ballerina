@@ -164,45 +164,6 @@ paths:
                     message: 'package not found: ballerina/nosuchpkg:*_any'
 components:
   schemas:
-    NotFoundMessage:
-      type: object
-      description: The 404 envelope returned by registry and docs lookups.
-      properties:
-        message:
-          type: string
-    PackageSearchResponse:
-      type: object
-      properties:
-        packages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Package'
-        count:
-          type: integer
-          description: Total matches available
-          not the page size.: null
-        offset:
-          type: integer
-        limit:
-          type: integer
-    PackageFullTextSearchResponse:
-      allOf:
-      - $ref: '#/components/schemas/PackageSearchResponse'
-      - type: object
-        properties:
-          suggestions:
-            type: array
-            items:
-              type: string
-          highlighting:
-            type: object
-            description: Map of package id to the matched fragments per field.
-            additionalProperties:
-              type: object
-              additionalProperties:
-                type: array
-                items:
-                  type: string
     Package:
       type: object
       description: A package published to Ballerina Central.
@@ -312,6 +273,21 @@ components:
         properties:
           message:
             type: string
+    PackageSearchResponse:
+      type: object
+      properties:
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Package'
+        count:
+          type: integer
+          description: Total matches available
+          not the page size.: null
+        offset:
+          type: integer
+        limit:
+          type: integer
     Module:
       type: object
       description: A module inside a published package.
@@ -326,6 +302,30 @@ components:
         summary:
           type: string
         readme:
+          type: string
+    PackageFullTextSearchResponse:
+      allOf:
+      - $ref: '#/components/schemas/PackageSearchResponse'
+      - type: object
+        properties:
+          suggestions:
+            type: array
+            items:
+              type: string
+          highlighting:
+            type: object
+            description: Map of package id to the matched fragments per field.
+            additionalProperties:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+    NotFoundMessage:
+      type: object
+      description: The 404 envelope returned by registry and docs lookups.
+      properties:
+        message:
           type: string
 x-provenance:
   method: probed
