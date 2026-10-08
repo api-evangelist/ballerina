@@ -123,6 +123,8 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ballerina.png
 access: 3rd-Party
 common:
+- type: FinOps
+  url: finops/ballerina-finops.yml
 - type: AgenticAccess
   url: agentic-access/ballerina-agentic-access.yml
 - type: DomainSecurity
