@@ -144,6 +144,19 @@ components:
         graalvmCompatible:
           type: string
           description: 'GraalVM native-image compatibility as declared/verified: e.g. `Yes`, `No`, `Unknown`.'
+    TriggerSearchResponse:
+      type: object
+      properties:
+        triggers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Trigger'
+        count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
     BadRequestError:
       description: Two 400 envelopes were observed. A query-parameter cast failure returns the timestamp/status/reason/message/path/method shape; a search validation failure returns a bare `message`.
       oneOf:
@@ -166,34 +179,6 @@ components:
         properties:
           message:
             type: string
-    TriggerSearchResponse:
-      type: object
-      properties:
-        triggers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Trigger'
-        count:
-          type: integer
-        offset:
-          type: integer
-        limit:
-          type: integer
-    Module:
-      type: object
-      description: A module inside a published package.
-      properties:
-        packageURL:
-          type: string
-        apiDocURL:
-          type: string
-          description: Rendered API docs URL on lib.ballerina.io.
-        name:
-          type: string
-        summary:
-          type: string
-        readme:
-          type: string
     Trigger:
       type: object
       description: An event trigger (listener) declared by a published package.
@@ -222,6 +207,21 @@ components:
           type: object
         package:
           $ref: '#/components/schemas/Package'
+    Module:
+      type: object
+      description: A module inside a published package.
+      properties:
+        packageURL:
+          type: string
+        apiDocURL:
+          type: string
+          description: Rendered API docs URL on lib.ballerina.io.
+        name:
+          type: string
+        summary:
+          type: string
+        readme:
+          type: string
 x-provenance:
   method: probed
   probed: '2026-09-04'

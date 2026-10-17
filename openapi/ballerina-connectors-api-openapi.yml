@@ -166,6 +166,19 @@ components:
         properties:
           message:
             type: string
+    ConnectorSearchResponse:
+      type: object
+      properties:
+        connectors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Connector'
+        count:
+          type: integer
+        offset:
+          type: integer
+        limit:
+          type: integer
     Connector:
       type: object
       description: A connector client declared by a published package.
@@ -206,19 +219,6 @@ components:
           type: string
         readme:
           type: string
-    ConnectorSearchResponse:
-      type: object
-      properties:
-        connectors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Connector'
-        count:
-          type: integer
-        offset:
-          type: integer
-        limit:
-          type: integer
 x-provenance:
   method: probed
   probed: '2026-09-04'

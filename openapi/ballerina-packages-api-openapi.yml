@@ -164,6 +164,12 @@ paths:
                     message: 'package not found: ballerina/nosuchpkg:*_any'
 components:
   schemas:
+    NotFoundMessage:
+      type: object
+      description: The 404 envelope returned by registry and docs lookups.
+      properties:
+        message:
+          type: string
     Package:
       type: object
       description: A package published to Ballerina Central.
@@ -251,6 +257,21 @@ components:
         graalvmCompatible:
           type: string
           description: 'GraalVM native-image compatibility as declared/verified: e.g. `Yes`, `No`, `Unknown`.'
+    PackageSearchResponse:
+      type: object
+      properties:
+        packages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Package'
+        count:
+          type: integer
+          description: Total matches available
+          not the page size.: null
+        offset:
+          type: integer
+        limit:
+          type: integer
     BadRequestError:
       description: Two 400 envelopes were observed. A query-parameter cast failure returns the timestamp/status/reason/message/path/method shape; a search validation failure returns a bare `message`.
       oneOf:
@@ -273,36 +294,6 @@ components:
         properties:
           message:
             type: string
-    PackageSearchResponse:
-      type: object
-      properties:
-        packages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Package'
-        count:
-          type: integer
-          description: Total matches available
-          not the page size.: null
-        offset:
-          type: integer
-        limit:
-          type: integer
-    Module:
-      type: object
-      description: A module inside a published package.
-      properties:
-        packageURL:
-          type: string
-        apiDocURL:
-          type: string
-          description: Rendered API docs URL on lib.ballerina.io.
-        name:
-          type: string
-        summary:
-          type: string
-        readme:
-          type: string
     PackageFullTextSearchResponse:
       allOf:
       - $ref: '#/components/schemas/PackageSearchResponse'
@@ -321,11 +312,20 @@ components:
                 type: array
                 items:
                   type: string
-    NotFoundMessage:
+    Module:
       type: object
-      description: The 404 envelope returned by registry and docs lookups.
+      description: A module inside a published package.
       properties:
-        message:
+        packageURL:
+          type: string
+        apiDocURL:
+          type: string
+          description: Rendered API docs URL on lib.ballerina.io.
+        name:
+          type: string
+        summary:
+          type: string
+        readme:
           type: string
 x-provenance:
   method: probed
