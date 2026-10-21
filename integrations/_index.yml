@@ -23,3 +23,37 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: ballerina-graphql-org-tools-and-libraries
+  label: GraphQL.org tools and libraries
+  partner_name: GraphQL.org tools and libraries
+  category: GraphQL tooling listing
+  type: register
+  channel: standard-directory
+  evidence: https://graphql.org/community/tools-and-libraries/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: GraphQL.org tools and libraries (graphql.org/community/tools-and-libraries; github.com/graphql/graphql.github.io
+      src/code)
+    standard: GraphQL
+    spec_file: null
+    role: graphql-org-listed-vendor
+    registered_name: ballerina-graphql
+    register_id: src/code/language-support/ballerina/client/ballerina-graphql.md
+    matched_domain: ballerina.io
+    matched_by: domain
+    listed_products:
+    - product_type: ballerina client
+      entries:
+      - ballerina-graphql
+    - product_type: ballerina server
+      entries:
+      - ballerina-graphql
+    signal_note: 'participation only: a reviewed listing on graphql.org, not a conformance certification; listed
+      products (one per section) are context, never counted'
+    detected_by: sweep-graphql-ecosystem.py
+    detected: '2026-10-21'
+    other_registrations:
+    - ballerina-graphql
+  status: not-a-workflow
+  arazzo: null
