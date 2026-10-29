@@ -1,4 +1,4 @@
-# Ballerina (ballerina)
+# Ballerina
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,67 +64,229 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Integration problems have been solved by restricted drag-and-drop tools/DSLs or generic programming languages that dont understand the unique challenges of integrations.
+Ballerina is an open-source programming language for the cloud, created and maintained by WSO2, whose type system, syntax and tooling are built around network interaction: services, clients, data transformation and integration are language constructs rather than framework add-ons. It ships first-party generators for OpenAPI, AsyncAPI, GraphQL, gRPC, WSDL, EDI and FHIR, a package registry called Ballerina Central with a public read API, and a first-party MCP server and Agent Skills for coding agents.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/ballerina/refs/heads/main/apis.yml)
+**Areas:** Integration · Orchestration · Open Source · Programming Language · Package Registry · Developer Tools · Code Generation · Agent Skills
 
-## Scope
+## Ballerina on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Ballerina is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ballerina/](https://apis.io/providers/ballerina/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (4)
 
-- Integrations
-- Orchestrations
-- Open Source
-- Programming Language
+- [Ballerina Packages API](https://apis.io/apis/ballerina/ballerina-packages-api/) — Public read API for the Ballerina Central package registry — list or search packages by keyword and organization, run a full-text search with suggestions…
+- [Ballerina Connectors API](https://apis.io/apis/ballerina/ballerina-connectors-api/) — Search the connector clients declared inside packages published to Ballerina Central — the outbound integration half of the registry, covering the 727…
+- [Ballerina Triggers API](https://apis.io/apis/ballerina/ballerina-triggers-api/) — Search the event triggers and listeners declared inside packages published to Ballerina Central — the inbound, event-driven half of the registry, paired…
+- [Ballerina Docs API](https://apis.io/apis/ballerina/ballerina-docs-api/) — Retrieve the complete generated API documentation model for one published package version — every module, client, function, record, type, constant, error,…
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-06-05
-- **Modified:** 2026-04-21
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Ballerina
+Model Context Protocol servers that expose the API to agents.
 
-Integration problems have been solved by restricted drag-and-drop tools/DSLs or generic programming languages that dont understand the unique challenges of integrations.
+- [ballerina-library](https://apis.io/servers/ballerina/ballerina-library/)
 
-- **Human URL:** [ https://ballerina.io/]( https://ballerina.io/)
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation]( https://ballerina.io/)
-- [OpenAPI](openapi/ballerina-central-api.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/ballerina-central-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ballerina-central-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Ballerina Agentic Access](https://apis.io/agentic-access/ballerina/ballerina-agentic-access/)
 
-## Common Properties
+#### JSON Schema (16)
 
-- [GitHub Organization](https://github.com/ballerina-platform)
-- [LinkedIn](https://www.linkedin.com/showcase/ballerinalang)
+The data models the API reads and writes.
+
+- [ApiDocs](https://apis.io/schemas/ballerina/central-api-api-docs/)
+- [BadRequestError](https://apis.io/schemas/ballerina/central-api-bad-request-error/)
+- [Connector](https://apis.io/schemas/ballerina/central-api-connector/)
+- [ConnectorSearchResponse](https://apis.io/schemas/ballerina/central-api-connector-search-response/)
+- [Moved to /providers/ballerina/](https://apis.io/schemas/ballerina/central-api-connector-summary/)
+- [Module](https://apis.io/schemas/ballerina/central-api-module/)
+- [NotFoundMessage](https://apis.io/schemas/ballerina/central-api-not-found-message/)
+- [Moved to /providers/ballerina/](https://apis.io/schemas/ballerina/central-api-organization/)
+- [Package](https://apis.io/schemas/ballerina/central-api-package/)
+- [Moved to /providers/ballerina/](https://apis.io/schemas/ballerina/central-api-package-docs/)
+- [PackageFullTextSearchResponse](https://apis.io/schemas/ballerina/central-api-package-full-text-search-response/)
+- [PackageSearchResponse](https://apis.io/schemas/ballerina/central-api-package-search-response/)
+- [Moved to /providers/ballerina/](https://apis.io/schemas/ballerina/central-api-package-summary/)
+- [Moved to /providers/ballerina/](https://apis.io/schemas/ballerina/central-api-package-version/)
+- [Trigger](https://apis.io/schemas/ballerina/central-api-trigger/)
+- [TriggerSearchResponse](https://apis.io/schemas/ballerina/central-api-trigger-search-response/)
+
+#### JSON Structure (16)
+
+Data models expressed in JSON Structure.
+
+- [Central Api Api Docs Structure](https://apis.io/json-structure/ballerina/central-api-api-docs-structure/)
+- [Central Api Bad Request Error Structure](https://apis.io/json-structure/ballerina/central-api-bad-request-error-structure/)
+- [Central Api Connector Search Response Structure](https://apis.io/json-structure/ballerina/central-api-connector-search-response-structure/)
+- [Central Api Connector Structure](https://apis.io/json-structure/ballerina/central-api-connector-structure/)
+- [Moved to /providers/ballerina/](https://apis.io/json-structure/ballerina/central-api-connector-summary-structure/)
+- [Central Api Module Structure](https://apis.io/json-structure/ballerina/central-api-module-structure/)
+- [Central Api Not Found Message Structure](https://apis.io/json-structure/ballerina/central-api-not-found-message-structure/)
+- [Moved to /providers/ballerina/](https://apis.io/json-structure/ballerina/central-api-organization-structure/)
+- [Moved to /providers/ballerina/](https://apis.io/json-structure/ballerina/central-api-package-docs-structure/)
+- [Central Api Package Full Text Search Response Structure](https://apis.io/json-structure/ballerina/central-api-package-full-text-search-response-structure/)
+- [Central Api Package Search Response Structure](https://apis.io/json-structure/ballerina/central-api-package-search-response-structure/)
+- [Central Api Package Structure](https://apis.io/json-structure/ballerina/central-api-package-structure/)
+- [Moved to /providers/ballerina/](https://apis.io/json-structure/ballerina/central-api-package-summary-structure/)
+- [Moved to /providers/ballerina/](https://apis.io/json-structure/ballerina/central-api-package-version-structure/)
+- [Central Api Trigger Search Response Structure](https://apis.io/json-structure/ballerina/central-api-trigger-search-response-structure/)
+- [Central Api Trigger Structure](https://apis.io/json-structure/ballerina/central-api-trigger-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Ballerina Context](https://apis.io/jsonld/ballerina/ballerina-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Ballerina Vocabulary](https://apis.io/vocabularies/ballerina/ballerina-vocabulary/)
+
+#### Examples (13)
+
+Example requests and responses.
+
+- [Central Api Connector Example](https://apis.io/examples/ballerina/central-api-connector-example/)
+- [Central Api Connector Search Response Example](https://apis.io/examples/ballerina/central-api-connector-search-response-example/)
+- [Moved to /providers/ballerina/](https://apis.io/examples/ballerina/central-api-connector-summary-example/)
+- [Central Api Module Example](https://apis.io/examples/ballerina/central-api-module-example/)
+- [Moved to /providers/ballerina/](https://apis.io/examples/ballerina/central-api-organization-example/)
+- [Central Api Package Docs Example](https://apis.io/examples/ballerina/central-api-package-docs-example/)
+- [Central Api Package Example](https://apis.io/examples/ballerina/central-api-package-example/)
+- [Central Api Package Fulltext Search Response Example](https://apis.io/examples/ballerina/central-api-package-fulltext-search-response-example/)
+- [Central Api Package Search Response Example](https://apis.io/examples/ballerina/central-api-package-search-response-example/)
+- [Moved to /providers/ballerina/](https://apis.io/examples/ballerina/central-api-package-summary-example/)
+- [Moved to /providers/ballerina/](https://apis.io/examples/ballerina/central-api-package-version-example/)
+- [Central Api Trigger Example](https://apis.io/examples/ballerina/central-api-trigger-example/)
+- [Central Api Trigger Search Response Example](https://apis.io/examples/ballerina/central-api-trigger-search-response-example/)
+
+#### Collections (6)
+
+Postman and Open Collection request collections.
+
+- [Moved to /providers/ballerina/](https://apis.io/collections/ballerina/open-ballerina-central-api/)
+- [Ballerina Connectors API](https://apis.io/collections/ballerina/open-ballerina-connectors-api/)
+- [Ballerina Docs API](https://apis.io/collections/ballerina/open-ballerina-docs-api/)
+- [Moved to /providers/ballerina/](https://apis.io/collections/ballerina/open-ballerina-organizations-api/)
+- [Ballerina Packages API](https://apis.io/collections/ballerina/open-ballerina-packages-api/)
+- [Ballerina Triggers API](https://apis.io/collections/ballerina/open-ballerina-triggers-api/)
+
+#### Overlays (4)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Ballerina Connectors Overlay](https://apis.io/overlays/ballerina/ballerina-connectors-overlay/)
+- [Ballerina Docs Overlay](https://apis.io/overlays/ballerina/ballerina-docs-overlay/)
+- [Ballerina Packages Overlay](https://apis.io/overlays/ballerina/ballerina-packages-overlay/)
+- [Ballerina Triggers Overlay](https://apis.io/overlays/ballerina/ballerina-triggers-overlay/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Ballerina — jsonschema rules](https://apis.io/rules/ballerina/ballerina-jsonschema-spectral-rules/)
+- [Ballerina API Rules](https://apis.io/rules/ballerina/ballerina-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ballerina Authentication](https://apis.io/security/ballerina/ballerina-authentication/)
+- [Ballerina Domain Security](https://apis.io/security/ballerina/ballerina-domain-security/)
+- [Ballerina Vulnerability Disclosure](https://apis.io/security/ballerina/ballerina-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Ballerina Plans Pricing](https://apis.io/plans/ballerina/ballerina-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Ballerina Rate Limits](https://apis.io/rate-limits/ballerina/ballerina-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Ballerina Finops](https://apis.io/finops/ballerina/ballerina-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://ballerina.io/)
-- [Case Studies](https://ballerina.io/case-studies/)
-- [Learning](https://ballerina.io/learn/)
-- [Learning](https://ballerina.io/learn/)
-- [Learning](https://ballerina.io/learn/)
-- [Packages](https://central.ballerina.io/)
-- [Events](https://ballerina.io/community/events/)
-- [Newsletter](https://ballerina.io/community/#subscribe-to-our-newsletter)
-- [Terms of Service](https://ballerina.io/terms-of-service/)
-- [Privacy Policy](https://ballerina.io/privacy-policy/)
-- [Security](https://ballerina.io/security-policy/)
-- [Trademark](https://ballerina.io/trademark-usage-policy/)
+- [Documentation](https://ballerina.io/learn/)
+- [Getting started](https://ballerina.io/learn/get-started/)
+- [API reference](https://lib.ballerina.io/)
+- [Sign up](https://central.ballerina.io/)
+- [Support](https://discord.gg/ballerinalang)
 - [Blog](https://blog.ballerina.io/)
-- [Libraries](https://central.ballerina.io/ballerina-library)
-- [Use Cases](undefined)
-- [Features](undefined)
-- [Spectral Rules](rules/ballerina-spectral-rules.yml)
-- [Vocabulary](vocabulary/ballerina-vocabulary.yaml)
+- [Security](https://ballerina.io/security-policy/)
+- [Terms of service](https://ballerina.io/terms-of-service/)
+- [Privacy policy](https://ballerina.io/privacy-policy/)
+- [GitHub](https://github.com/ballerina-platform)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 51.2** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 65.0 |
+| Contract quality | 59.5 |
+| Contract governance | 22.0 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 71.4 |
+| Access clarity | 34.2 |
+
+**Agent readiness 40.5** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 30.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ballerina/](https://apis.io/providers/ballerina/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Ballerina: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ballerina/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
