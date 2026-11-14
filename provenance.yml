@@ -5,10 +5,22 @@ artifacts:
   agentic-access/ballerina-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-preferences/ballerina-ai-preferences.yml:
+    method: harvested
+    evidence: declared in the artifact
   authentication/ballerina-authentication.yml:
     method: searched
     evidence: declared in the artifact
   capabilities/ballerina-capability-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
+  certification/observations-2026-11-10.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
     method: unknown
     evidence: no authorship recorded
   changelog/ballerina-changelog.yml:
@@ -47,8 +59,14 @@ artifacts:
   conventions/ballerina-conventions.yml:
     method: unknown
     evidence: no authorship recorded
+  data-license/ballerina-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/ballerina-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  eligibility/ballerina-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/ballerina-problem-types.yml:
     method: unknown
@@ -93,6 +111,12 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   heartbeat/2026-11-02.yml:
+    method: unknown
+    evidence: no authorship recorded
+  heartbeat/2026-11-06.yml:
+    method: unknown
+    evidence: no authorship recorded
+  heartbeat/2026-11-13.yml:
     method: unknown
     evidence: no authorship recorded
   integrations/_index.yml:
@@ -173,7 +197,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -239,6 +263,9 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/ballerina-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -285,6 +312,9 @@ artifacts:
   plans/ballerina-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
+  privacy/ballerina-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/ballerina-rate-limits.yml:
     method: unknown
     evidence: no authorship recorded
@@ -315,6 +345,9 @@ artifacts:
   skills/ballerina-making-graalvm-compatible.md:
     method: unknown
     evidence: no authorship recorded
+  terms/ballerina-terms-of-service.yml:
+    method: harvested
+    evidence: declared in the artifact
   vocabulary/ballerina-vocabulary.yaml:
     method: derived
     evidence: declared in the artifact
